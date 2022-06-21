@@ -37,17 +37,17 @@ use-license: true
 
 navigation:
   - title: Syllabus
-    url: /syllabus/
+    url: ../stat-406/syllabus/
   - title: Schedule
     url: /
   - title: Worksheets
     url: https://ubc-stat.github.io/stat-406-worksheets/
   - title: Project
-    url: /project/
+    url: ../stat-406/project/
   - title: Computing
-    url: /computing/
+    url: ../stat-406/computing/
   - title: FAQ
-    url: /faq/
+    url: ../stat-406/faq/
   - title: Github
     url: https://learning.github.ubc.ca/STAT-406-101-2021W/
     icon: "fab fa-github"
