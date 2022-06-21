@@ -45,11 +45,11 @@ Handouts
 : Using in RMarkdown [`.Rmd`](handouts/00-rmarkdown.Rmd), [`.pdf`](handouts/00-rmarkdown.pdf)
 
 
-| Slides                                                                                 | Date      | Deadlines               |   |
-|:---------------------------------------------------------------------------------------|:----------|:------------------------|---|
-|                                                                                        | 7 Sep 21  | (no class, Imagine UBC) |   |
-| [Intro to class](slides/00-intro-to-class.html), [Git](slides/00-version-control.html) | 9 Sep 21  | Syllabus, Git, Github   |   |
-| [LM review](slides/01-lm-review.html), [LM Example](slides/02-lm-example.html)         | 14 Sep 21 |                         |   |
+| Date      | Slides                                                                                 | Deadlines |
+|:----------|:---------------------------------------------------------------------------------------|:----------|
+| 7 Sep 21  | (no class, Imagine UBC)                                                                |           |
+| 9 Sep 21  | [Intro to class](slides/00-intro-to-class.html), [Git](slides/00-version-control.html) |           |
+| 14 Sep 21 | [LM review](slides/01-lm-review.html), [LM Example](slides/02-lm-example.html)         |           |
 {: .table .table-striped}
 
 
@@ -69,12 +69,12 @@ Video lectures from last year
 Optional reading
 : \[ESL\] 7.1-7.5, 7.10
 
-|Date      |Slides |Deadlines    |
-|:---------|:-----------|:-----------|
-|16 Sep 21 |[Regression function](03-regression-function.html), [Bias and Variance](04-bias-variance.html)
-|21 Sep 21 |[Risk estimation](05-estimating-test-mse.html), [Info Criteria](06-information-criteria.html)    | |
-|23 Sep 21 | [Greedy selection](07-greedy-selection.html) |           |
-|28 Sep 21 |         | HW1 due, PC 1 due |
+| Date      | Slides                                                                                                       | Deadlines         |
+|:----------|:-------------------------------------------------------------------------------------------------------------|:------------------|
+| 16 Sep 21 | [Regression function](slides/03-regression-function.html), [Bias and Variance](slides/04-bias-variance.html) |                   |
+| 21 Sep 21 | [Risk estimation](slides/05-estimating-test-mse.html), [Info Criteria](slides/06-information-criteria.html)  |                   |
+| 23 Sep 21 | [Greedy selection](slides/07-greedy-selection.html)                                                          |                   |
+| 28 Sep 21 |                                                                                                              | HW1 due, PC 1 due |
 {: .table .table-striped}
 
 
@@ -94,14 +94,14 @@ Video lectures from last year
 Optional reading
 : \[ESL\] 3.4, 3.8, 5.4, 6.3
 
-|Date      |Slides |Deadlines    |
-|:---------|:---------|:-----|
-|30 Sep 21 |(no class, National Day for Truth and Reconciliation) |
-|5 Oct 21  |[Ridge](08-ridge-regression.html), [Lasso](09-l1-penalties.html)  |  |
-|7 Oct 21  |[NP 1](10-basis-expansions.html), [NP 2](11-kernel-smoothers.html) |  |
-|12 Oct 21 |[Why smoothing?](12-why-smooth.html)  |  |
-|14 Oct 21 |[Other](13-gams-trees.html)          |  |
-|19 Oct 21 |          | HW 2 due |
+| Date      | Slides                                                                           | Deadlines |
+|:----------|:---------------------------------------------------------------------------------|:----------|
+| 30 Sep 21 | (no class, National Day for Truth and Reconciliation)                            |           |
+| 5 Oct 21  | [Ridge](slides/08-ridge-regression.html), [Lasso](slides/09-l1-penalties.html)   |           |
+| 7 Oct 21  | [NP 1](slides/10-basis-expansions.html), [NP 2](slides/11-kernel-smoothers.html) |           |
+| 12 Oct 21 | [Why smoothing?](slides/12-why-smooth.html)                                      |           |
+| 14 Oct 21 | [Other](slides/13-gams-trees.html)                                               |           |
+| 19 Oct 21 |                                                                                  | HW 2 due  |
 {: .table .table-striped}
 
 
@@ -120,12 +120,12 @@ Video lectures from last year
 Optional reading
 : \[ESL\] 4-4.4, 9.2, 13.3
 
-|Date      |Slides |Deadlines    |
-|:---------|:---------|:-----|
-|21 Oct 21 |[Classification](14-classification-intro.html), [LDA and QDA](15-LDA-and-QDA.html) |          |
-|26 Oct 21 |[Gradient descent](00-gradient-descent.html), [Logistic regression](16-logistic-regression.html) |
-|28 Oct 21 |[Nonlinear](17-nonlinear-classifiers.html)  |  |
-|2 Nov 21  |          |  |
+| Date      | Slides                                                                                                         | Deadlines |
+|:----------|:---------------------------------------------------------------------------------------------------------------|:----------|
+| 21 Oct 21 | [Classification](slides/14-classification-intro.html), [LDA and QDA](slides/15-LDA-and-QDA.html)               |           |
+| 26 Oct 21 | [Gradient descent](slides/00-gradient-descent.html), [Logistic regression](slides/16-logistic-regression.html) |           |
+| 28 Oct 21 | [Nonlinear](slides/17-nonlinear-classifiers.html)                                                              |           |
+| 2 Nov 21  |                                                                                                                |           |
 {: .table .table-striped}
 
 
@@ -144,14 +144,14 @@ Video lectures
 Optional reading
 : \[ESL\] 10.1-10.10 (skip 10.7), 11.1-11.7
 
-|Date      |Slides |Deadlines    |
-|:---------|:---------|:-----|
-| 4 Nov 21   | [The bootstrap](18-the-bootstrap.html) | HW 3 due  |
-| 9 Nov 21   |[Bagging and random forests](19-bagging-and-rf.html), [Boosting](20-boosting.html)| PC 2 due |
-| 11 Nov 21  | (no class, Midterm Break) |
-| 16 Nov 21  |[Intro to neural nets](21-nnets-intro.html), [Estimating neural nets](22-nnets-estimation.html)  |
-| 18 Nov 21  |[Neural nets wrapup](23-nnets-other.html) |          |
-| 23 Nov 21  |  | HW 4 due |
+| Date      | Slides                                                                                                        | Deadlines |
+|:----------|:--------------------------------------------------------------------------------------------------------------|:----------|
+| 4 Nov 21  | [The bootstrap](slides/18-the-bootstrap.html)                                                                 | HW 3 due  |
+| 9 Nov 21  | [Bagging and random forests](slides/19-bagging-and-rf.html), [Boosting](slides/20-boosting.html)              | PC 2 due  |
+| 11 Nov 21 | (no class, Midterm Break)                                                                                     |           |
+| 16 Nov 21 | [Intro to neural nets](slides/21-nnets-intro.html), [Estimating neural nets](slides/22-nnets-estimation.html) |           |
+| 18 Nov 21 | [Neural nets wrapup](slides/23-nnets-other.html)                                                              |           |
+| 23 Nov 21 |                                                                                                               | HW 4 due  |
 {: .table .table-striped}
 
 
@@ -171,12 +171,12 @@ Optional reading
 : \[ESL\] 8.5, 13.2, 14.3, 14.5.1, 14.8, 14.9
 
 
-|Date      |Slides |Deadlines    |
-|:---------|:-----------|:-----------|
-|25 Nov 20 | [Intro to PCA](24-pca-intro.html), [Issues with PCA](25-pca-issues.html)  |
-|30 Nov 20 | [PCA v KPCA](26-pca-v-kpca.html) |
-|2 Dec 20  |[K means clustering](27-kmeans.html), [Hierarchical clustering](28-hclust.html) |         |
-|7 Dec 20  | |HW 5 due, PC 3 due |
+| Date      | Slides                                                                                        | Deadlines          |
+|:----------|:----------------------------------------------------------------------------------------------|:-------------------|
+| 25 Nov 20 | [Intro to PCA](slides/24-pca-intro.html), [Issues with PCA](slides/25-pca-issues.html)        |                    |
+| 30 Nov 20 | [PCA v KPCA](slides/26-pca-v-kpca.html)                                                       |                    |
+| 2 Dec 20  | [K means clustering](slides/27-kmeans.html), [Hierarchical clustering](slides/28-hclust.html) |                    |
+| 7 Dec 20  |                                                                                               | HW 5 due, PC 3 due |
 {: .table .table-striped}
 
 
