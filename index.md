@@ -29,7 +29,7 @@ Readings from [\[ISLR\]](https://www.statlearning.com) are always required while
 ## 0 Introduction and Review
 
 Required reading below is meant to reengage brain cells which have no doubt forgotten all
-the material that was covered in STAT 306 or CPSC 340. We don't presume that you remember all these details, but that, upon rereading, they at least sound familiar. If this all strikes you as completely foreign, this class may not be for you. 
+the material that was covered in STAT 306 or CPSC 340. We don't presume that you remember all these details, but that, upon rereading, they at least sound familiar. If this all strikes you as completely foreign, this class may not be for you.
 
 Required reading  
 : \[ISLR\] 2.1, 2.2, and Chapter 3 (this material is review)
@@ -47,9 +47,9 @@ Handouts
 
 | Date      | Slides                                                                                 | Deadlines |
 |:----------|:---------------------------------------------------------------------------------------|:----------|
-| 7 Sep 21  | (no class, Imagine UBC)                                                                |           |
-| 9 Sep 21  | [Intro to class](slides/00-intro-to-class.html), [Git](slides/00-version-control.html) |           |
-| 14 Sep 21 | [LM review](slides/01-lm-review.html), [LM Example](slides/02-lm-example.html)         |           |
+| 6 Sep 21  | (no class, Imagine UBC)                                                                |           |
+| 8 Sep 21  | [Intro to class](slides/00-intro-to-class.html), [Git](slides/00-version-control.html) |           |
+| 13 Sep 21 | [LM review](slides/01-lm-review.html), [LM Example](slides/02-lm-example.html)         |           |
 {: .table .table-striped}
 
 
@@ -71,10 +71,10 @@ Optional reading
 
 | Date      | Slides                                                                                                       | Deadlines         |
 |:----------|:-------------------------------------------------------------------------------------------------------------|:------------------|
-| 16 Sep 21 | [Regression function](slides/03-regression-function.html), [Bias and Variance](slides/04-bias-variance.html) |                   |
-| 21 Sep 21 | [Risk estimation](slides/05-estimating-test-mse.html), [Info Criteria](slides/06-information-criteria.html)  |                   |
-| 23 Sep 21 | [Greedy selection](slides/07-greedy-selection.html)                                                          |                   |
-| 28 Sep 21 |                                                                                                              | HW1 due, PC 1 due |
+| 15 Sep 21 | [Regression function](slides/03-regression-function.html), [Bias and Variance](slides/04-bias-variance.html) |                   |
+| 20 Sep 21 | [Risk estimation](slides/05-estimating-test-mse.html), [Info Criteria](slides/06-information-criteria.html)  |                   |
+| 22 Sep 21 | [Greedy selection](slides/07-greedy-selection.html)                                                          |                   |
+| 27 Sep 21 |                                                                                                              | HW1 due, PC 1 due |
 {: .table .table-striped}
 
 
@@ -96,12 +96,12 @@ Optional reading
 
 | Date      | Slides                                                                           | Deadlines |
 |:----------|:---------------------------------------------------------------------------------|:----------|
-| 30 Sep 21 | (no class, National Day for Truth and Reconciliation)                            |           |
-| 5 Oct 21  | [Ridge](slides/08-ridge-regression.html), [Lasso](slides/09-l1-penalties.html)   |           |
-| 7 Oct 21  | [NP 1](slides/10-basis-expansions.html), [NP 2](slides/11-kernel-smoothers.html) |           |
-| 12 Oct 21 | [Why smoothing?](slides/12-why-smooth.html)                                      |           |
-| 14 Oct 21 | [Other](slides/13-gams-trees.html)                                               |           |
-| 19 Oct 21 |                                                                                  | HW 2 due  |
+| 29 Sep 21 | (no class, National Day for Truth and Reconciliation)                            |           |
+| 4 Oct 21  | [Ridge](slides/08-ridge-regression.html), [Lasso](slides/09-l1-penalties.html)   |           |
+| 6 Oct 21  | [NP 1](slides/10-basis-expansions.html), [NP 2](slides/11-kernel-smoothers.html) |           |
+| 11 Oct 21 | [Why smoothing?](slides/12-why-smooth.html)                                      |           |
+| 13 Oct 21 | [Other](slides/13-gams-trees.html)                                               |           |
+| 18 Oct 21 |                                                                                  | HW 2 due  |
 {: .table .table-striped}
 
 
@@ -122,10 +122,10 @@ Optional reading
 
 | Date      | Slides                                                                                                         | Deadlines |
 |:----------|:---------------------------------------------------------------------------------------------------------------|:----------|
-| 21 Oct 21 | [Classification](slides/14-classification-intro.html), [LDA and QDA](slides/15-LDA-and-QDA.html)               |           |
-| 26 Oct 21 | [Gradient descent](slides/00-gradient-descent.html), [Logistic regression](slides/16-logistic-regression.html) |           |
-| 28 Oct 21 | [Nonlinear](slides/17-nonlinear-classifiers.html)                                                              |           |
-| 2 Nov 21  |                                                                                                                |           |
+| 20 Oct 21 | [Classification](slides/14-classification-intro.html), [LDA and QDA](slides/15-LDA-and-QDA.html)               |           |
+| 25 Oct 21 | [Gradient descent](slides/00-gradient-descent.html), [Logistic regression](slides/16-logistic-regression.html) |           |
+| 27 Oct 21 | [Nonlinear](slides/17-nonlinear-classifiers.html)                                                              |           |
+| 1 Nov 21  |                                                                                                                |           |
 {: .table .table-striped}
 
 
@@ -146,12 +146,12 @@ Optional reading
 
 | Date      | Slides                                                                                                        | Deadlines |
 |:----------|:--------------------------------------------------------------------------------------------------------------|:----------|
-| 4 Nov 21  | [The bootstrap](slides/18-the-bootstrap.html)                                                                 | HW 3 due  |
-| 9 Nov 21  | [Bagging and random forests](slides/19-bagging-and-rf.html), [Boosting](slides/20-boosting.html)              | PC 2 due  |
-| 11 Nov 21 | (no class, Midterm Break)                                                                                     |           |
-| 16 Nov 21 | [Intro to neural nets](slides/21-nnets-intro.html), [Estimating neural nets](slides/22-nnets-estimation.html) |           |
-| 18 Nov 21 | [Neural nets wrapup](slides/23-nnets-other.html)                                                              |           |
-| 23 Nov 21 |                                                                                                               | HW 4 due  |
+| 3 Nov 21  | [The bootstrap](slides/18-the-bootstrap.html)                                                                 | HW 3 due  |
+| 8 Nov 21  | [Bagging and random forests](slides/19-bagging-and-rf.html), [Boosting](slides/20-boosting.html)              | PC 2 due  |
+| 10 Nov 21 | (no class, Midterm Break)                                                                                     |           |
+| 15 Nov 21 | [Intro to neural nets](slides/21-nnets-intro.html), [Estimating neural nets](slides/22-nnets-estimation.html) |           |
+| 17 Nov 21 | [Neural nets wrapup](slides/23-nnets-other.html)                                                              |           |
+| 22 Nov 21 |                                                                                                               | HW 4 due  |
 {: .table .table-striped}
 
 
@@ -173,10 +173,10 @@ Optional reading
 
 | Date      | Slides                                                                                        | Deadlines          |
 |:----------|:----------------------------------------------------------------------------------------------|:-------------------|
-| 25 Nov 20 | [Intro to PCA](slides/24-pca-intro.html), [Issues with PCA](slides/25-pca-issues.html)        |                    |
-| 30 Nov 20 | [PCA v KPCA](slides/26-pca-v-kpca.html)                                                       |                    |
-| 2 Dec 20  | [K means clustering](slides/27-kmeans.html), [Hierarchical clustering](slides/28-hclust.html) |                    |
-| 7 Dec 20  |                                                                                               | HW 5 due, PC 3 due |
+| 24 Nov 20 | [Intro to PCA](slides/24-pca-intro.html), [Issues with PCA](slides/25-pca-issues.html)        |                    |
+| 29 Nov 20 | [PCA v KPCA](slides/26-pca-v-kpca.html)                                                       |                    |
+| 1 Dec 20  | [K means clustering](slides/27-kmeans.html), [Hierarchical clustering](slides/28-hclust.html) |                    |
+| 6 Dec 20  |                                                                                               | HW 5 due, PC 3 due |
 {: .table .table-striped}
 
 
