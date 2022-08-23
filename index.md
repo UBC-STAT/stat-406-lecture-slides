@@ -22,9 +22,13 @@ Readings from [\[ISLR\]](https://www.statlearning.com) are always required while
 
 <br>
 
-All lecture slides as `.Rmd` files are available [here](https://github.com/UBC-STAT/stat-406/tree/main/_lecture-slides). {: .alert .alert-info}
+<div class="alert alert-info" role="alert">
+All lecture slides as `.Rmd` files are available [here](https://github.com/UBC-STAT/stat-406/tree/main/_lecture-slides).
+</div>
 
-Handouts for some lectures (coding files, pdfs) are available [here](https://github.com/UBC-STAT/stat-406/tree/main/_lecture-slides/handouts). {: .alert .alert-info}
+<div class="alert alert-info" role="alert">
+Handouts for some lectures (coding files, pdfs) are available [here](https://github.com/UBC-STAT/stat-406/tree/main/_lecture-slides/handouts).
+</div>
 
 ## 0 Introduction and Review
 
