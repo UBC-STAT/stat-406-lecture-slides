@@ -5,7 +5,7 @@ icon: "far fa-calendar-alt"
 ---
 
 Required readings and lecture videos are listed below for each module.
-Readings from [\[ISLR\]](https://www.statlearning.com) are always required while those from [\[ESL\]](https://web.stanford.edu/~hastie/ElemStatLearn/) are optional and supplemental. The exception is the coverage of Neural Networks in Module 4 (this material does not appear in \[ISLR\]). Required readings and videos must be completed before the mini quiz at the beginning of each module.
+Readings from [\[ISLR\]](https://www.statlearning.com) are always required while those from [\[ESL\]](https://web.stanford.edu/~hastie/ElemStatLearn/) are optional and supplemental. 
 
 
 <div class="text-center">
@@ -34,9 +34,6 @@ the material that was covered in STAT 306 or CPSC 340. We don't presume that you
 Required reading  
 : \[ISLR\] 2.1, 2.2, and Chapter 3 (this material is review)
 
-Video lectures from last year
-: Lectures 1 and 2
-
 Optional reading
 : \[ESL\] 2.4 and 2.6
 
@@ -49,7 +46,8 @@ Handouts
 |:----------|:---------------------------------------------------------------------------------------|:----------|
 | 6 Sep 21  | (no class, Imagine UBC)                                                                |           |
 | 8 Sep 21  | [Intro to class](slides/00-intro-to-class.html), [Git](slides/00-version-control.html) |           |
-| 13 Sep 21 | [LM review](slides/01-lm-review.html), [LM Example](slides/02-lm-example.html)         |           |
+| 13 Sep 21 | [Understanding R / Rmd](slides/00-r-programming.html)                                  |           |
+| 15 Sep 21 | [LM review](slides/01-lm-review.html), [LM Example](slides/02-lm-example.html)         |           |
 {: .table .table-striped}
 
 
@@ -63,18 +61,15 @@ Topics
 Required reading  
 : \[ISLR\] Ch 2.2 (not 2.2.3), 5.1 (not 5.1.5), 6.1, 6.4
 
-Video lectures from last year
-: Lectures 3 to 7 
-
 Optional reading
 : \[ESL\] 7.1-7.5, 7.10
 
 | Date      | Slides                                                                                                       | Deadlines         |
 |:----------|:-------------------------------------------------------------------------------------------------------------|:------------------|
-| 15 Sep 21 | [Regression function](slides/03-regression-function.html), [Bias and Variance](slides/04-bias-variance.html) |                   |
-| 20 Sep 21 | [Risk estimation](slides/05-estimating-test-mse.html), [Info Criteria](slides/06-information-criteria.html)  |                   |
-| 22 Sep 21 | [Greedy selection](slides/07-greedy-selection.html)                                                          |                   |
-| 27 Sep 21 |                                                                                                              | HW1 due, PC 1 due |
+| 20 Sep 21 | [Regression function](slides/03-regression-function.html), [Bias and Variance](slides/04-bias-variance.html) |                   |
+| 22 Sep 21 | [Risk estimation](slides/05-estimating-test-mse.html), [Info Criteria](slides/06-information-criteria.html)  |                   |
+| 27 Sep 21 | [Greedy selection](slides/07-greedy-selection.html)                                                          |                   |
+| 29 Sep 21 |                                                                                                              | HW 1 due |
 {: .table .table-striped}
 
 
@@ -88,15 +83,11 @@ Topics
 Required reading  
 : \[ISLR\] Ch 6.2, 7.1-7.7.1, 8.1, 8.1.1, 8.1.3, 8.1.4
 
-Video lectures from last year  
-: Lectures 8-13
-
 Optional reading
 : \[ESL\] 3.4, 3.8, 5.4, 6.3
 
 | Date      | Slides                                                                           | Deadlines |
 |:----------|:---------------------------------------------------------------------------------|:----------|
-| 29 Sep 21 | (no class, National Day for Truth and Reconciliation)                            |           |
 | 4 Oct 21  | [Ridge](slides/08-ridge-regression.html), [Lasso](slides/09-l1-penalties.html)   |           |
 | 6 Oct 21  | [NP 1](slides/10-basis-expansions.html), [NP 2](slides/11-kernel-smoothers.html) |           |
 | 11 Oct 21 | [Why smoothing?](slides/12-why-smooth.html)                                      |           |
@@ -114,9 +105,6 @@ Topics
 Required reading  
 : \[ISLR\] Ch 2.2.3, 5.1.5, 4-4.5, 8.1.2
 
-Video lectures from last year
-: Lectures 14-17 and Gradient descent (best after lecture 15)
-
 Optional reading
 : \[ESL\] 4-4.4, 9.2, 13.3
 
@@ -125,7 +113,7 @@ Optional reading
 | 20 Oct 21 | [Classification](slides/14-classification-intro.html), [LDA and QDA](slides/15-LDA-and-QDA.html)               |           |
 | 25 Oct 21 | [Gradient descent](slides/00-gradient-descent.html), [Logistic regression](slides/16-logistic-regression.html) |           |
 | 27 Oct 21 | [Nonlinear](slides/17-nonlinear-classifiers.html)                                                              |           |
-| 1 Nov 21  |                                                                                                                |           |
+| 1 Nov 21  |                                                                                                                | HW 3 due       |
 {: .table .table-striped}
 
 
@@ -136,18 +124,15 @@ Topics
 : bagging; boosting; random forests; neural networks
 
 Required reading  
-: \[ISLR\] 5.2, 8.2, 10.1, 10.2, 10.6, 10.7 \[ESL\] 11.1, 11.3, 11.4, 11.7
-
-Video lectures  
-: Lecture 18-23
+: \[ISLR\] 5.2, 8.2, 10.1, 10.2, 10.6, 10.7 
 
 Optional reading
-: \[ESL\] 10.1-10.10 (skip 10.7), 11.1-11.7
+: \[ESL\] 10.1-10.10 (skip 10.7), 11.1, 11.3, 11.4, 11.7
 
 | Date      | Slides                                                                                                        | Deadlines |
 |:----------|:--------------------------------------------------------------------------------------------------------------|:----------|
-| 3 Nov 21  | [The bootstrap](slides/18-the-bootstrap.html)                                                                 | HW 3 due  |
-| 8 Nov 21  | [Bagging and random forests](slides/19-bagging-and-rf.html), [Boosting](slides/20-boosting.html)              | PC 2 due  |
+| 3 Nov 21  | [The bootstrap](slides/18-the-bootstrap.html)                                                                 |    |
+| 8 Nov 21  | [Bagging and random forests](slides/19-bagging-and-rf.html), [Boosting](slides/20-boosting.html)              |     |
 | 10 Nov 21 | (no class, Midterm Break)                                                                                     |           |
 | 15 Nov 21 | [Intro to neural nets](slides/21-nnets-intro.html), [Estimating neural nets](slides/22-nnets-estimation.html) |           |
 | 17 Nov 21 | [Neural nets wrapup](slides/23-nnets-other.html)                                                              |           |
@@ -176,7 +161,7 @@ Optional reading
 | 24 Nov 20 | [Intro to PCA](slides/24-pca-intro.html), [Issues with PCA](slides/25-pca-issues.html)        |                    |
 | 29 Nov 20 | [PCA v KPCA](slides/26-pca-v-kpca.html)                                                       |                    |
 | 1 Dec 20  | [K means clustering](slides/27-kmeans.html), [Hierarchical clustering](slides/28-hclust.html) |                    |
-| 6 Dec 20  |                                                                                               | HW 5 due, PC 3 due |
+| 6 Dec 20  |                                                                                               | HW 5 due |
 {: .table .table-striped}
 
 
@@ -184,7 +169,7 @@ Optional reading
 
 ## F Final exam
 
-__TBA__
+__TBA__ Schedule set by the University in early October. DO NOT PURCHASE FLIGHTS PRIOR TO THE SCHEDULE RELEASE.
 
 <!--
 
