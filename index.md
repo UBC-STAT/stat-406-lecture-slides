@@ -22,12 +22,12 @@ Readings from [\[ISLR\]](https://www.statlearning.com) are always required while
 
 <br>
 
-<div class="alert alert-info" role="alert">
-All lecture slides as `.Rmd` files are available [here](https://github.com/UBC-STAT/stat-406/tree/main/_lecture-slides).
+<div class="alert alert-primary" role="alert">
+All lecture slides as <code>.Rmd</code> files are available <a href="https://github.com/UBC-STAT/stat-406/tree/main/_lecture-slides">here</a>.
 </div>
 
-<div class="alert alert-info" role="alert">
-Handouts for some lectures (coding files, pdfs) are available [here](https://github.com/UBC-STAT/stat-406/tree/main/_lecture-slides/handouts).
+<div class="alert alert-primary" role="alert">
+Handouts for some lectures (coding files, pdfs) are available <a href="https://github.com/UBC-STAT/stat-406/tree/main/_lecture-slides/handouts">here</a>.
 </div>
 
 ## 0 Introduction and Review
@@ -173,7 +173,9 @@ Optional reading
 
 ## F Final exam
 
-__TBA__ Schedule set by the University in early October. DO NOT PURCHASE FLIGHTS PRIOR TO THE SCHEDULE RELEASE.
+__TBA__ Schedule set by the University in early October. 
+
+<div class="alert alert-danger" role="alert">Do not purchase flights prior to the release of the final exam date.</div>
 
 <!--
 
