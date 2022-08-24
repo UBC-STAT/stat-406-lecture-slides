@@ -1,0 +1,870 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+  <head>
+    <title>00 R, Rmarkdown, code, and {tidyverse}:   A whirlwind tour</title>
+    <meta charset="utf-8" />
+    <meta name="author" content="STAT 406" />
+    <meta name="author" content="Daniel J. McDonald" />
+    <script src="materials/libs/header-attrs/header-attrs.js"></script>
+    <script src="https://kit.fontawesome.com/ae71192e04.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="materials/xaringan-themer.css" type="text/css" />
+    <link rel="stylesheet" href="materials/slides-style.css" type="text/css" />
+  </head>
+  <body>
+    <textarea id="source">
+class: center, middle, inverse, title-slide
+
+.title[
+# 00 R, Rmarkdown, code, and {tidyverse}: <br> A whirlwind tour
+]
+.author[
+### STAT 406
+]
+.author[
+### Daniel J. McDonald
+]
+.date[
+### Last modified - 2022-08-24
+]
+
+---
+
+
+
+
+class: middle, inverse, center
+
+# The basics
+
+---
+## Tour of Rstudio
+
+Things to note
+
+1. Console
+2. Terminal
+3. Scripts, .Rmd, Knit
+4. Files, Projects
+5. Getting help
+6. Environment, Git
+
+---
+## Simple stuff
+
+.pull-left[
+### Vectors:
+
+```r
+x &lt;- c(1, 3, 4)
+x[1]
+```
+
+```
+## [1] 1
+```
+
+```r
+x[-1]
+```
+
+```
+## [1] 3 4
+```
+
+```r
+rev(x)
+```
+
+```
+## [1] 4 3 1
+```
+
+```r
+c(x, x)
+```
+
+```
+## [1] 1 3 4 1 3 4
+```
+]
+
+.pull-right[
+### Matrices:
+
+```r
+x &lt;- matrix(1:25, nrow = 5, ncol = 5)
+x[1,]
+```
+
+```
+## [1]  1  6 11 16 21
+```
+
+```r
+x[,-1]
+```
+
+```
+##      [,1] [,2] [,3] [,4]
+## [1,]    6   11   16   21
+## [2,]    7   12   17   22
+## [3,]    8   13   18   23
+## [4,]    9   14   19   24
+## [5,]   10   15   20   25
+```
+
+```r
+x[c(1,3),  2:3]
+```
+
+```
+##      [,1] [,2]
+## [1,]    6   11
+## [2,]    8   13
+```
+
+]
+
+---
+## Simple stuff
+
+.pull-left[
+### Lists
+
+```r
+(l &lt;- list(a = letters[1:2], b = 1:4, c = list(a = 1)))
+```
+
+```
+## $a
+## [1] "a" "b"
+## 
+## $b
+## [1] 1 2 3 4
+## 
+## $c
+## $c$a
+## [1] 1
+```
+
+```r
+l$a
+```
+
+```
+## [1] "a" "b"
+```
+
+```r
+l$c$a
+```
+
+```
+## [1] 1
+```
+
+```r
+l["b"]
+```
+
+```
+## $b
+## [1] 1 2 3 4
+```
+]
+
+.pull-right[
+### Data frames
+
+```r
+(dat &lt;- data.frame(z = 1:5, b = 6:10, c = letters[1:5]))
+```
+
+```
+##   z  b c
+## 1 1  6 a
+## 2 2  7 b
+## 3 3  8 c
+## 4 4  9 d
+## 5 5 10 e
+```
+
+```r
+class(dat)
+```
+
+```
+## [1] "data.frame"
+```
+
+```r
+dat$b
+```
+
+```
+## [1]  6  7  8  9 10
+```
+
+```r
+dat[1,]
+```
+
+```
+##   z b c
+## 1 1 6 a
+```
+
+.secondary[Data frames are sort-of lists and sort-of matrices]
+]
+
+---
+
+## Tibbles
+
+.secondary[These are `{tidyverse}` data frames]
+
+
+```r
+(dat2 &lt;- tibble(z = 1:5, b = z + 5, c = letters[z]))
+```
+
+```
+## # A tibble: 5 × 3
+##       z     b c    
+##   &lt;int&gt; &lt;dbl&gt; &lt;chr&gt;
+## 1     1     6 a    
+## 2     2     7 b    
+## 3     3     8 c    
+## 4     4     9 d    
+## 5     5    10 e
+```
+
+```r
+class(dat2)
+```
+
+```
+## [1] "tbl_df"     "tbl"        "data.frame"
+```
+
+We'll return to classes in a moment. A `tbl_df` is a "subclass" of `data.frame`.
+
+Anything that `data.frame` can do, `tbl_df` can do (better).
+
+For instance, the printing is more informative.
+
+Also, you can construct one by referencing previously constructed columns.
+---
+class: middle, inverse, center
+
+# Functions
+
+---
+
+## Understanding signatures
+
+
+
+
+```r
+sig(lm)
+```
+
+```
+## fn &lt;- function(formula, data, subset, weights, na.action, method = "qr",
+##   model = TRUE, x = FALSE, y = FALSE, qr = TRUE, singular.ok = TRUE,
+##   contrasts = NULL, offset, ...)
+```
+
+```r
+sig(`+`)
+```
+
+```
+## fn &lt;- function(e1, e2)
+```
+
+```r
+sig(ggplot2::layer)
+```
+
+```
+## fn &lt;- function(geom = NULL, stat = NULL, data = NULL, mapping = NULL,
+##   position = NULL, params = list(), inherit.aes = TRUE, check.aes = TRUE,
+##   check.param = TRUE, show.legend = NA, key_glyph = NULL, layer_class)
+```
+
+```r
+sig(epipredict::layer)
+```
+
+```
+## fn &lt;- function(subclass, ..., .prefix = "layer_")
+```
+
+```r
+sig(rnorm)
+```
+
+```
+## fn &lt;- function(n, mean = 0, sd = 1)
+```
+
+---
+
+## These are all the same
+
+
+```r
+set.seed(12345)
+rnorm(3)
+```
+
+```
+## [1]  0.5855288  0.7094660 -0.1093033
+```
+
+```r
+set.seed(12345)
+rnorm(n = 3, mean = 0)
+```
+
+```
+## [1]  0.5855288  0.7094660 -0.1093033
+```
+
+```r
+set.seed(12345)
+rnorm(3, 0, 1)
+```
+
+```
+## [1]  0.5855288  0.7094660 -0.1093033
+```
+
+```r
+set.seed(12345)
+rnorm(sd = 1, n = 3, mean = 0)
+```
+
+```
+## [1]  0.5855288  0.7094660 -0.1093033
+```
+
+* Functions can have default values.
+* You may, but don't have to, name the arguments
+* If you name them, you can pass them out of order (but you shouldn't).
+
+---
+
+## Write lots of functions. I can't emphasize this enough.
+
+.pull-left[
+
+```r
+f &lt;- function(arg1, arg2, arg3 = 12, ...) {
+  stuff &lt;- arg1 * arg3
+  stuff2 &lt;- stuff + arg2
+  plot(arg1, stuff2, ...)
+  return(stuff2)
+}
+x &lt;- rnorm(100)
+```
+]
+
+.pull-right[
+
+```r
+y1 &lt;- f(x, 3, 15, col = 4, pch = 19)
+```
+
+![](rmd_gfx/00-r-review/plot-it-1.svg)&lt;!-- --&gt;
+]
+
+---
+
+## Outputs vs. Side effects
+
+.pull-left[
+* Side effects are things a function does, outputs can be assigned to variables
+* A good example is the `hist` function
+* You have probably only seen the side effect which is to plot the histogram
+
+```r
+my_histogram &lt;- hist(rnorm(1000))
+```
+
+&lt;img src="rmd_gfx/00-r-review/unnamed-chunk-9-1.svg" style="display: block; margin: auto;" /&gt;
+]
+
+.pull-right[
+
+```r
+my_histogram
+```
+
+```
+## $breaks
+##  [1] -3.0 -2.5 -2.0 -1.5 -1.0 -0.5  0.0  0.5  1.0  1.5  2.0  2.5  3.0  3.5
+## 
+## $counts
+##  [1]   4  21  41  89 142 200 193 170  74  38  24   2   2
+## 
+## $density
+##  [1] 0.008 0.042 0.082 0.178 0.284 0.400 0.386 0.340 0.148 0.076 0.048
+## [12] 0.004 0.004
+## 
+## $mids
+##  [1] -2.75 -2.25 -1.75 -1.25 -0.75 -0.25  0.25  0.75  1.25  1.75  2.25
+## [12]  2.75  3.25
+## 
+## $xname
+## [1] "rnorm(1000)"
+## 
+## $equidist
+## [1] TRUE
+## 
+## attr(,"class")
+## [1] "histogram"
+```
+
+```r
+class(my_histogram)
+```
+
+```
+## [1] "histogram"
+```
+
+]
+
+---
+
+### When writing functions, program defensively, ensure behaviour
+
+.pull-left[
+
+```r
+incrementer &lt;- function(x, inc_by = 1) return(x + 1)
+incrementer(2)
+```
+
+```
+## [1] 3
+```
+
+```r
+incrementer(1:4)
+```
+
+```
+## [1] 2 3 4 5
+```
+
+```r
+incrementer("a")
+```
+
+```
+## Error in x + 1: non-numeric argument to binary operator
+```
+
+--
+
+
+```r
+incrementer &lt;- function(x, inc_by = 1) {
+  stopifnot(is.numeric(x))
+  return(x + 1)
+}
+incrementer("a")
+```
+
+```
+## Error in incrementer("a"): is.numeric(x) is not TRUE
+```
+
+]
+
+--
+
+.pull-right[
+
+```r
+incrementer &lt;- function(x, inc_by = 1) {
+  if (!is.numeric(x)) stop("`x` should be numeric")
+  return(x + 1)
+}
+incrementer("a")
+```
+
+```
+## Error in incrementer("a"): `x` should be numeric
+```
+
+```r
+incrementer(2, -3) ## oops!
+```
+
+```
+## [1] 3
+```
+
+```r
+incrementer &lt;- function(x, inc_by = 1) {
+  if (!is.numeric(x)) stop("`x` should be numeric")
+  return(x + inc_by)
+}
+incrementer(2, -3)
+```
+
+```
+## [1] -1
+```
+]
+
+---
+
+## How to keep track
+
+.pull-left[
+
+```r
+library(testthat)
+incrementer &lt;- function(x, inc_by = 1) {
+  if (!is.numeric(x)) stop("`x` should be numeric")
+  if (!is.numeric(inc_by)) 
+    stop("`inc_by` should be numeric")
+  return(x + inc_by)
+}
+expect_error(incrementer("a"))
+expect_equal(incrementer(1:3), 2:4)
+expect_equal(incrementer(2, -3), -1)
+expect_error(incrementer(1, "b"))
+```
+
+
+```r
+expect_identical(incrementer(1:3), 2:4)
+```
+
+```
+## Error: incrementer(1:3) not identical to 2:4.
+## Objects equal but not identical
+```
+]
+
+--
+
+.pull-right[
+
+```r
+is.integer(2:4)
+```
+
+```
+## [1] TRUE
+```
+
+```r
+is.integer(incrementer(1:3))
+```
+
+```
+## [1] FALSE
+```
+
+```r
+expect_identical(incrementer(1:3, 1L), 2:4)
+```
+]
+
+--
+
+.emphasis[
+If you copy something, write a function.
+
+Validate your arguments.
+
+To ensure proper functionality, write tests to check if inputs result in predicted outputs.
+]
+
+
+---
+class: middle, inverse, center
+
+# Classes and methods
+
+---
+
+## Classes
+
+.pull-left[
+We saw some of these earlier:
+
+
+```r
+tib &lt;- tibble(
+  x1 = rnorm(100), 
+  x2 = rnorm(100), 
+  y = x1 + 2 * x2
+)
+mdl &lt;- lm(y ~ ., data = tib )
+class(tib)
+```
+
+```
+## [1] "tbl_df"     "tbl"        "data.frame"
+```
+
+```r
+class(mdl)
+```
+
+```
+## [1] "lm"
+```
+
+The class allows for the use of "methods"
+
+
+```r
+print(mdl)
+```
+
+```
+## 
+## Call:
+## lm(formula = y ~ ., data = tib)
+## 
+## Coefficients:
+## (Intercept)           x1           x2  
+##  -1.581e-16    1.000e+00    2.000e+00
+```
+]
+
+--
+
+.pull-right[
+`R` "knows what to do" when you `print()` an object of class `"lm"`.
+
+`print()` is called a "generic" function. You can create "methods" that get dispatched.
+
+For any generic, `R` looks for a method for the class.
+
+If available, it calls that function.
+
+
+```r
+sloop::s3_dispatch(print(incrementer))
+```
+
+```
+## =&gt; print.function
+##  * print.default
+```
+
+```r
+sloop::s3_dispatch(print(tib))
+```
+
+```
+##    print.tbl_df
+## =&gt; print.tbl
+##  * print.data.frame
+##  * print.default
+```
+
+```r
+sloop::s3_dispatch(print(mdl))
+```
+
+```
+## =&gt; print.lm
+##  * print.default
+```
+]
+
+---
+
+
+## R-Geeky But Important
+
+There are .secondary[lots] of generic functions in `R`
+
+Common ones are `print()`, `summary()`, and `plot()`.
+
+Also, lots of important statistical modelling concepts:
+`residuals()` `coefficients()` 
+
+(In `python`, these work the opposite way: `obj.residuals`. The dot after the object accesses methods defined for that type of object. But the dispatch behaviour is less robust.)  
+
+* The convention is
+that the specialized function is named `method.class`, e.g., `summary.lm`.
+
+* If no specialized function is defined, R will try to use `method.default`.
+
+For this reason, `R` programmers try to avoid `.` in names of functions or objects.
+
+--
+
+### Wherefore methods?
+
+
+* The advantage is that you don't have to learn a totally
+new syntax to grab residuals or plot things
+
+* You just use `residuals(mdl)` whether `mdl` comes from `lm`
+could have been done two centuries ago, or a Batrachian Emphasis Machine
+which won't be invented for another five years.  
+
+* The one draw-back is the help pages for the generic methods tend
+to be pretty vague
+
+* Compare `?summary` with `?summary.lm`.  
+
+
+---
+
+# Environments 
+
+# Debugging
+
+# Understanding {tidyverse}
+    </textarea>
+<style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
+<script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
+<script src="materials/macros.js"></script>
+<script>var slideshow = remark.create({
+"highlightLines": true,
+"countIncrementalSlides": false,
+"ratio": "16:9"
+});
+if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
+  window.dispatchEvent(new Event('resize'));
+});
+(function(d) {
+  var s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
+  if (!r) return;
+  s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }";
+  d.head.appendChild(s);
+})(document);
+
+(function(d) {
+  var el = d.getElementsByClassName("remark-slides-area");
+  if (!el) return;
+  var slide, slides = slideshow.getSlides(), els = el[0].children;
+  for (var i = 1; i < slides.length; i++) {
+    slide = slides[i];
+    if (slide.properties.continued === "true" || slide.properties.count === "false") {
+      els[i - 1].className += ' has-continuation';
+    }
+  }
+  var s = d.createElement("style");
+  s.type = "text/css"; s.innerHTML = "@media print { .has-continuation { display: none; } }";
+  d.head.appendChild(s);
+})(document);
+// delete the temporary CSS (for displaying all slides initially) when the user
+// starts to view slides
+(function() {
+  var deleted = false;
+  slideshow.on('beforeShowSlide', function(slide) {
+    if (deleted) return;
+    var sheets = document.styleSheets, node;
+    for (var i = 0; i < sheets.length; i++) {
+      node = sheets[i].ownerNode;
+      if (node.dataset["target"] !== "print-only") continue;
+      node.parentNode.removeChild(node);
+    }
+    deleted = true;
+  });
+})();
+// add `data-at-shortcutkeys` attribute to <body> to resolve conflicts with JAWS
+// screen reader (see PR #262)
+(function(d) {
+  let res = {};
+  d.querySelectorAll('.remark-help-content table tr').forEach(tr => {
+    const t = tr.querySelector('td:nth-child(2)').innerText;
+    tr.querySelectorAll('td:first-child .key').forEach(key => {
+      const k = key.innerText;
+      if (/^[a-z]$/.test(k)) res[k] = t;  // must be a single letter (key)
+    });
+  });
+  d.body.setAttribute('data-at-shortcutkeys', JSON.stringify(res));
+})(document);
+(function() {
+  "use strict"
+  // Replace <script> tags in slides area to make them executable
+  var scripts = document.querySelectorAll(
+    '.remark-slides-area .remark-slide-container script'
+  );
+  if (!scripts.length) return;
+  for (var i = 0; i < scripts.length; i++) {
+    var s = document.createElement('script');
+    var code = document.createTextNode(scripts[i].textContent);
+    s.appendChild(code);
+    var scriptAttrs = scripts[i].attributes;
+    for (var j = 0; j < scriptAttrs.length; j++) {
+      s.setAttribute(scriptAttrs[j].name, scriptAttrs[j].value);
+    }
+    scripts[i].parentElement.replaceChild(s, scripts[i]);
+  }
+})();
+(function() {
+  var links = document.getElementsByTagName('a');
+  for (var i = 0; i < links.length; i++) {
+    if (/^(https?:)?\/\//.test(links[i].getAttribute('href'))) {
+      links[i].target = '_blank';
+    }
+  }
+})();
+// adds .remark-code-has-line-highlighted class to <pre> parent elements
+// of code chunks containing highlighted lines with class .remark-code-line-highlighted
+(function(d) {
+  const hlines = d.querySelectorAll('.remark-code-line-highlighted');
+  const preParents = [];
+  const findPreParent = function(line, p = 0) {
+    if (p > 1) return null; // traverse up no further than grandparent
+    const el = line.parentElement;
+    return el.tagName === "PRE" ? el : findPreParent(el, ++p);
+  };
+
+  for (let line of hlines) {
+    let pre = findPreParent(line);
+    if (pre && !preParents.includes(pre)) preParents.push(pre);
+  }
+  preParents.forEach(p => p.classList.add("remark-code-has-line-highlighted"));
+})(document);</script>
+
+<script>
+slideshow._releaseMath = function(el) {
+  var i, text, code, codes = el.getElementsByTagName('code');
+  for (i = 0; i < codes.length;) {
+    code = codes[i];
+    if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+      text = code.textContent;
+      if (/^\\\((.|\s)+\\\)$/.test(text) || /^\\\[(.|\s)+\\\]$/.test(text) ||
+          /^\$\$(.|\s)+\$\$$/.test(text) ||
+          /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+        code.outerHTML = code.innerHTML;  // remove <code></code>
+        continue;
+      }
+    }
+    i++;
+  }
+};
+slideshow._releaseMath(document);
+</script>
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+(function () {
+  var script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.src  = 'https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML';
+  if (location.protocol !== 'file:' && /^https?:/.test(script.src))
+    script.src  = script.src.replace(/^https?:/, '');
+  document.getElementsByTagName('head')[0].appendChild(script);
+})();
+</script>
+  </body>
+</html>

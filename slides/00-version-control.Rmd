@@ -585,3 +585,12 @@ git branch -d badbranch
 4. In the Lab next week, you'll practice 
     * Doing it right.
     * Recovering from some mistakes.
+    
+---
+
+# Example of setting up labs
+
+* Cloning your repo.
+* Creating a branch.
+* Knitting the Rmd.
+* Where to put answers.
