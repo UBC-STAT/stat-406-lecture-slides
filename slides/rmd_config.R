@@ -4,10 +4,18 @@ knitr::opts_chunk$set(
   warning=FALSE, message=FALSE, dev="svg"
 )
 options(htmltools.dir.version = FALSE)
-purple = "#598234"
-orange = "#68829e"
-green = "#28a745"
-yellow = "#ffc107"
+secondary = "#e98a15"
+primary = "#2c365e"
+tertiary = "#0a8754"
+fourth_color = "#a8201a"
+
+## for simplicity
+purple = primary
+blue = primary
+orange = secondary
+green = tertiary
+red = fourth_color
+
 library(tidyverse)
 # library(cowplot)
 library(fontawesome)

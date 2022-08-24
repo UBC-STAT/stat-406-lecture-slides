@@ -44,29 +44,29 @@
 
   /* Colors */
   --text-color: #000000;
-  --header-color: #68829e;
+  --header-color: #2c365e;
   --background-color: #FFFFFF;
-  --link-color: #68829e;
-  --text-bold-color: #68829e;
+  --link-color: #2c365e;
+  --text-bold-color: #2c365e;
   --code-highlight-color: rgba(255,255,0,0.5);
   --inverse-text-color: #000000;
-  --inverse-background-color: #598234;
+  --inverse-background-color: #e98a15;
   --inverse-header-color: #000000;
-  --inverse-link-color: #68829e;
-  --title-slide-background-color: #68829e;
-  --title-slide-text-color: #000000;
-  --header-background-color: #68829e;
+  --inverse-link-color: #2c365e;
+  --title-slide-background-color: #2c365e;
+  --title-slide-text-color: #FFFFFF;
+  --header-background-color: #2c365e;
   --header-background-text-color: #FFFFFF;
-  --primary: #68829e;
-  --secondary: #598234;
+  --primary: #2c365e;
+  --secondary: #e98a15;
   --white: #FFFFFF;
   --black: #000000;
-  --tertiary: #0076A5;
-  --fourth_color: #DB0B5B;
-  --light_pri: #E0E6EB;
-  --light_sec: #DDE6D6;
-  --light_ter: #CCE3ED;
-  --light_fou: #F7CEDE;
+  --tertiary: #0a8754;
+  --fourth_color: #a8201a;
+  --light_pri: #D4D6DE;
+  --light_sec: #FAE7D0;
+  --light_ter: #CEE7DC;
+  --light_fou: #EDD2D1;
 }
 
 html {
@@ -107,10 +107,10 @@ h1, h2, h3 {
 }
 .remark-inline-code {
   font-size: var(--code-inline-font-size);
-  color: #68829e;
+  color: #2c365e;
 }
 .remark-slide-number {
-  color: #68829e;
+  color: #2c365e;
   opacity: 1;
   font-size: 0.9rem;
 }
@@ -158,10 +158,10 @@ a, a > code {
   float: left;
 }
 .left-column h2, .left-column h3 {
-  color: #68829e99;
+  color: #2c365e99;
 }
 .left-column h2:last-of-type, .left-column h3:last-child {
-  color: #68829e;
+  color: #2c365e;
 }
 .right-column {
   width: 75%;
@@ -183,7 +183,7 @@ img, video, iframe {
   max-width: 100%;
 }
 blockquote {
-  border-left: solid 5px #59823480;
+  border-left: solid 5px #e98a1580;
   padding-left: 1em;
 }
 .remark-slide table {
@@ -198,7 +198,7 @@ th, td {
   padding: 5px;
 }
 .remark-slide thead, .remark-slide tfoot, .remark-slide tr:nth-child(even) {
-  background: #E0E6EB;
+  background: #D4D6DE;
 }
 table.dataTable tbody {
   background-color: var(--background-color);
@@ -208,7 +208,7 @@ table.dataTable.display tbody tr.odd {
   background-color: var(--background-color);
 }
 table.dataTable.display tbody tr.even {
-  background-color: #E0E6EB;
+  background-color: #D4D6DE;
 }
 table.dataTable.hover tbody tr:hover, table.dataTable.display tbody tr:hover {
   background-color: rgba(255, 255, 255, 0.5);

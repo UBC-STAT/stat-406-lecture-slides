@@ -2,15 +2,15 @@
 
 library(xaringanthemer)
 
-secondary = "#598234"
-primary = "#68829e"
-tertiary = "#0076A5"
-fourth_color = "#DB0B5B"
+secondary = "#e98a15"
+primary = "#2c365e"
+tertiary = "#0a8754"
+fourth_color = "#a8201a"
 
 # set colors -------------------------------------------------------------------
 style_duo_accent(
-  primary_color      = primary,  #"#002145", # UBC primary
-  secondary_color    = secondary,  #"6EC4E8", # UBC secondary 4
+  primary_color      = primary, 
+  secondary_color    = secondary, 
   header_font_google = google_font("Fira Sans"),
   text_font_google   = google_font("Fira Sans", "300", "300i"),
   code_font_google   = google_font("Ubuntu Mono"),
