@@ -14,10 +14,18 @@
     <textarea id="source">
 class: center, middle, inverse, title-slide
 
+.title[
 # 00 Git, Github, and Slack
+]
+.author[
 ### STAT 406
+]
+.author[
 ### Daniel J. McDonald
-### Last modified - 2021-09-13
+]
+.date[
+### Last modified - 2022-08-24
+]
 
 ---
 
@@ -72,7 +80,7 @@ class: center, middle, inverse, title-slide
 
 * Much more DS friendly
 
-* Note that MDS uses both of these, the department uses both, Google/Amazon/Facebook use things like these, etc.
+* Note that MDS uses both of these, the department uses both, Google / Amazon / Facebook use things like these, etc.
 
 --
 
@@ -113,8 +121,9 @@ class: middle, center, inverse
 
 ---
 
-## Why Git
+## Why Git?
 
+.pull-left[
 * You could use something like Box or Dropbox
 
 * These are poor-man's version control
@@ -129,7 +138,22 @@ class: middle, center, inverse
 
 * Tech companies use it (so it's in your interest to have some experience)
 
-&gt; This will hurt, but what doesn't kill you, makes you stronger.
+.emphasis[
+
+This will hurt, but what doesn't kill you, 
+
+makes you stronger.
+]
+]
+
+.pull-right[
+
+![](https://imgs.xkcd.com/comics/git.png)
+
+]
+
+
+
 
 ---
 
@@ -147,13 +171,31 @@ class: middle, center, inverse
 
 * `github.com` is a service that hosts a repo  remotely and has other features: issues, project boards, pull requests, renders `.ipynb` &amp; `.md`
 
-* Some IDEs (pycharm, RStudio, VScode) have built in `git` (I don’t use this) 
+* Some IDEs (pycharm, RStudio, VScode) have built in `git` 
 
 * `git`/`github.com` is broad and complicated. Here, just what you **need**
 
 ---
 
-## Typical workflow
+## Aside on built-in / command line
+
+* Command line is the "old" type of computing. You type commands at a prompt and the computer "does stuff". 
+
+* You may not have seen where this is. RStudio has one built in called "Terminal"
+
+* The Mac System version is also called "Terminal". If you have a Linux machine, this should all be familiar.
+
+* Windows is not great at this.
+
+* To get the most out of Git, you have to use the command line.
+
+* We'll practice this in the Lab next week.
+
+* But, if everything goes right, you can do everything you need directly from RStudio point + click.
+
+---
+
+## Typical workflow for doing stuff (command line)
 
 
 .pull-left[
@@ -181,6 +223,7 @@ git commit -m "Some explanatory message"
 * Push to Github
 ```
 git push
+git push -u origin &lt;branchname&gt;
 ```
 ]
 
@@ -238,19 +281,15 @@ git add .
 ## Rules
 
 
-**Homework and worksheets**
+**Homework and Labs**
 * You each have your own repo
 * You make a branch
 * *DO NOT* rename files
-* Make enough commits.
+* Make enough commits (2 for labs, 5 for HW).
 * Push your changes (at anytime) and make a PR against `main` when done.
-* TAs review your work and merge the PR (they may ask for changes)
+* TAs review your work.
+* On HW, if you want to revise, make changes in response to feedback and push to the same branch.
 
-
-**Project**
-* Each team gets a repo.
-* Make other branches as you wish to divide up work
-* When ready to submit, make sure that `main` is up to date. We'll clone and make a PR with the comments.
 
 ---
 
@@ -280,37 +319,294 @@ git add .
 
 * There are guardrails in place. But those won't stop a bulldozer.
 
-* The hardest part is the initial setup. Then this should all be rinse and repeat.
+* The hardest part is the initial setup. Then, this should all be rinse and repeat.
 
 * This book is great: [Happy Git with R](https://happygitwithr.com)
     1. See Chapter 6 if you have install problems.
     1. See Chapter 10 for credential caching (avoid typing a password all the time)
     1. See Chapter 13 if RStudio can't find `git`
+    
 
 ---
 
-## Practice
+## The `main/develop/branch` workflow
+
+* When working on your own
+    1. Don't NEED branches.
+    1. I often make a branch if I want to try a modification without breaking what I have.
+    1. Otherwise, can "pretend `git` is Dropbox": work on `main`, make changes and commits, sync to remote for backup purposes.
+    
+--
+    
+* When working on a large team with production grade software
+    1. `main` is protected, released version of software (maybe renamed to `release`)
+    1. `develop` contains things not yet on `main`, but thoroughly tested
+    1. On a schedule (once a week, once a month) `develop` gets merged to `main`
+    1. You work on a `feature` branch off `develop` to build your new feature
+    1. You do a PR against `develop` 
+    
+--
+
+I and many DS/CS/Stat faculty use this workflow with my lab.
+    
+--
+
+### Protection
+
+* Typical for your PR to trigger tests to make sure you don't break things
+* Typical for team members or supervisors to review your PR for compliance
+
+
+---
+
+## Guardrails
+
+* The `.github` directory contains interactions with Github
+
+    1. Actions: On push / PR / other Github does something on their server (builds a website, runs tests on code)
+    1. PR templates: Little admonitions when you open a PR
+    1. Branch protection: prevent you from doing stuff
+    
+* In this course, I protect `main` so that you can't push there
+
+.emphasis[
+If you try to push to `main`, it will give an error like
+```
+remote: error: GH006: Protected branch update failed for refs/heads/main.
+```
+]
+
+* I also use a PR template. It gives you some instructions that you should follow
+
+--
+
+.alert[
+Read the PR template!!
+]
+
+
+---
+
+## Operations in Rstudio 
+
+1. Stage
+1. Commit
+1. Push
+1. Pull
+1. Create a branch
+
+--
+
+.emphasis[
+Covers:
+* Everything to do your HW / Labs if you're careful
+* Plus most other things you "want to do"
+]
+
+--
+
+#### Command line versions (of the same)
+
+```
+git add &lt;name/of/file&gt;
+git commit -m "some useful message"
+git push
+git pull
+git checkout -b &lt;name/of/branch&gt;
+
+```
+
+---
+
+## Other useful stuff (but command line only)
 
 .pull-left[
-
-[Website](https://learning.github.ubc.ca/STAT-406-101-2021W/wkshts-labs-dajmcdon)
-
-Do you have `git`?
+.primary[Initializing]
 ```
-git --version
+git config user.name --global "Daniel J. McDonald"
+git config user.email --global "daniel@stat.ubc.ca"
+git config core.editor --global nano 
+# or emacs or ... (default is vim)
 ```
-If it's there, you're done.
 
-Help on `git/github`:
 
-https://happygitwithr.com/install-git.html
+.primary[Staging]
+```
+git add name/of/file # stage 1 file
+git add . # stage all
+```
+
+.primary[Committing]
+```
+# stage/commit simultaneously
+git commit -am "message" 
+
+# open editor to write long commit message
+git commit 
+```
+
+.primary[Pushing]
+```
+# If branchname doesn't exist
+# on remote, create it and push
+git push -u origin branchname
+```
+]
+
+.pull-right[
+.primary[Branching]
+```
+# switch to branchname, error if uncommitted changes
+git checkout branchname 
+# switch to a previous commit
+git checkout aec356
+
+# create a new branch
+git branch newbranchname
+
+# create a new branch and check it out
+git checkout -b newbranchname
+
+# merge changes in branch2 onto branch1
+git checkout branch1
+git merge branch2
+
+# grab a file from branch2 and put it on current
+git checkout branch2 -- name/of/file
+
+git branch -v # list all branches
+```
+
+.primary[Check the status]
+```
+git status
+git remote -v # list remotes
+git log # show recent commits, msgs
+```
+
 
 ]
 
-.pull-right[.center[
-![:scale 60%](https://imgs.xkcd.com/comics/git.png)
-]]
+---
 
+## Conflicts
+
+Sometimes you merge things and "conflicts" happen.
+
+Meaning that changes on one branch would overwrite changes on a different branch.
+
+They look like this.
+
+```
+Here are lines that are either unchanged from the common
+ancestor, or cleanly resolved because only one side changed.
+
+But below we have some troubles
+&lt;&lt;&lt;&lt;&lt;&lt;&lt; yours:sample.txt
+Conflict resolution is hard;
+let's go shopping.
+=======
+Git makes conflict resolution easy.
+&gt;&gt;&gt;&gt;&gt;&gt;&gt; theirs:sample.txt
+
+And here is another line that is cleanly resolved or unmodified.
+```
+
+You get to decide, do you want to keep
+
+1. Your changes (above `======`)
+2. Their changes (below `======`)
+3. Both.
+4. Neither.
+
+But always delete the `&lt;&lt;&lt;&lt;&lt;`, `======`, and `&gt;&gt;&gt;&gt;&gt;` lines.
+
+---
+
+## Some other pointers
+
+* Commits have long names: `32b252c854c45d2f8dfda1076078eae8d5d7c81f`
+
+* If you want to use it, you need "enough to be unique": `32b25`
+
+* Online help uses directed graphs in ways different from statistics:
+    * In stats, arrows point from cause to effect, forward in time
+    * In git docs, it's reversed, they point to the thing on which they depend
+    
+    
+### Cheat sheet
+
+&lt;https://training.github.com/downloads/github-git-cheat-sheet.pdf&gt;
+
+
+---
+
+## How to undo in 3 scenarios
+
+* Suppose we're concerned about a file named `README.md`
+* Often, `git status` will give some of these as suggestions
+
+.pull-left[
+**1.** Saved but not staged
+* In RStudio, select the file and click <svg aria-hidden="true" role="img" viewBox="0 0 512 512" style="height:1em;width:1em;vertical-align:-0.125em;margin-left:auto;margin-right:auto;font-size:inherit;fill:blue;overflow:visible;position:relative;"><path d="M487.4 315.7l-42.6-24.6c4.3-23.2 4.3-47 0-70.2l42.6-24.6c4.9-2.8 7.1-8.6 5.5-14-11.1-35.6-30-67.8-54.7-94.6-3.8-4.1-10-5.1-14.8-2.3L380.8 110c-17.9-15.4-38.5-27.3-60.8-35.1V25.8c0-5.6-3.9-10.5-9.4-11.7-36.7-8.2-74.3-7.8-109.2 0-5.5 1.2-9.4 6.1-9.4 11.7V75c-22.2 7.9-42.8 19.8-60.8 35.1L88.7 85.5c-4.9-2.8-11-1.9-14.8 2.3-24.7 26.7-43.6 58.9-54.7 94.6-1.7 5.4.6 11.2 5.5 14L67.3 221c-4.3 23.2-4.3 47 0 70.2l-42.6 24.6c-4.9 2.8-7.1 8.6-5.5 14 11.1 35.6 30 67.8 54.7 94.6 3.8 4.1 10 5.1 14.8 2.3l42.6-24.6c17.9 15.4 38.5 27.3 60.8 35.1v49.2c0 5.6 3.9 10.5 9.4 11.7 36.7 8.2 74.3 7.8 109.2 0 5.5-1.2 9.4-6.1 9.4-11.7v-49.2c22.2-7.9 42.8-19.8 60.8-35.1l42.6 24.6c4.9 2.8 11 1.9 14.8-2.3 24.7-26.7 43.6-58.9 54.7-94.6 1.5-5.5-.7-11.3-5.6-14.1zM256 336c-44.1 0-80-35.9-80-80s35.9-80 80-80 80 35.9 80 80-35.9 80-80 80z"/></svg> <svg aria-hidden="true" role="img" viewBox="0 0 320 512" style="height:1em;width:0.62em;vertical-align:-0.125em;margin-left:auto;margin-right:auto;font-size:inherit;fill:currentColor;overflow:visible;position:relative;"><path d="M31.3 192h257.3c17.8 0 26.7 21.5 14.1 34.1L174.1 354.8c-7.8 7.8-20.5 7.8-28.3 0L17.2 226.1C4.6 213.5 13.5 192 31.3 192z"/></svg> then select <svg aria-hidden="true" role="img" viewBox="0 0 512 512" style="height:1em;width:1em;vertical-align:-0.125em;margin-left:auto;margin-right:auto;font-size:inherit;fill:red;overflow:visible;position:relative;"><path d="M212.333 224.333H12c-6.627 0-12-5.373-12-12V12C0 5.373 5.373 0 12 0h48c6.627 0 12 5.373 12 12v78.112C117.773 39.279 184.26 7.47 258.175 8.007c136.906.994 246.448 111.623 246.157 248.532C504.041 393.258 393.12 504 256.333 504c-64.089 0-122.496-24.313-166.51-64.215-5.099-4.622-5.334-12.554-.467-17.42l33.967-33.967c4.474-4.474 11.662-4.717 16.401-.525C170.76 415.336 211.58 432 256.333 432c97.268 0 176-78.716 176-176 0-97.267-78.716-176-176-176-58.496 0-110.28 28.476-142.274 72.333h98.274c6.627 0 12 5.373 12 12v48c0 6.627-5.373 12-12 12z"/></svg> Revert...
+```
+# grab the previously committed version
+git checkout -- README.md 
+```
+
+**2.** Staged but not committed
+* In RStudio, uncheck the box by the file, then use the method above.
+```
+# unstage
+git reset HEAD README.md
+git checkout -- README.md
+```
+]
+
+.pull-right[
+
+**3.** Committed
+* Not easy to do in RStudio...
+```
+# check the log to see where you made the chg, 
+git log
+# go one step before that (eg to 32b252)
+# and grab that earlier version
+git checkout 32b252 -- README.md
+```
+```
+# alternatively
+# if it happens to also be on another branch
+git checkout otherbranch -- README.md
+```
+]
+
+---
+
+## Recovering from things
+
+1. Accidentally did work on main, Tried to Push but got refused
+```
+# make a new branch with everything, but stay on main
+git branch newbranch
+# find out where to go to
+git log
+# undo everything after ace2193
+git reset --hard ace2193
+git checkout newbranch
+```
+
+2. Made a branch, did lots of work, realized it all s**ks
+```
+git checkout main
+git branch -d badbranch
+```
+
+3. Anything more complicated, either post to Slack or LMGTFY
+
+4. In the Lab next week, you'll practice 
+    * Doing it right.
+    * Recovering from some mistakes.
     </textarea>
 <style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
 <script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
@@ -359,6 +655,19 @@ if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
     deleted = true;
   });
 })();
+// add `data-at-shortcutkeys` attribute to <body> to resolve conflicts with JAWS
+// screen reader (see PR #262)
+(function(d) {
+  let res = {};
+  d.querySelectorAll('.remark-help-content table tr').forEach(tr => {
+    const t = tr.querySelector('td:nth-child(2)').innerText;
+    tr.querySelectorAll('td:first-child .key').forEach(key => {
+      const k = key.innerText;
+      if (/^[a-z]$/.test(k)) res[k] = t;  // must be a single letter (key)
+    });
+  });
+  d.body.setAttribute('data-at-shortcutkeys', JSON.stringify(res));
+})(document);
 (function() {
   "use strict"
   // Replace <script> tags in slides area to make them executable
