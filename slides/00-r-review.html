@@ -24,7 +24,7 @@ class: center, middle, inverse, title-slide
 ### Daniel J. McDonald
 ]
 .date[
-### Last modified - 2022-08-24
+### Last modified - 2022-08-25
 ]
 
 ---
@@ -607,7 +607,7 @@ We saw some of these earlier:
 tib &lt;- tibble(
   x1 = rnorm(100), 
   x2 = rnorm(100), 
-  y = x1 + 2 * x2
+  y = x1 + 2 * x2 + rnorm(100)
 )
 mdl &lt;- lm(y ~ ., data = tib )
 class(tib)
@@ -639,7 +639,7 @@ print(mdl)
 ## 
 ## Coefficients:
 ## (Intercept)           x1           x2  
-##  -1.581e-16    1.000e+00    2.000e+00
+##     -0.1742       1.0454       2.0470
 ```
 ]
 
@@ -915,6 +915,255 @@ The best way to do this is with the `{reprex}` package.
 class: middle, inverse, center
 
 # Understanding `{tidyverse}`
+
+---
+
+## `{tidyverse}` is huge
+
+Core tidyverse is nearly 30 different R packages, but we're going to just talk about a few of them.
+
+Falls roughly into a few categories:
+
+1. **Graphing:** `{ggplot2}` and some others like `{scales}`.
+2. **Data processing:** `{dplyr}` and many others.
+3. **Convenience functions:** `{magrittr}` and many many others.
+4. **Utilities**
+
+
+--
+&lt;hr&gt;
+
+We're going to talk quickly about some of it, but ignore much of 3.
+
+There's a lot that's great about these packages, especially ease of data processing.
+
+But it doesn't always jive with base R (it's almost a separate proglang at this point).
+
+---
+
+## Piping
+
+This was introduced by `{magrittr}` as `%&gt;%`, but is now in base R (&gt;=4.1.0) as `|&gt;`.
+
+Note: there are other pipes in `{magrittr}` (e.g. `%$%` and `%T%`) but I've never used them.
+
+I've used the old version for so long, that it's hard for me to adopt the new one.
+
+The point of the pipe is to **logically sequence nested operations**
+
+--
+&lt;hr&gt;
+
+.pull-left[
+
+```r
+mse1 &lt;- print(
+  sum(
+    residuals(
+      lm(y~., data = mutate(
+        tib, 
+        x3 = x1^2,
+        x4 = log(x2 + abs(min(x2)) + 1)
+      )
+      )
+    )^2
+  )
+)
+```
+
+```
+## [1] 1.574086e-28
+```
+]
+
+.pull-right[
+
+```r
+mse2 &lt;- tib %&gt;%
+  mutate(
+    x3 = x1^2, 
+    x4 = log(x2 + abs(min(x2)) + 1)
+  ) %&gt;%
+  lm(y ~ ., data = .) %&gt;% ## note the use of `.`
+  residuals() %&gt;%
+  raise_to_power(2) %&gt;% ## same as `^`(2)
+  sum() %&gt;%
+  print()
+```
+
+```
+## [1] 1.574086e-28
+```
+]
+
+---
+
+It may seem like we should push this all the way
+
+
+```r
+tib %&gt;%
+  mutate(
+    x3 = x1^2, 
+    x4 = log(x2 + abs(min(x2)) + 1)
+  ) %&gt;%
+  lm(y ~ ., data = .) %&gt;% ## note the use of `.`
+  residuals() %&gt;%
+  raise_to_power(2) %&gt;% ## same as `^`(2)
+  sum() -&gt;
+  mse3
+```
+
+This works, but it's really annoying.
+
+---
+
+## Data processing in `{dplyr}`
+
+.pull-left[
+This package has all sorts of things. And it interacts with `{tibble}` generally.
+
+The basic idea is "tibble in, tibble out".
+
+Satisfies **data masking** which means you can refer to columns by name or use helpers like `ends_with("_rate")`
+
+Majorly useful operations:
+
+1. `select()` (chooses columns to keep)
+1. `mutate()` (showed this already)
+1. `group_by()`
+1. `pivot_longer()` and `pivot_wider()`
+1. `left_join()` and `full_join()`
+1. `summarise()`
+]
+
+.pull-right[
+A useful data frame
+
+```r
+covid &lt;- covidcast(
+  data_source = "jhu-csse",
+  signals = "confirmed_7dav_incidence_prop,deaths_7dav_incidence_prop",
+  time_type = "day",
+  geo_type = "state",
+  time_values = epirange(20220801, 20220821),
+  geo_values = "ca,wa"
+) %&gt;%
+  fetch_tbl() %&gt;%
+  select(geo_value, time_value, signal, value)
+covid
+```
+
+```
+## # A tibble: 84 × 4
+##    geo_value time_value signal                        value
+##    &lt;chr&gt;     &lt;date&gt;     &lt;chr&gt;                         &lt;dbl&gt;
+##  1 ca        2022-08-01 confirmed_7dav_incidence_prop  45.3
+##  2 wa        2022-08-01 confirmed_7dav_incidence_prop  27.7
+##  3 ca        2022-08-02 confirmed_7dav_incidence_prop  44.8
+##  4 wa        2022-08-02 confirmed_7dav_incidence_prop  27.7
+##  5 ca        2022-08-03 confirmed_7dav_incidence_prop  44.5
+##  6 wa        2022-08-03 confirmed_7dav_incidence_prop  26.6
+##  7 ca        2022-08-04 confirmed_7dav_incidence_prop  42.2
+##  8 wa        2022-08-04 confirmed_7dav_incidence_prop  26.6
+##  9 ca        2022-08-05 confirmed_7dav_incidence_prop  40.5
+## 10 wa        2022-08-05 confirmed_7dav_incidence_prop  34.6
+## # … with 74 more rows
+## # ℹ Use `print(n = ...)` to see more rows
+```
+
+]
+
+---
+
+.pull-left[
+
+Rename the `signal` to something short.
+
+
+```r
+covid &lt;- covid %&gt;% 
+  mutate(signal = case_when(
+    str_starts(signal, "confirmed") ~ "case_rate",
+    TRUE ~ "death_rate"))
+```
+
+
+Sort by `time_value` then `geo_value`
+
+
+```r
+covid &lt;- covid %&gt;%
+  arrange(time_value, geo_value)
+```
+
+Calculate grouped medians
+
+
+```r
+covid %&gt;% 
+  group_by(geo_value, signal) %&gt;%
+  summarise(med = median(value), .groups = "drop")
+```
+
+```
+## # A tibble: 4 × 3
+##   geo_value signal        med
+##   &lt;chr&gt;     &lt;chr&gt;       &lt;dbl&gt;
+## 1 ca        case_rate  31.9  
+## 2 ca        death_rate  0.115
+## 3 wa        case_rate  23.2  
+## 4 wa        death_rate  0.178
+```
+
+]
+
+.pull-right[
+Split the data into two tibbles by signal
+
+
+```r
+cases &lt;- covid %&gt;% 
+  filter(signal == "case_rate") %&gt;%
+  rename(case_rate = value) %&gt;% select(-signal)
+deaths &lt;- covid %&gt;% 
+  filter(signal == "death_rate") %&gt;%
+  rename(death_rate = value) %&gt;% select(-signal)
+```
+
+Join them together
+
+```r
+joined &lt;- full_join(
+  cases, deaths, 
+  by = c("geo_value", "time_value"))
+```
+
+Do the same thing by pivoting
+
+```r
+covid %&gt;% 
+  pivot_wider(names_from = signal, values_from = value)
+```
+
+```
+## # A tibble: 42 × 4
+##    geo_value time_value case_rate death_rate
+##    &lt;chr&gt;     &lt;date&gt;         &lt;dbl&gt;      &lt;dbl&gt;
+##  1 ca        2022-08-01      45.3      0.104
+##  2 wa        2022-08-01      27.7      0.169
+##  3 ca        2022-08-02      44.8      0.105
+##  4 wa        2022-08-02      27.7      0.169
+##  5 ca        2022-08-03      44.5      0.109
+##  6 wa        2022-08-03      26.6      0.173
+##  7 ca        2022-08-04      42.2      0.115
+##  8 wa        2022-08-04      26.6      0.173
+##  9 ca        2022-08-05      40.5      0.118
+## 10 wa        2022-08-05      34.6      0.225
+## # … with 32 more rows
+## # ℹ Use `print(n = ...)` to see more rows
+```
+]
     </textarea>
 <style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
 <script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>

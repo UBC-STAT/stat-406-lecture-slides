@@ -8,6 +8,7 @@ date: 'Last modified - `r Sys.Date()`'
 
 ```{r setup, include=FALSE}
 source("rmd_config.R")
+library(magrittr)
 ```
 
 class: middle, inverse, center
@@ -280,7 +281,7 @@ We saw some of these earlier:
 tib <- tibble(
   x1 = rnorm(100), 
   x2 = rnorm(100), 
-  y = x1 + 2 * x2
+  y = x1 + 2 * x2 + rnorm(100)
 )
 mdl <- lm(y ~ ., data = tib )
 class(tib)
@@ -533,3 +534,188 @@ The best way to do this is with the `{reprex}` package.
 class: middle, inverse, center
 
 # Understanding `{tidyverse}`
+
+---
+
+## `{tidyverse}` is huge
+
+Core tidyverse is nearly 30 different R packages, but we're going to just talk about a few of them.
+
+Falls roughly into a few categories:
+
+1. **Convenience functions:** `{magrittr}` and many many others.
+1. **Data processing:** `{dplyr}` and many others.
+1. **Graphing:** `{ggplot2}` and some others like `{scales}`.
+1. **Utilities**
+
+
+--
+<hr>
+
+We're going to talk quickly about some of it, but ignore much of 2.
+
+There's a lot that's great about these packages, especially ease of data processing.
+
+But it doesn't always jive with base R (it's almost a separate proglang at this point).
+
+---
+
+## Piping
+
+This was introduced by `{magrittr}` as `%>%`, but is now in base R (>=4.1.0) as `|>`.
+
+Note: there are other pipes in `{magrittr}` (e.g. `%$%` and `%T%`) but I've never used them.
+
+I've used the old version for so long, that it's hard for me to adopt the new one.
+
+The point of the pipe is to **logically sequence nested operations**
+
+--
+<hr>
+
+.pull-left[
+```{r}
+mse1 <- print(
+  sum(
+    residuals(
+      lm(y~., data = mutate(
+        tib, 
+        x3 = x1^2,
+        x4 = log(x2 + abs(min(x2)) + 1)
+      )
+      )
+    )^2
+  )
+)
+```
+]
+
+.pull-right[
+```{r}
+mse2 <- tib %>%
+  mutate(
+    x3 = x1^2, 
+    x4 = log(x2 + abs(min(x2)) + 1)
+  ) %>%
+  lm(y ~ ., data = .) %>% ## note the use of `.`
+  residuals() %>%
+  raise_to_power(2) %>% ## same as `^`(2)
+  sum() %>%
+  print()
+```
+]
+
+---
+
+It may seem like we should push this all the way
+
+```{r}
+tib %>%
+  mutate(
+    x3 = x1^2, 
+    x4 = log(x2 + abs(min(x2)) + 1)
+  ) %>%
+  lm(y ~ ., data = .) %>% ## note the use of `.`
+  residuals() %>%
+  raise_to_power(2) %>% ## same as `^`(2)
+  sum() ->
+  mse3
+```
+
+This works, but it's really annoying.
+
+---
+
+## Data processing in `{dplyr}`
+
+.pull-left[
+This package has all sorts of things. And it interacts with `{tibble}` generally.
+
+The basic idea is "tibble in, tibble out".
+
+Satisfies **data masking** which means you can refer to columns by name or use helpers like `ends_with("_rate")`
+
+Majorly useful operations:
+
+1. `select()` (chooses columns to keep)
+1. `mutate()` (showed this already)
+1. `group_by()`
+1. `pivot_longer()` and `pivot_wider()`
+1. `left_join()` and `full_join()`
+1. `summarise()`
+]
+
+.pull-right[
+A useful data frame
+```{r}
+covid <- covidcast(
+  data_source = "jhu-csse",
+  signals = "confirmed_7dav_incidence_prop,deaths_7dav_incidence_prop",
+  time_type = "day",
+  geo_type = "state",
+  time_values = epirange(20220801, 20220821),
+  geo_values = "ca,wa"
+) %>%
+  fetch_tbl() %>%
+  select(geo_value, time_value, signal, value)
+covid
+```
+
+]
+
+---
+
+.pull-left[
+
+Rename the `signal` to something short.
+
+```{r}
+covid <- covid %>% 
+  mutate(signal = case_when(
+    str_starts(signal, "confirmed") ~ "case_rate",
+    TRUE ~ "death_rate"))
+```
+
+
+Sort by `time_value` then `geo_value`
+
+```{r}
+covid <- covid %>%
+  arrange(time_value, geo_value)
+```
+
+Calculate grouped medians
+
+```{r}
+covid %>% 
+  group_by(geo_value, signal) %>%
+  summarise(med = median(value), .groups = "drop")
+```
+
+]
+
+.pull-right[
+Split the data into two tibbles by signal
+
+```{r}
+cases <- covid %>% 
+  filter(signal == "case_rate") %>%
+  rename(case_rate = value) %>% select(-signal)
+deaths <- covid %>% 
+  filter(signal == "death_rate") %>%
+  rename(death_rate = value) %>% select(-signal)
+```
+
+Join them together
+```{r}
+joined <- full_join(
+  cases, deaths, 
+  by = c("geo_value", "time_value"))
+```
+
+Do the same thing by pivoting
+```{r}
+covid %>% 
+  pivot_wider(names_from = signal, values_from = value)
+```
+]
