@@ -353,9 +353,183 @@ to be pretty vague
 
 
 ---
+class: middle, inverse, center
 
 # Environments 
 
+---
+
+## Different environments
+
+* These are often tricky, but are very common.
+
+* Most programming languages have this concept in one way or another.
+
+* In `R` code run in the Console produces objects in the "Global environment"
+
+* You can see what you create in the "Environment" tab.
+
+* But there's lots of other stuff.
+
+* Many packages are automatically loaded at startup, so you have access to the functions and data inside
+
+For example `mean()`, `lm()`, `plot()`, `iris` (technically `iris` is lazy-loaded, meaning it's not in memory until you call it, but it is available)
+
+--
+
+<hr>
+
+* Other packages require you to load them with `library(pkg)` before their functions are available.
+
+* But, you can call those functions by prefixing the package name `ggplot2::ggplot()`.
+
+* You can also access functions that the package developer didn't "export" for use with `:::` like `dplyr:::as_across_fn_call()`
+
+---
+
+## Other issues with environments
+
+.pull-left[
+As one might expect, functions create an environment inside the function.
+```{r}
+z <- 1
+fun <- function(x) {
+  z <- x
+  print(z)
+  invisible(z)
+}
+fun(14)
+```
+
+More non-trivial cases are `data-masking` environments.
+
+```{r, error=TRUE}
+tib <- tibble(
+  x1 = rnorm(100), 
+  x2 = rnorm(100), 
+  y = x1 + 2 * x2
+)
+mdl <- lm(y ~ x2, data = tib)
+x2
+```
+* `lm()` looks "inside" the `tib` to find `y` and `x2`
+* The data variables are added to the `lm` environment
+]
+
+--
+
+.pull-right[
+
+.emphasis[
+When Knit, `.Rmd` files run in their OWN environment.
+]
+
+They are run from top to bottom, with code chunks depending on previous
+
+This makes them reproducible.
+
+Jupyter notebooks don't do this.
+
+Objects in your local environment are not available in the `.Rmd`
+
+Objects in the `.Rmd` are not available locally.
+
+.emphasis[
+The most frequent error I see is:
+
+* running chunks individually, 1-by-1, and it works
+* Knitting, and it fails
+
+The reason is almost always that the chunks refer to objects in the Environment that don't exist in the `.Rmd`
+]
+]
+
+---
+class: middle
+
+.alert[
+### This error also happens because:
+
+* `library()` calls were made globally but not in the `.Rmd` so the packages aren't loaded
+
+* paths to data or other objects are not relative to the `.Rmd` in your file system (they must be)
+
+]
+
+
+---
+class: middle, inverse, center
+
 # Debugging
 
-# Understanding {tidyverse}
+---
+
+## How to fix code
+
+* If you're using a function in a package, start with `?function` to see the help
+    * Make sure you're calling the function correctly.
+    * Try running the examples.
+    * paste the error into Google (if you share the error on Slack, I often do this first)
+    * Go to the package website if it exists, and browse around
+    
+* If your `.Rmd` won't Knit
+    * Did you make the mistake on the last slide?
+    * Did it Knit before? Then the bug is in whatever you added.
+    * Did you never Knit it? Why not?
+    * Call `rstudioapi::restartSession()`, then run the Chunks 1-by-1
+    
+* Adding `browser()`
+    * Only useful with your own functions.
+    * Open the script with the function, and add `browser()` to the code somewhere
+    * Then call your function.
+    * The execution will Stop where you added `browser() and you'll have access to the local objects to play around
+
+---
+
+## Reproducible examples
+
+.emphasis[
+Question I get on Slack that I hate:
+
+"I ran the code like you had on Slide 39, but it didn't work."
+]
+
+If you want to ask me why the code doesn't work, you need to show me what's wrong.
+
+.emphasis[
+**Don't just paste a screenshot!** 
+
+Unless you get lucky, I won't be able to figure it out from that. And we'll both get frustrated.
+]
+
+What you need is a Reproducible Example or `reprex`.
+
+This is a small chunk of code that runs in it's own environment and produces the error.
+
+The best way to do this is with the `{reprex}` package.
+
+---
+## Reproducible examples
+
+### How it works
+
+1. Open a new `.R` script.
+
+1. Paste your buggy code in the file (no need to save)
+
+1. Edit your code to make sure it's "enough to produce the error" and nothing more.
+
+1. Copy your code.
+
+1. Call `reprex::reprex(venue = "r")` from the console. This will run your code in a new environment and show the result in the Viewer tab. Does it create the error you expect?
+
+1. If it creates other errors, that may be the problem. You may fix the bug on your own!
+
+1. The Output is now on your clipboard. Go to Slack and paste it in a message. Then press `Cmd+Shift+Enter` (on Mac) or `Ctrl+Shift+Enter` (Windows/Linux). Under Type, select `R`.
+
+1. Send the message, perhaps with more description and an SOS emoji.
+
+---
+class: middle, inverse, center
+
+# Understanding `{tidyverse}`
