@@ -648,6 +648,7 @@ Majorly useful operations:
 .pull-right[
 A useful data frame
 ```{r}
+library(epidatr)
 covid <- covidcast(
   data_source = "jhu-csse",
   signals = "confirmed_7dav_incidence_prop,deaths_7dav_incidence_prop",
@@ -719,3 +720,10 @@ covid %>%
   pivot_wider(names_from = signal, values_from = value)
 ```
 ]
+
+---
+
+## Plotting with `{ggplot2}`
+
+* Everything you can do with `ggplot()`, you can do with `plot()`. But the 
+defaults are _much_ prettier.
