@@ -50,7 +50,7 @@ Handouts
 |:----------|:---------------------------------------------------------------------------------------|:----------|
 | 6 Sep 21  | (no class, Imagine UBC)                                                                |           |
 | 8 Sep 21  | [Intro to class](slides/00-intro-to-class.html), [Git](slides/00-version-control.html) |           |
-| 13 Sep 21 | [Understanding R / Rmd](slides/00-r-programming.html)                                  |           |
+| 13 Sep 21 | [Understanding R / Rmd](slides/00-r-review.html)                                  |           |
 | 15 Sep 21 | [LM review](slides/01-lm-review.html), [LM Example](slides/02-lm-example.html)         |           |
 {: .table .table-striped}
 
@@ -115,9 +115,9 @@ Optional reading
 | Date      | Slides                                                                                                         | Deadlines |
 |:----------|:---------------------------------------------------------------------------------------------------------------|:----------|
 | 20 Oct 21 | [Classification](slides/14-classification-intro.html), [LDA and QDA](slides/15-LDA-and-QDA.html)               |           |
-| 25 Oct 21 | [Gradient descent](slides/00-gradient-descent.html), [Logistic regression](slides/16-logistic-regression.html) |           |
-| 27 Oct 21 | [Nonlinear](slides/17-nonlinear-classifiers.html)                                                              |           |
-| 1 Nov 21  |                                                                                                                | HW 3 due       |
+| 25 Oct 21 | No class  |           |
+| 27 Oct 21 | [Gradient descent](slides/00-gradient-descent.html), [Logistic regression](slides/16-logistic-regression.html)        |           |
+| 1 Nov 21  | [Nonlinear](slides/17-nonlinear-classifiers.html)                                                                   | HW 3 due       |
 {: .table .table-striped}
 
 

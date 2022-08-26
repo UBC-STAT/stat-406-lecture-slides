@@ -5,13 +5,18 @@ author:
   - "Daniel J. McDonald"
 date: 'Last modified - `r Sys.Date()`'
 ---
+class: middle, inverse, center
+
 
 ```{r setup, include=FALSE}
 source("rmd_config.R")
 library(magrittr)
 ```
 
-class: middle, inverse, center
+```{r css-extras, file="css-extras.R", echo=FALSE}
+```
+
+
 
 # The basics
 
