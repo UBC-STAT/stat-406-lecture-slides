@@ -648,6 +648,7 @@ Majorly useful operations:
 .pull-right[
 A useful data frame
 ```{r}
+library(epidatr)
 covid <- covidcast(
   data_source = "jhu-csse",
   signals = "confirmed_7dav_incidence_prop,deaths_7dav_incidence_prop",

@@ -271,9 +271,8 @@ sig(lm)
 ```
 
 ```
-## fn &lt;- function(formula, data, subset, weights, na.action, method = "qr",
-##   model = TRUE, x = FALSE, y = FALSE, qr = TRUE, singular.ok = TRUE,
-##   contrasts = NULL, offset, ...)
+## fn &lt;- function(formula, data, subset, weights, na.action, method = "qr", model = TRUE, x = FALSE, y
+##   = FALSE, qr = TRUE, singular.ok = TRUE, contrasts = NULL, offset, ...)
 ```
 
 ```r
@@ -289,9 +288,9 @@ sig(ggplot2::layer)
 ```
 
 ```
-## fn &lt;- function(geom = NULL, stat = NULL, data = NULL, mapping = NULL,
-##   position = NULL, params = list(), inherit.aes = TRUE, check.aes = TRUE,
-##   check.param = TRUE, show.legend = NA, key_glyph = NULL, layer_class)
+## fn &lt;- function(geom = NULL, stat = NULL, data = NULL, mapping = NULL, position = NULL, params =
+##   list(), inherit.aes = TRUE, check.aes = TRUE, check.param = TRUE, show.legend = NA, key_glyph =
+##   NULL, layer_class)
 ```
 
 ```r
@@ -411,12 +410,10 @@ my_histogram
 ##  [1]   4  21  41  89 142 200 193 170  74  38  24   2   2
 ## 
 ## $density
-##  [1] 0.008 0.042 0.082 0.178 0.284 0.400 0.386 0.340 0.148 0.076 0.048 0.004
-## [13] 0.004
+##  [1] 0.008 0.042 0.082 0.178 0.284 0.400 0.386 0.340 0.148 0.076 0.048 0.004 0.004
 ## 
 ## $mids
-##  [1] -2.75 -2.25 -1.75 -1.25 -0.75 -0.25  0.25  0.75  1.25  1.75  2.25  2.75
-## [13]  3.25
+##  [1] -2.75 -2.25 -1.75 -1.25 -0.75 -0.25  0.25  0.75  1.25  1.75  2.25  2.75  3.25
 ## 
 ## $xname
 ## [1] "rnorm(1000)"
@@ -924,16 +921,16 @@ Core tidyverse is nearly 30 different R packages, but we're going to just talk a
 
 Falls roughly into a few categories:
 
+1. **Convenience functions:** `{magrittr}` and many many others.
+1. **Data processing:** `{dplyr}` and many others.
 1. **Graphing:** `{ggplot2}` and some others like `{scales}`.
-2. **Data processing:** `{dplyr}` and many others.
-3. **Convenience functions:** `{magrittr}` and many many others.
-4. **Utilities**
+1. **Utilities**
 
 
 --
 &lt;hr&gt;
 
-We're going to talk quickly about some of it, but ignore much of 3.
+We're going to talk quickly about some of it, but ignore much of 2.
 
 There's a lot that's great about these packages, especially ease of data processing.
 
@@ -1041,6 +1038,7 @@ Majorly useful operations:
 A useful data frame
 
 ```r
+library(epidatr)
 covid &lt;- covidcast(
   data_source = "jhu-csse",
   signals = "confirmed_7dav_incidence_prop,deaths_7dav_incidence_prop",
@@ -1069,7 +1067,6 @@ covid
 ##  9 ca        2022-08-05 confirmed_7dav_incidence_prop  40.5
 ## 10 wa        2022-08-05 confirmed_7dav_incidence_prop  34.6
 ## # … with 74 more rows
-## # ℹ Use `print(n = ...)` to see more rows
 ```
 
 ]
@@ -1161,7 +1158,6 @@ covid %&gt;%
 ##  9 ca        2022-08-05      40.5      0.118
 ## 10 wa        2022-08-05      34.6      0.225
 ## # … with 32 more rows
-## # ℹ Use `print(n = ...)` to see more rows
 ```
 ]
     </textarea>
