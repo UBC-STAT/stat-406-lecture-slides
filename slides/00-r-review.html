@@ -24,7 +24,7 @@ class: center, middle, inverse, title-slide
 ### Daniel J. McDonald
 ]
 .date[
-### Last modified - 2022-08-25
+### Last modified - 2022-08-26
 ]
 
 ---
@@ -271,9 +271,9 @@ sig(lm)
 ```
 
 ```
-## fn &lt;- function(formula, data, subset, weights, na.action, method = "qr", model
-##   = TRUE, x = FALSE, y = FALSE, qr = TRUE, singular.ok = TRUE, contrasts =
-##   NULL, offset, ...)
+## fn &lt;- function(formula, data, subset, weights, na.action, method = "qr",
+##   model = TRUE, x = FALSE, y = FALSE, qr = TRUE, singular.ok = TRUE,
+##   contrasts = NULL, offset, ...)
 ```
 
 ```r
@@ -289,9 +289,9 @@ sig(ggplot2::layer)
 ```
 
 ```
-## fn &lt;- function(geom = NULL, stat = NULL, data = NULL, mapping = NULL, position
-##   = NULL, params = list(), inherit.aes = TRUE, check.aes = TRUE, check.param =
-##   TRUE, show.legend = NA, key_glyph = NULL, layer_class)
+## fn &lt;- function(geom = NULL, stat = NULL, data = NULL, mapping = NULL,
+##   position = NULL, params = list(), inherit.aes = TRUE, check.aes = TRUE,
+##   check.param = TRUE, show.legend = NA, key_glyph = NULL, layer_class)
 ```
 
 ```r
@@ -1067,9 +1067,10 @@ covid
 ##  6 wa        2022-08-03 confirmed_7dav_incidence_prop  26.6
 ##  7 ca        2022-08-04 confirmed_7dav_incidence_prop  42.2
 ##  8 wa        2022-08-04 confirmed_7dav_incidence_prop  26.6
-##  9 ca        2022-08-05 confirmed_7dav_incidence_prop  40.5
+##  9 ca        2022-08-05 confirmed_7dav_incidence_prop  40.6
 ## 10 wa        2022-08-05 confirmed_7dav_incidence_prop  34.6
 ## # … with 74 more rows
+## # ℹ Use `print(n = ...)` to see more rows
 ```
 
 ]
@@ -1110,7 +1111,7 @@ covid %&gt;%
 ## # A tibble: 4 × 3
 ##   geo_value signal        med
 ##   &lt;chr&gt;     &lt;chr&gt;       &lt;dbl&gt;
-## 1 ca        case_rate  31.9  
+## 1 ca        case_rate  32.8  
 ## 2 ca        death_rate  0.115
 ## 3 wa        case_rate  23.2  
 ## 4 wa        death_rate  0.178
@@ -1158,9 +1159,10 @@ covid %&gt;%
 ##  6 wa        2022-08-03      26.6      0.173
 ##  7 ca        2022-08-04      42.2      0.115
 ##  8 wa        2022-08-04      26.6      0.173
-##  9 ca        2022-08-05      40.5      0.118
+##  9 ca        2022-08-05      40.6      0.118
 ## 10 wa        2022-08-05      34.6      0.225
 ## # … with 32 more rows
+## # ℹ Use `print(n = ...)` to see more rows
 ```
 ]
 
@@ -1170,6 +1172,228 @@ covid %&gt;%
 
 * Everything you can do with `ggplot()`, you can do with `plot()`. But the 
 defaults are _much_ prettier.
+
+* It's also much easier to adjust by aesthetics/panels by factors.
+
+* It also uses "data masking": data goes into `ggplot(data = mydata)`, then the columns are available to the rest.
+
+* It (sort of) pipes, but by adding **layers** with `+`
+
+* It .secondary[.hand[strongly prefers]] "long" data frames over "wide" data frames.
+
+--
+
+&lt;hr&gt;
+
+I'll give a very fast overview of some confusing bits.
+
+&lt;br&gt;&lt;br&gt;
+
+.center[
+.secondary[.hand[I suggest exploring]]
+
+<svg aria-hidden="true" role="img" viewBox="0 0 640 512" style="height:1em;width:1.25em;vertical-align:-0.125em;margin-left:auto;margin-right:auto;font-size:inherit;fill:currentColor;overflow:visible;position:relative;"><path d="M172.5 131.1C228.1 75.51 320.5 75.51 376.1 131.1C426.1 181.1 433.5 260.8 392.4 318.3L391.3 319.9C381 334.2 361 337.6 346.7 327.3C332.3 317 328.9 297 339.2 282.7L340.3 281.1C363.2 249 359.6 205.1 331.7 177.2C300.3 145.8 249.2 145.8 217.7 177.2L105.5 289.5C73.99 320.1 73.99 372 105.5 403.5C133.3 431.4 177.3 435 209.3 412.1L210.9 410.1C225.3 400.7 245.3 404 255.5 418.4C265.8 432.8 262.5 452.8 248.1 463.1L246.5 464.2C188.1 505.3 110.2 498.7 60.21 448.8C3.741 392.3 3.741 300.7 60.21 244.3L172.5 131.1zM467.5 380C411 436.5 319.5 436.5 263 380C213 330 206.5 251.2 247.6 193.7L248.7 192.1C258.1 177.8 278.1 174.4 293.3 184.7C307.7 194.1 311.1 214.1 300.8 229.3L299.7 230.9C276.8 262.1 280.4 306.9 308.3 334.8C339.7 366.2 390.8 366.2 422.3 334.8L534.5 222.5C566 191 566 139.1 534.5 108.5C506.7 80.63 462.7 76.99 430.7 99.9L429.1 101C414.7 111.3 394.7 107.1 384.5 93.58C374.2 79.2 377.5 59.21 391.9 48.94L393.5 47.82C451 6.731 529.8 13.25 579.8 63.24C636.3 119.7 636.3 211.3 579.8 267.7L467.5 380z"/></svg> .hand[[This slide deck](https://djnavarro.net/slides-starting-ggplot/)] <svg aria-hidden="true" role="img" viewBox="0 0 512 512" style="height:1em;width:1em;vertical-align:-0.125em;margin-left:auto;margin-right:auto;font-size:inherit;fill:currentColor;overflow:visible;position:relative;"><path d="M187.7 153.7c-34 0-61.7 25.7-61.7 57.7 0 31.7 27.7 57.7 61.7 57.7s61.7-26 61.7-57.7c0-32-27.7-57.7-61.7-57.7zm143.4 0c-34 0-61.7 25.7-61.7 57.7 0 31.7 27.7 57.7 61.7 57.7 34.3 0 61.7-26 61.7-57.7 .1-32-27.4-57.7-61.7-57.7zm156.6 90l-6 4.3V49.7c0-27.4-20.6-49.7-46-49.7H76.6c-25.4 0-46 22.3-46 49.7V248c-2-1.4-4.3-2.9-6.3-4.3-15.1-10.6-25.1 4-16 17.7 18.3 22.6 53.1 50.3 106.3 72C58.3 525.1 252 555.7 248.9 457.5c0-.7 .3-56.6 .3-96.6 5.1 1.1 9.4 2.3 13.7 3.1 0 39.7 .3 92.8 .3 93.5-3.1 98.3 190.6 67.7 134.3-124 53.1-21.7 88-49.4 106.3-72 9.1-13.8-.9-28.3-16.1-17.8zm-30.5 19.2c-68.9 37.4-128.3 31.1-160.6 29.7-23.7-.9-32.6 9.1-33.7 24.9-10.3-7.7-18.6-15.5-20.3-17.1-5.1-5.4-13.7-8-27.1-7.7-31.7 1.1-89.7 7.4-157.4-28V72.3c0-34.9 8.9-45.7 40.6-45.7h317.7c30.3 0 40.9 12.9 40.9 45.7v190.6z"/></svg>
+
+.secondary[.hand[for more help]]
+]
+
+---
+class: middle
+
+.pull-left[
+
+
+```r
+ggplot(
+  data = covid %&gt;% 
+    filter(signal == "case_rate")
+) +
+  geom_point(
+    mapping = aes(
+      x = time_value,
+      y = value
+    )
+  ) + 
+  geom_smooth( 
+    mapping = aes( 
+      x = time_value, 
+      y = value 
+    ) 
+  ) 
+```
+]
+
+.pull-right[
+
+![](rmd_gfx/00-r-review/unnamed-chunk-32-1.svg)&lt;!-- --&gt;
+]
+
+???
+
+* The complete code
+* Data is specified in the ggplot, passed along
+* (we show only case_rate)
+
+
+* The Grey SE shading is pretty ugly
+* And there are two states mashed together
+* That trend is awfully wiggly
+
+
+---
+class: middle
+
+.pull-left[
+
+
+```r
+ggplot(
+  data = covid %&gt;% 
+    filter(signal == "case_rate")
+) +
+  geom_point(
+    mapping = aes(
+      x = time_value,
+      y = value,
+      colour = geo_value
+    )
+  ) + 
+  geom_smooth( 
+    mapping = aes( 
+      x = time_value, 
+      y = value,
+      colour = geo_value
+    ),
+    se = FALSE,
+    method = "lm"
+  ) 
+```
+]
+
+.pull-right[
+
+![](rmd_gfx/00-r-review/unnamed-chunk-33-1.svg)&lt;!-- --&gt;
+]
+
+???
+
+* Separate out the states by colour
+* straight lines instead
+* no more grey shading
+* Why do I keep writing all that mapping = stuff?
+
+
+---
+class: middle
+
+.pull-left[
+
+
+```r
+ggplot(
+  data = covid %&gt;% 
+    filter(signal == "case_rate"),
+  mapping = aes(
+    x = time_value,
+    y = value,
+    colour = geo_value
+  )
+) +
+  geom_point() + 
+  geom_smooth(se = FALSE, method = "lm") 
+```
+]
+
+.pull-right[
+
+![](rmd_gfx/00-r-review/unnamed-chunk-34-1.svg)&lt;!-- --&gt;
+]
+
+???
+
+mapping in the `ggplot()` call is shared across the rest
+
+---
+class: middle
+
+.pull-left[
+
+
+```r
+ggplot(covid %&gt;% filter(signal == "case_rate"),
+       aes(time_value, value, colour = geo_value)) +
+  geom_point() + 
+  geom_smooth(se = FALSE, method = "lm") 
+```
+]
+
+.pull-right[
+
+![](rmd_gfx/00-r-review/unnamed-chunk-35-1.svg)&lt;!-- --&gt;
+]
+
+???
+
+Don't need to name the arguments.
+
+This is typically what ggplot code looks like.
+
+Let's go a bit further to spruce this up.
+
+---
+class: middle
+
+.pull-left[
+
+
+```r
+ggplot(covid, 
+       aes(time_value, value, colour = geo_value)) +
+  geom_point() + 
+  geom_smooth(se = FALSE, method = "lm") +
+  facet_grid(signal ~ geo_value) +
+  scale_colour_manual(
+    name = NULL, 
+    values = c(blue, orange)) +
+  theme(legend.position = "bottom")
+```
+]
+
+.pull-right[
+
+![](rmd_gfx/00-r-review/unnamed-chunk-36-1.svg)&lt;!-- --&gt;
+]
+
+???
+
+* use facet_grid to split out states / show both signals (formula)
+* change the colour scaling, remove the annoying title
+* put the legend on the bottom
+* But the y-axis scale is shared, measurements are on different scales
+
+---
+class: middle
+
+.pull-left[
+
+
+```r
+ggplot(covid, 
+       aes(time_value, value, colour = geo_value)) +
+  geom_point() + 
+  geom_smooth(se = FALSE, method = "lm") +
+  facet_grid(signal ~ geo_value, scales = "free_y") +
+  scale_colour_manual(
+    name = NULL, 
+    values = c(blue, orange)) +
+  theme(legend.position = "bottom")
+```
+]
+
+.pull-right[
+
+![](rmd_gfx/00-r-review/unnamed-chunk-37-1.svg)&lt;!-- --&gt;
+]
     </textarea>
 <style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
 <script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>

@@ -727,3 +727,225 @@ covid %>%
 
 * Everything you can do with `ggplot()`, you can do with `plot()`. But the 
 defaults are _much_ prettier.
+
+* It's also much easier to adjust by aesthetics/panels by factors.
+
+* It also uses "data masking": data goes into `ggplot(data = mydata)`, then the columns are available to the rest.
+
+* It (sort of) pipes, but by adding **layers** with `+`
+
+* It .secondary[.hand[strongly prefers]] "long" data frames over "wide" data frames.
+
+--
+
+<hr>
+
+I'll give a very fast overview of some confusing bits.
+
+<br><br>
+
+.center[
+.secondary[.hand[I suggest exploring]]
+
+`r fa("link")` .hand[[This slide deck](https://djnavarro.net/slides-starting-ggplot/)] `r fa("slideshare")`
+
+.secondary[.hand[for more help]]
+]
+
+---
+class: middle
+
+.pull-left[
+
+```{r adding-geoms, fig.show='hide'}
+ggplot(
+  data = covid %>% 
+    filter(signal == "case_rate")
+) +
+  geom_point(
+    mapping = aes(
+      x = time_value,
+      y = value
+    )
+  ) + 
+  geom_smooth( 
+    mapping = aes( 
+      x = time_value, 
+      y = value 
+    ) 
+  ) 
+```
+]
+
+.pull-right[
+
+```{r ref.label="adding-geoms", echo=FALSE, warning=FALSE, message=FALSE, fig.height=4}
+```
+]
+
+???
+
+* The complete code
+* Data is specified in the ggplot, passed along
+* (we show only case_rate)
+
+
+* The Grey SE shading is pretty ugly
+* And there are two states mashed together
+* That trend is awfully wiggly
+
+
+---
+class: middle
+
+.pull-left[
+
+```{r adding-geoms2, fig.show='hide'}
+ggplot(
+  data = covid %>% 
+    filter(signal == "case_rate")
+) +
+  geom_point(
+    mapping = aes(
+      x = time_value,
+      y = value,
+      colour = geo_value
+    )
+  ) + 
+  geom_smooth( 
+    mapping = aes( 
+      x = time_value, 
+      y = value,
+      colour = geo_value
+    ),
+    se = FALSE,
+    method = "lm"
+  ) 
+```
+]
+
+.pull-right[
+
+```{r ref.label="adding-geoms2", echo=FALSE, warning=FALSE, message=FALSE, fig.height=4}
+```
+]
+
+???
+
+* Separate out the states by colour
+* straight lines instead
+* no more grey shading
+* Why do I keep writing all that mapping = stuff?
+
+
+---
+class: middle
+
+.pull-left[
+
+```{r adding-geoms3, fig.show='hide'}
+ggplot(
+  data = covid %>% 
+    filter(signal == "case_rate"),
+  mapping = aes(
+    x = time_value,
+    y = value,
+    colour = geo_value
+  )
+) +
+  geom_point() + 
+  geom_smooth(se = FALSE, method = "lm") 
+```
+]
+
+.pull-right[
+
+```{r ref.label="adding-geoms3", echo=FALSE, warning=FALSE, message=FALSE, fig.height=4}
+```
+]
+
+???
+
+mapping in the `ggplot()` call is shared across the rest
+
+---
+class: middle
+
+.pull-left[
+
+```{r adding-geoms4, fig.show='hide'}
+ggplot(covid %>% filter(signal == "case_rate"),
+       aes(time_value, value, colour = geo_value)) +
+  geom_point() + 
+  geom_smooth(se = FALSE, method = "lm") 
+```
+]
+
+.pull-right[
+
+```{r ref.label="adding-geoms4", echo=FALSE, warning=FALSE, message=FALSE, fig.height=4}
+```
+]
+
+???
+
+Don't need to name the arguments.
+
+This is typically what ggplot code looks like.
+
+Let's go a bit further to spruce this up.
+
+---
+class: middle
+
+.pull-left[
+
+```{r adding-geoms5, fig.show='hide'}
+ggplot(covid, 
+       aes(time_value, value, colour = geo_value)) +
+  geom_point() + 
+  geom_smooth(se = FALSE, method = "lm") +
+  facet_grid(signal ~ geo_value) +
+  scale_colour_manual(
+    name = NULL, 
+    values = c(blue, orange)) +
+  theme(legend.position = "bottom")
+```
+]
+
+.pull-right[
+
+```{r ref.label="adding-geoms5", echo=FALSE, warning=FALSE, message=FALSE, fig.height=6}
+```
+]
+
+???
+
+* use facet_grid to split out states / show both signals (formula)
+* change the colour scaling, remove the annoying title
+* put the legend on the bottom
+* But the y-axis scale is shared, measurements are on different scales
+
+---
+class: middle
+
+.pull-left[
+
+```{r adding-geoms6, fig.show='hide'}
+ggplot(covid, 
+       aes(time_value, value, colour = geo_value)) +
+  geom_point() + 
+  geom_smooth(se = FALSE, method = "lm") +
+  facet_grid(signal ~ geo_value, scales = "free_y") +
+  scale_colour_manual(
+    name = NULL, 
+    values = c(blue, orange)) +
+  theme(legend.position = "bottom")
+```
+]
+
+.pull-right[
+
+```{r ref.label="adding-geoms6", echo=FALSE, warning=FALSE, message=FALSE, fig.height=6}
+```
+]
