@@ -39,6 +39,11 @@ source("rmd_config.R")
 
 ## A small detour...
 
+
+```{r css-extras, file="css-extras.R", echo=FALSE}
+```
+
+
 .center[
 ![](https://www.azquotes.com/picture-quotes/quote-i-believe-in-pulling-yourself-up-by-your-own-bootstraps-i-believe-it-is-possible-i-saw-stephen-colbert-62-38-03.jpg)
 ]

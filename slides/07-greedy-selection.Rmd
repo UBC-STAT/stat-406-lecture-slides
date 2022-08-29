@@ -8,7 +8,13 @@ date: 'Last modified - `r Sys.Date()`'
 
 ```{r setup, include=FALSE, warning=FALSE, message=FALSE}
 source("rmd_config.R")
+library(cowplot)
 ```
+
+```{r css-extras, file="css-extras.R", echo=FALSE}
+```
+
+
 
 ## Selecting predictors
 

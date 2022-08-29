@@ -22,6 +22,11 @@ source("rmd_config.R")
 ---
 
 
+```{r css-extras, file="css-extras.R", echo=FALSE}
+```
+
+
+
 ## Recap
 
 So far, we thought of __model selection__ as
@@ -164,15 +169,22 @@ nb = normBall(2)
 ed = ellipseData()
 bols = data.frame(x=1,y=1)
 bhat = lballmax(ed, 2)
-ggplot(nb,aes(x,y)) + xlim(-2,2) + ylim(-2,2) + geom_path(color=red) + 
+ggplot(nb,aes(x,y)) + xlim(-2,2) + ylim(-2,2) +
+  geom_path(color=red) + 
   geom_contour(mapping=aes(z=z), color=blue, data=ed, bins=7) +
   geom_vline(xintercept = 0) + geom_hline(yintercept = 0) + 
   geom_point(data=bols) + coord_equal() +
-  geom_label(data=bols, mapping=aes(label=bquote('hat(beta)[ols]')), parse=TRUE,
+  geom_label(data=bols,
+             mapping = aes(label=bquote('hat(beta)[ols]')), 
+             parse = TRUE,
              nudge_x = .3, nudge_y = .3) +
-  geom_point(data=bhat) + xlab(expression(beta[1])) + ylab(expression(beta[2])) + 
-  geom_label(data=bhat, mapping=aes(label=bquote('hat(beta)[s]^R')), parse=TRUE,
-             nudge_x = -.4, nudge_y = -.4) + theme_cowplot()
+  geom_point(data=bhat) + xlab(bquote(beta[1])) + 
+  ylab(bquote(beta[2])) + 
+  theme_bw(base_family = "", base_size = 24) +
+  geom_label(data=bhat, 
+             mapping=aes(label=bquote('hat(beta)[s]^R')), 
+             parse = TRUE,
+             nudge_x = -.4, nudge_y = -.4)
 ```
 
 ---

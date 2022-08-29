@@ -23,6 +23,10 @@ background-size: cover
 
 ---
 
+```{r css-extras, file="css-extras.R", echo=FALSE}
+```
+
+
 ## Mean squared error (MSE)
 
 Let's look at the population version, and let's forget about the linear model.

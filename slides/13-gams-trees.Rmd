@@ -11,6 +11,10 @@ source("rmd_config.R")
 ```
 
 
+```{r css-extras, file="css-extras.R", echo=FALSE}
+```
+
+
 ## GAMs
 
 Last time we discussed smoothing in multiple dimensions.

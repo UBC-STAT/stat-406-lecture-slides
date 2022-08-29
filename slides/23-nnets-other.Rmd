@@ -1,5 +1,5 @@
 ---
-title: "22 Neural nets - other considerations"
+title: "23 Neural nets - other considerations"
 author:
 - STAT 406
 - Daniel J. McDonald
@@ -9,6 +9,11 @@ date: "Last modified - `r Sys.Date()`"
 ```{r setup, include=FALSE, warning=FALSE, message=FALSE}
 source("rmd_config.R")
 ```
+
+
+```{r css-extras, file="css-extras.R", echo=FALSE}
+```
+
 
 ## Estimation procedures (training)
 
@@ -154,7 +159,7 @@ Off the top of my head, without lots of justification
 
 __Why don't statisticians like them?__
 
-.center[.larger[`r fa("angry", fill=red)`]]
+.center[.larger[`r fa("face-angry", fill=red)`]]
 
 - There is almost no theory (certainly nothing for deep nets)
 - Theory is (as far as we can tell) nearly impossible
@@ -169,7 +174,7 @@ __Why don't statisticians like them?__
 
 __Why are they hot?__
 
-.center[.larger[`r fa("fire-alt", fill=orange)`]]
+.center[.larger[`r fa("fire", fill=orange)`]]
 
 - Perform exceptionally well on typical CS tasks (images, translation)
 - Take advantage of SOTA computing (parallel, GPUs)

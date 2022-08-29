@@ -12,6 +12,11 @@ date: 'Last modified - `r Sys.Date()`'
 source("rmd_config.R")
 ```
 
+
+```{r css-extras, file="css-extras.R", echo=FALSE}
+```
+
+
 ## Last time
 
 We examined kernel PCA:
@@ -147,7 +152,7 @@ $$f(x) = x^2 \Rightarrow f'(x) = 2x.$$
 ```{r echo=FALSE, fig.align='center',fig.height=4,fig.width=4}
 quad <- function(x) x^2
 ggplot(data.frame(x=c(-1,1)), aes(x)) + stat_function(fun=quad, color=blue) +
-  geom_abline(slope = 1, intercept = -.25, color=red) + theme_cowplot()
+  geom_abline(slope = 1, intercept = -.25, color=red)
 ```
 
 ]
@@ -227,7 +232,7 @@ all = as_tibble(all)
 all$method = rep(c("data","pca","cmds","le"), each=nrow(elef)) 
 ggplot(all, aes(y,x,color=col)) + geom_point() + 
   scale_color_viridis_c() +
-  facet_wrap(~method, scales="free", ncol = 4) + theme_cowplot() +
+  facet_wrap(~method, scales="free", ncol = 4) +
   theme(legend.position = "none", 
         axis.line = element_blank(), axis.text = element_blank(),
         axis.ticks = element_blank(), axis.title = element_blank())
@@ -259,7 +264,7 @@ all_ele = bind_rows(
   near=noisy_ele %>% mutate(tt=colors) %>% select(x,y,tt), 
   on=ele, .id = "on_near")
 all_ele %>% ggplot(aes(x=y,y=x,col=tt)) + geom_point() + 
-  theme_cowplot() + facet_wrap(~on_near) +
+  facet_wrap(~on_near) +
   scale_color_viridis_c() + 
   theme(legend.position = 'none',
         axis.line = element_blank(), axis.text = element_blank(),

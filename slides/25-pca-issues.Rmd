@@ -12,6 +12,9 @@ date: 'Last modified - `r Sys.Date()`'
 source("rmd_config.R")
 ```
 
+```{r css-extras, file="css-extras.R", echo=FALSE}
+```
+
 ## PCA
 
 If we knew how to rotate our data, then we could more easily retain the structure.
@@ -119,6 +122,7 @@ However, when we write it as 1 PCA dimension,
 all the points are all "mixed up". 
 
 ```{r spiral-reduced, fig.align='center',fig.height=5,fig.width=10, echo=FALSE}
+library(cowplot)
 xx = as.matrix(df_spiral[,1:2]) %*% ee$vectors[,1]
 df_spiral2 = data.frame(x=xx, y=xx, z=tt)
 gspbad <- ggplot(df_spiral2) + geom_point(aes(x=x,y=y,col=z)) + 

@@ -10,6 +10,11 @@ date: 'Last modified - `r Sys.Date()`'
 source("rmd_config.R")
 ```
 
+
+```{r css-extras, file="css-extras.R", echo=FALSE}
+```
+
+
 ## What about nonlinear things
 
 $$\newcommand{\Expect}[1]{E\left[ #1 \right]}
@@ -106,6 +111,7 @@ for (i in 1:nmods) {
 .pull-right[
 
 ```{r, echo=FALSE, dev="svg"}
+library(cowplot)
 g1 = ggplot(data.frame(ord=1:nmods,cvscores=cvscores), aes(ord,cvscores)) +
   geom_point(color=blue) +
   geom_line(color=blue) + ylab('LOO CV') + xlab('polynomial order') +

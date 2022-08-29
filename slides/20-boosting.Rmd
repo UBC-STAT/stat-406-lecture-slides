@@ -14,6 +14,11 @@ date: 'Last modified - `r Sys.Date()`'
 source("rmd_config.R")
 ```
 
+
+```{r css-extras, file="css-extras.R", echo=FALSE}
+```
+
+
 We learned about bagging, for averaging low-bias / high-variance estimators.
 
 Today, we examine it's opposite: __Boosting__.
@@ -243,6 +248,7 @@ grad_boost <- gbm(mobile ~ ., data = train_boost, n.trees = 500, distribution = 
 * There are many other extensions, notably XGBoost.
 
 ```{r, fig.height=3.5, fig.width=10, fig.align='center', echo=FALSE}
+library(cowplot)
 boost_preds = tibble(
   adaboost = predict(adab, test_boost),
   gbm = predict(grad_boost, test_boost),

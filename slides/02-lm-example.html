@@ -6,6 +6,20 @@
     <meta name="author" content="STAT 406" />
     <meta name="author" content="Daniel J. McDonald" />
     <script src="materials/libs/header-attrs/header-attrs.js"></script>
+    <script src="materials/libs/fabric/fabric.min.js"></script>
+    <link href="materials/libs/xaringanExtra-scribble/scribble.css" rel="stylesheet" />
+    <script src="materials/libs/xaringanExtra-scribble/scribble.js"></script>
+    <script>document.addEventListener('DOMContentLoaded', function() { window.xeScribble = new Scribble({"pen_color":["#e98a15"],"pen_size":3,"eraser_size":30,"palette":["#2c365e","#e98a15","#0a8754","#a8201a","#E41A1C","#377EB8","#4DAF4A","#984EA3","#FF7F00","#FFFF33"]}) })</script>
+    <link href="materials/libs/panelset/panelset.css" rel="stylesheet" />
+    <script src="materials/libs/panelset/panelset.js"></script>
+    <script src="materials/libs/clipboard/clipboard.min.js"></script>
+    <link href="materials/libs/xaringanExtra-clipboard/xaringanExtra-clipboard.css" rel="stylesheet" />
+    <script src="materials/libs/xaringanExtra-clipboard/xaringanExtra-clipboard.js"></script>
+    <script>window.xaringanExtraClipboard(null, {"button":"<i class=\"fa fa-clipboard\"><\/i>","success":"<i class=\"fa fa-check\" style=\"color: #90BE6D\"><\/i>","error":"Press Ctrl+C to Copy"})</script>
+    <link href="materials/libs/font-awesome/css/all.css" rel="stylesheet" />
+    <link href="materials/libs/font-awesome/css/v4-shims.css" rel="stylesheet" />
+    <link href="materials/libs/xaringanExtra-extra-styles/xaringanExtra-extra-styles.css" rel="stylesheet" />
+    <script src="materials/libs/xaringanExtra-progressBar/progress-bar.js"></script>
     <script src="https://kit.fontawesome.com/ae71192e04.js" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="materials/xaringan-themer.css" type="text/css" />
     <link rel="stylesheet" href="materials/slides-style.css" type="text/css" />
@@ -14,15 +28,44 @@
     <textarea id="source">
 class: center, middle, inverse, title-slide
 
+.title[
 # 02 Linear model example
+]
+.author[
 ### STAT 406
+]
+.author[
 ### Daniel J. McDonald
-### Last modified - 2021-09-13
+]
+.date[
+### Last modified - 2022-08-29
+]
 
 ---
 
 
 
+
+<style>.panelset{--panel-tab-active-foreground: #2c365e;--panel-tab-hover-foreground: #e98a15;}</style><style>.xe__progress-bar__container {
+  top:0;
+  opacity: 1;
+  position:absolute;
+  right:0;
+  left: 0;
+}
+.xe__progress-bar {
+  height: 0.25em;
+  background-color: #2c365e;
+  width: calc(var(--slide-current) / var(--slide-total) * 100%);
+}
+.remark-visible .xe__progress-bar {
+  animation: xe__progress-bar__wipe 200ms forwards;
+  animation-timing-function: cubic-bezier(.86,0,.07,1);
+}
+@keyframes xe__progress-bar__wipe {
+  0% { width: calc(var(--slide-previous) / var(--slide-total) * 100%); }
+  100% { width: calc(var(--slide-current) / var(--slide-total) * 100%); }
+}</style>
 
 
 ## Economic mobility
@@ -37,25 +80,25 @@ mobility
 
 ```
 ## # A tibble: 741 × 43
-##       ID Name             Mobility State Population Urban Black Seg_racial Seg_income
-##    &lt;dbl&gt; &lt;chr&gt;               &lt;dbl&gt; &lt;chr&gt;      &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;      &lt;dbl&gt;      &lt;dbl&gt;
-##  1   100 Johnson City       0.0622 TN        576081     1 0.021      0.09       0.035
-##  2   200 Morristown         0.0537 TN        227816     1 0.02       0.093      0.026
-##  3   301 Middlesborough     0.0726 TN         66708     0 0.015      0.064      0.024
-##  4   302 Knoxville          0.0563 TN        727600     1 0.056      0.21       0.092
-##  5   401 Winston-Salem      0.0448 NC        493180     1 0.174      0.262      0.072
-##  6   402 Martinsville       0.0518 VA         92753     0 0.224      0.137      0.024
-##  7   500 Greensboro         0.0474 NC       1055133     1 0.218      0.22       0.068
-##  8   601 North Wilkesboro   0.0517 NC         90016     0 0.032      0.114      0.012
-##  9   602 Galax              0.0796 VA         64676     0 0.029      0.131      0.005
-## 10   700 Spartanburg        0.0431 SC        354533     1 0.207      0.139      0.045
-## # … with 731 more rows, and 34 more variables: Seg_poverty &lt;dbl&gt;,
-## #   Seg_affluence &lt;dbl&gt;, Commute &lt;dbl&gt;, Income &lt;dbl&gt;, Gini &lt;dbl&gt;,
-## #   Share01 &lt;dbl&gt;, Gini_99 &lt;dbl&gt;, Middle_class &lt;dbl&gt;, Local_tax_rate &lt;dbl&gt;,
-## #   Local_gov_spending &lt;dbl&gt;, Progressivity &lt;dbl&gt;, EITC &lt;dbl&gt;,
-## #   School_spending &lt;dbl&gt;, Student_teacher_ratio &lt;dbl&gt;, Test_scores &lt;dbl&gt;,
-## #   HS_dropout &lt;dbl&gt;, Colleges &lt;dbl&gt;, Tuition &lt;dbl&gt;, Graduation &lt;dbl&gt;,
-## #   Labor_force_participation &lt;dbl&gt;, Manufacturing &lt;dbl&gt;, …
+##       ID Name  Mobil…¹ State Popul…² Urban Black Seg_r…³ Seg_i…⁴ Seg_p…⁵ Seg_a…⁶
+##    &lt;dbl&gt; &lt;chr&gt;   &lt;dbl&gt; &lt;chr&gt;   &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;
+##  1   100 John…  0.0622 TN     576081     1 0.021   0.09    0.035   0.03    0.038
+##  2   200 Morr…  0.0537 TN     227816     1 0.02    0.093   0.026   0.028   0.025
+##  3   301 Midd…  0.0726 TN      66708     0 0.015   0.064   0.024   0.015   0.026
+##  4   302 Knox…  0.0563 TN     727600     1 0.056   0.21    0.092   0.084   0.102
+##  5   401 Wins…  0.0448 NC     493180     1 0.174   0.262   0.072   0.061   0.081
+##  6   402 Mart…  0.0518 VA      92753     0 0.224   0.137   0.024   0.015   0.028
+##  7   500 Gree…  0.0474 NC    1055133     1 0.218   0.22    0.068   0.058   0.077
+##  8   601 Nort…  0.0517 NC      90016     0 0.032   0.114   0.012   0.009   0.012
+##  9   602 Galax  0.0796 VA      64676     0 0.029   0.131   0.005   0.004   0.006
+## 10   700 Spar…  0.0431 SC     354533     1 0.207   0.139   0.045   0.044   0.045
+## # … with 731 more rows, 32 more variables: Commute &lt;dbl&gt;, Income &lt;dbl&gt;,
+## #   Gini &lt;dbl&gt;, Share01 &lt;dbl&gt;, Gini_99 &lt;dbl&gt;, Middle_class &lt;dbl&gt;,
+## #   Local_tax_rate &lt;dbl&gt;, Local_gov_spending &lt;dbl&gt;, Progressivity &lt;dbl&gt;,
+## #   EITC &lt;dbl&gt;, School_spending &lt;dbl&gt;, Student_teacher_ratio &lt;dbl&gt;,
+## #   Test_scores &lt;dbl&gt;, HS_dropout &lt;dbl&gt;, Colleges &lt;dbl&gt;, Tuition &lt;dbl&gt;,
+## #   Graduation &lt;dbl&gt;, Labor_force_participation &lt;dbl&gt;, Manufacturing &lt;dbl&gt;,
+## #   Chinese_imports &lt;dbl&gt;, Teenage_labor &lt;dbl&gt;, Migration_in &lt;dbl&gt;, …
 ```
 
 ???
@@ -235,10 +278,11 @@ reduced %&gt;% broom::glance()
 
 ```
 ## # A tibble: 1 × 12
-##   r.squared adj.r.squared  sigma statistic  p.value    df logLik    AIC    BIC
-##       &lt;dbl&gt;         &lt;dbl&gt;  &lt;dbl&gt;     &lt;dbl&gt;    &lt;dbl&gt; &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;
-## 1     0.701         0.693 0.0255      89.0 4.65e-75     8   708. -1397. -1359.
-## # … with 3 more variables: deviance &lt;dbl&gt;, df.residual &lt;int&gt;, nobs &lt;int&gt;
+##   r.squared adj.r.s…¹  sigma stati…²  p.value    df logLik    AIC    BIC devia…³
+##       &lt;dbl&gt;     &lt;dbl&gt;  &lt;dbl&gt;   &lt;dbl&gt;    &lt;dbl&gt; &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;   &lt;dbl&gt;
+## 1     0.701     0.693 0.0255    89.0 4.65e-75     8   708. -1397. -1359.   0.198
+## # … with 2 more variables: df.residual &lt;int&gt;, nobs &lt;int&gt;, and abbreviated
+## #   variable names ¹​adj.r.squared, ²​statistic, ³​deviance
 ```
 
 ---
@@ -365,6 +409,19 @@ if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
     deleted = true;
   });
 })();
+// add `data-at-shortcutkeys` attribute to <body> to resolve conflicts with JAWS
+// screen reader (see PR #262)
+(function(d) {
+  let res = {};
+  d.querySelectorAll('.remark-help-content table tr').forEach(tr => {
+    const t = tr.querySelector('td:nth-child(2)').innerText;
+    tr.querySelectorAll('td:first-child .key').forEach(key => {
+      const k = key.innerText;
+      if (/^[a-z]$/.test(k)) res[k] = t;  // must be a single letter (key)
+    });
+  });
+  d.body.setAttribute('data-at-shortcutkeys', JSON.stringify(res));
+})(document);
 (function() {
   "use strict"
   // Replace <script> tags in slides area to make them executable

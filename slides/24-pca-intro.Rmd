@@ -40,6 +40,11 @@ source("rmd_config.R")
 
 ---
 
+
+```{r css-extras, file="css-extras.R", echo=FALSE}
+```
+
+
 ## Unsupervised learning
 
 In Machine Learning, rather than calling $\y$ the .hand[response], people call it the .hand[supervisor]
@@ -275,6 +280,7 @@ pca <- prcomp(X, scale=TRUE) ## DON'T USE princomp()
 
 
 ```{r pca-leaf-plot, fig.align='center',fig.height=3,fig.width=10,echo=FALSE}
+library(cowplot)
 proj_pca <- as.matrix(X) %*% pca$rotation[,1:2] %>% scale() %>% as_tibble()
 proj_pca$species = as.factor(leaf$Species)
 g1 = ggplot(proj_pca, aes(PC1,PC2,color=species)) + 

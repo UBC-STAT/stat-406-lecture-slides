@@ -10,6 +10,10 @@ date: 'Last modified - `r Sys.Date()`'
 source("rmd_config.R")
 ```
 
+```{r css-extras, file="css-extras.R", echo=FALSE}
+```
+
+
 ## Last time...
 
 
@@ -31,6 +35,7 @@ Let's use 3 neighbors
 
 .pull-right[
 ```{r load-lidar, echo=FALSE}
+library(cowplot)
 data(lidar, package="SemiPar")
 set.seed(12345)
 lidar_unif = lidar[sample.int(nrow(lidar), 40),] %>% arrange(range)

@@ -10,6 +10,10 @@ date: '`r Sys.Date()`'
 source("rmd_config.R")
 ```
 
+```{r css-extras, file="css-extras.R", echo=FALSE}
+```
+
+
 ## The normal linear model
 
 Assume that 

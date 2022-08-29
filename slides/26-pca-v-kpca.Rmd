@@ -12,6 +12,10 @@ date: 'Last modified - `r Sys.Date()`'
 source("rmd_config.R")
 ```
 
+```{r css-extras, file="css-extras.R", echo=FALSE}
+```
+
+
 ## PCA v KPCA
 
 

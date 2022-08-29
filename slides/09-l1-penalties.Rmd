@@ -10,6 +10,11 @@ date: 'Last modified - `r Sys.Date()`'
 source("rmd_config.R")
 ```
 
+
+```{r css-extras, file="css-extras.R", echo=FALSE}
+```
+
+
 ## Last time
 
 $$\newcommand{\Expect}[1]{\mathbb{E}\left[ #1 \right]}
@@ -79,7 +84,7 @@ lballmax <- function(ed,q=1,tol=1e-6){
 ```
 
 
-```{r convexity,echo=FALSE, dev="svg", fig.height=6,fig.width=11,fig.align="center"}
+```{r convexity,echo=FALSE, dev="svg", fig.height=6,fig.width=13,fig.align="center"}
 nbs = list()
 nbs[[1]] = normBall(0,1)
 qs = c(.5,.75,1,1.5,2)
@@ -92,9 +97,10 @@ levels(seg$lab) = levels(nbs$lab)
 ggplot(nbs, aes(x,y)) + geom_path(size=1.2) + 
   facet_wrap(~lab,labeller = label_parsed) + 
   geom_segment(data=seg,aes(x=x0,xend=x1,y=y0,yend=y1),size=1.2) + 
+  theme_bw(base_family = "", base_size = 24) +
   coord_equal() + geom_vline(xintercept = 0,size=.5) + 
   geom_hline(yintercept = 0,size=.5) +
-  theme_cowplot() + xlab("") + ylab("")
+  xlab(bquote(beta[1])) + ylab(bquote(beta[2]))
 ```
 
 ---
@@ -111,12 +117,12 @@ ggplot(nb,aes(x,y)) + xlim(-2,2) + ylim(-2,2) + geom_path(color=red) +
   geom_contour(mapping=aes(z=z), color=blue, data=ed, bins=7) +
   geom_vline(xintercept = 0) + geom_hline(yintercept = 0) + 
   geom_point(data=bols) + coord_equal() +
+  theme_bw(base_family = "", base_size = 24) +
   geom_label(data=bols, mapping=aes(label=bquote('hat(beta)[ols]')), parse=TRUE,
              nudge_x = .3, nudge_y = .3) +
-  geom_point(data=bhat) + xlab(expression(beta[1])) + ylab(expression(beta[2])) + 
+  geom_point(data=bhat) + xlab(bquote(beta[1])) + ylab(bquote(beta[2])) + 
   geom_label(data=bhat, mapping=aes(label=bquote('hat(beta)[s]^L')), parse=TRUE,
-             nudge_x = -.4, nudge_y = -.4) +
-  theme_cowplot()
+             nudge_x = -.4, nudge_y = -.4) 
 ```
 
 This regularization set...

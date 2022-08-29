@@ -12,6 +12,11 @@ date: 'Last modified - `r Sys.Date()`'
 source("rmd_config.R")
 ```
 
+
+```{r css-extras, file="css-extras.R", echo=FALSE}
+```
+
+
 ## From $K$-means to hierarchical clustering
 
 
@@ -349,7 +354,7 @@ class: middle, inverse, center
 
 ### No more slides.  All done. 
 
-`r fontawesome::fa('grin-stars', height = "6em", fill = blue)`
+`r fontawesome::fa('face-grin-stars', height = "6em", fill = blue)`
 
 --
 

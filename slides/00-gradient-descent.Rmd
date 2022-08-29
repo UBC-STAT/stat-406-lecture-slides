@@ -25,6 +25,11 @@ $$\newcommand{\Expect}[1]{\mathbb{E}\left[ #1 \right]}
 source("rmd_config.R")
 ```
 
+
+```{r css-extras, file="css-extras.R", echo=FALSE}
+```
+
+
 We'll see "gradient descent" a few times: 
 
 1. solves logistic regression (simple version of IRWLS)
@@ -120,7 +125,6 @@ x = c(-1.75,-1,-.5)
 
 ggplot(data.frame(x=c(-2,3)), aes(x)) + 
   stat_function(fun=f, color=blue) + 
-  theme_cowplot() + 
   geom_point(data=data.frame(x=x,y=f(x)),aes(x,y),color=red) +
   stat_function(fun=quad, args = list(x0=-1.75), color=red) +
   stat_function(fun=quad, args = list(x0=-1), color=red) +

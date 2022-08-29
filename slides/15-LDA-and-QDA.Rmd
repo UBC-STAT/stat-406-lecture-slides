@@ -10,6 +10,10 @@ date: 'Last modified - `r Sys.Date()`'
 source("rmd_config.R")
 ```
 
+```{r css-extras, file="css-extras.R", echo=FALSE}
+```
+
+
 ## Last time
 
 $$\newcommand{\Expect}[1]{E\left[ #1 \right]}
@@ -151,6 +155,7 @@ pts <- predict(lda_fit, gr)
 g0 <- ggplot(dat1, aes(x1, x2)) + 
   scale_shape_manual(values=c("0","1"), guide="none") +
   geom_raster(data = tibble(gr, disc = c(pts$x)), aes(x1, x2, fill=disc)) +
+  theme_bw(base_size = 24) +
   geom_point(aes(shape = as.factor(y)), size = 4) +
   coord_cartesian(c(-2.5, 3), c(-2.5, 3)) +
   scale_fill_steps2(n.breaks = 6,
@@ -170,6 +175,7 @@ separateclasses <- generate_lda(150, c(.2, .3, .5), matrix(c(-1, -1, 2, 2, 2, -1
 ```
 
 ```{r 3class-plot,echo=FALSE,fig.align='center',fig.height=6,fig.width=12,dev='png',dvi=300}
+library(cowplot)
 lda_3fit = lda(y~., moreclasses)
 lda_separate = lda(y~., separateclasses)
 pts3 = predict(lda_3fit, gr)
@@ -180,12 +186,14 @@ g1 = ggplot(moreclasses, aes(x1,x2)) +
   geom_point(aes(shape=as.factor(y)), size=4) +
   coord_cartesian(c(-2.5,3),c(-2.5,3)) +
   scale_fill_viridis_d(alpha=.5,name=bquote(hat(g)(x))) +
+  theme_bw(base_size = 24) +
   theme(legend.position = "bottom")
 g2 = ggplot(separateclasses, aes(x1,x2)) + 
   scale_shape_manual(values=levels(ptss$class), guide="none") +
   geom_raster(data=tibble(gr,disc=ptss$class), aes(x1,x2,fill=disc)) +
   geom_point(aes(shape=as.factor(y)), size=4) +
   coord_cartesian(c(-2.5,3),c(-2.5,3)) +
+  theme_bw(base_size = 24) +
   scale_fill_viridis_d(alpha=.5,name=bquote(hat(g)(x))) +
   theme(legend.position = "bottom")
 plot_grid(g1, g2)
@@ -215,6 +223,7 @@ gq0 = ggplot(dat1, aes(x1,x2)) +
   geom_raster(data=tibble(gr,disc=z), aes(x1,x2,fill=disc)) +
   geom_point(aes(shape=as.factor(y)), size=4) +
   coord_cartesian(c(-2.5,3),c(-2.5,3)) +
+  theme_bw(base_size = 24) +
   scale_fill_steps2(n.breaks=8,name=bquote(delta[1]-delta[0])) +
   theme(legend.position = "bottom", legend.key.width=unit(3,"cm"))
 plot_grid(g0,gq0)
@@ -230,6 +239,7 @@ gq1 = ggplot(moreclasses, aes(x1,x2)) +
   geom_raster(data=tibble(gr,disc=pts_qda3$class), aes(x1,x2,fill=disc)) +
   geom_point(aes(shape=as.factor(y)), size=4) +
   coord_cartesian(c(-2.5,3),c(-2.5,3)) +
+  theme_bw(base_size = 24) +
   scale_fill_viridis_d(alpha=.5,name=bquote(hat(g)(x))) +
   theme(legend.position = "bottom")
 plot_grid(g1,gq1)
