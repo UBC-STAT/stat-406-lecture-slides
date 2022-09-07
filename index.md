@@ -117,7 +117,7 @@ Optional reading
 | 20 Oct 21 | [Classification](slides/14-classification-intro.html), [LDA and QDA](slides/15-LDA-and-QDA.html)               |           |
 | 25 Oct 21 | No class  |           |
 | 27 Oct 21 | [Gradient descent](slides/00-gradient-descent.html), [Logistic regression](slides/16-logistic-regression.html)        |           |
-| 1 Nov 21  | [Nonlinear](slides/17-nonlinear-classifiers.html)                                                                   | HW 3 due       |
+| 1 Nov 21  | [Nonlinear](slides/17-nonlinear-classifiers.html)                                                                   |       |
 {: .table .table-striped}
 
 
@@ -135,7 +135,7 @@ Optional reading
 
 | Date      | Slides                                                                                                        | Deadlines |
 |:----------|:--------------------------------------------------------------------------------------------------------------|:----------|
-| 3 Nov 21  | [The bootstrap](slides/18-the-bootstrap.html)                                                                 |    |
+| 3 Nov 21  | [The bootstrap](slides/18-the-bootstrap.html)                                                                 | HW 3 due     |
 | 8 Nov 21  | [Bagging and random forests](slides/19-bagging-and-rf.html), [Boosting](slides/20-boosting.html)              |     |
 | 10 Nov 21 | (no class, Midterm Break)                                                                                     |           |
 | 15 Nov 21 | [Intro to neural nets](slides/21-nnets-intro.html), [Estimating neural nets](slides/22-nnets-estimation.html) |           |
