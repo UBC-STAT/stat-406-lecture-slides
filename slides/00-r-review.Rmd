@@ -391,6 +391,10 @@ For example `mean()`, `lm()`, `plot()`, `iris` (technically `iris` is lazy-loade
 
 * You can also access functions that the package developer didn't "export" for use with `:::` like `dplyr:::as_across_fn_call()`
 
+???
+
+That is all about accessing "objects in package environments"
+
 ---
 
 ## Other issues with environments
@@ -460,7 +464,13 @@ class: middle
 
 * paths to data or other objects are not relative to the `.Rmd` in your file system (they must be)
 
+
 ]
+
+
+<br><br>
+
+* Carefully keeping Labs / Assignments in their current location will help to avoid some of these.
 
 
 ---
@@ -488,7 +498,7 @@ class: middle, inverse, center
     * Only useful with your own functions.
     * Open the script with the function, and add `browser()` to the code somewhere
     * Then call your function.
-    * The execution will Stop where you added `browser() and you'll have access to the local objects to play around
+    * The execution will Stop where you added `browser()` and you'll have access to the local objects (and the global objects) to play around
 
 ---
 
@@ -515,9 +525,7 @@ This is a small chunk of code that runs in it's own environment and produces the
 The best way to do this is with the `{reprex}` package.
 
 ---
-## Reproducible examples
-
-### How it works
+## Reproducible examples, How it works
 
 1. Open a new `.R` script.
 
@@ -531,9 +539,15 @@ The best way to do this is with the `{reprex}` package.
 
 1. If it creates other errors, that may be the problem. You may fix the bug on your own!
 
+1. If it doesn't have errors, then your global environment is Farblunget.
+
 1. The Output is now on your clipboard. Go to Slack and paste it in a message. Then press `Cmd+Shift+Enter` (on Mac) or `Ctrl+Shift+Enter` (Windows/Linux). Under Type, select `R`.
 
 1. Send the message, perhaps with more description and an SOS emoji.
+
+.emphasis[
+Note: Because Reprex runs in it's own environment, it doesn't have access to any of the libraries you loaded or the stuff in your global environment. You'll have to load these things in the script.
+]
 
 ---
 class: middle, inverse, center
