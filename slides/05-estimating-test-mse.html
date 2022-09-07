@@ -38,7 +38,7 @@ class: center, middle, inverse, title-slide
 ### Daniel J. McDonald
 ]
 .date[
-### Last modified - 2022-08-29
+### Last modified - 2022-09-02
 ]
 
 ---
@@ -272,33 +272,32 @@ To alleviate some of these problems, people usually use `\(K\)`-fold cross valid
 #' @param data The full data set
 #' @param estimator Function. Has 1 argument (some data) and fits a model. 
 #' @param predictor Function. Has 2 args (the fitted model, the_newdata) and produces predictions
+#' @param error_fun Function. Has one arg: the test data, with fits added.
 #' @param kfolds Integer. The number of folds.
-#' @param responsename Character. The column name of "y" in the data
-kfold_cv &lt;- function(data, estimator, predictor, kfolds = 5, responsename = "y") {
+kfold_cv &lt;- function(data, estimator, predictor, 
+                     error_fun, kfolds = 5) {
   n &lt;- nrow(data)
   fold.labels &lt;- sample(rep(1:kfolds, length.out = n))
-  mses &lt;- double(kfolds)
+  errors &lt;- double(kfolds)
   for (fold in 1:kfolds) {
     test.rows &lt;- fold.labels == fold
     train &lt;- data[!test.rows, ]
     test &lt;- data[test.rows, ]
     current_model &lt;- estimator(train)
-    predictions &lt;- predictor(current_model, test)
-    test_responses &lt;- test[, responsename]
-    test_errors &lt;- test_responses - predictions
-    mses[fold] &lt;- mean(test_errors^2)
+    test$.preds &lt;- predictor(current_model, test)
+    errors[fold] &lt;- error_fun(test)
   }
-  mean(mses)
+  mean(errors)
 }
 ```
 
 
 ```r
-# Example
 somedata &lt;- data.frame(z = rnorm(100), x1 = rnorm(100), x2 = rnorm(100))
 est &lt;- function(dataset) lm(z ~ ., data = dataset)
 pred &lt;- function(mod, dataset) predict(mod, newdata = dataset)
-kfold_cv(somedata, est, pred, 5, "z")
+error_fun &lt;- function(testdata) mutate(testdata, errs = (z - .preds)^2) %&gt;% pull(errs) %&gt;% mean()
+kfold_cv(somedata, est, pred, error_fun, 5)
 ```
 
 ```

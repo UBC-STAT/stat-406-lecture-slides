@@ -15,7 +15,7 @@ htmltools::tagList(
   ),
   rmarkdown::html_dependency_font_awesome()
 )
-xaringanExtra::use_extra_styles(
-  mute_unhighlighted_code = FALSE
-)
-xaringanExtra::use_progress_bar(color = primary, location = "top")
+# xaringanExtra::use_extra_styles(
+#   mute_unhighlighted_code = FALSE
+# )
+# xaringanExtra::use_progress_bar(color = primary, location = "top")

@@ -44,7 +44,7 @@ source("rmd_config.R")
 
 * This is where you complete/submit assignments/projects/in-class-work
 
-* This is hosted by UBC <https://learning.github.ubc.ca/STAT-406-101-2021W/>
+* This is also hosted on Servers outside Canada <https://github.com/stat-406-2022w/>
 
 ---
 
@@ -52,13 +52,13 @@ source("rmd_config.R")
 
 * Yes, some data is hosted on servers in the US.
 
-* But in the real world, no one uses Canvas/Piazza, so why not learn things they do use?
+* But in the real world, no one uses Canvas / Piazza, so why not learn things they do use?
 
 * Much easier to communicate, "mark" or comment on your work
 
 * Much more DS friendly
 
-* Note that MDS uses both of these, the department uses both, Google / Amazon / Facebook use things like these, etc.
+* Note that MDS uses both of these, the Stat and CS departments use both, many faculty use them, Google / Amazon / Facebook use things like these, etc.
 
 --
 
@@ -137,6 +137,7 @@ makes you stronger.
 
 ## Overview
 
+
 * `git` is a command line program that lives on your machine
 
 * If you want to track changes in a directory, you type `git init`
@@ -156,6 +157,11 @@ makes you stronger.
 ---
 
 ## Aside on built-in / command line
+
+.emphasis[
+First things first, RStudio and the Terminal
+]
+
 
 * Command line is the "old" type of computing. You type commands at a prompt and the computer "does stuff". 
 
@@ -178,20 +184,20 @@ makes you stronger.
 
 .pull-left[
 1. Download a repo from Github
-```
-git clone https://learning.github.ubc.ca/STAT-406-101-2021W/wkshts-labs-dajmcdon.git
+```bash
+git clone https://github.com/stat-406-2022W/labs-dajmcdon.git
 ```
 2. Create a **branch**
-```
+```bash
 git branch <branchname>
 ```
 3. Make changes to your files.
 4. Add your changes to be tracked ("stage" them)
-```
+```bash
 git add <name/of/tracked/file>
 ```
 5. Commit your changes
-```
+```bash
 git commit -m "Some explanatory message"
 ```
 
@@ -199,7 +205,7 @@ git commit -m "Some explanatory message"
 **Repeat 3--5 as needed. Once you're satisfied**
 
 * Push to Github
-```
+```bash
 git push
 git push -u origin <branchname>
 ```
@@ -233,7 +239,7 @@ git push -u origin <branchname>
 
 * A file called `.gitignore` tells `git` files or types to never track
 
-```
+```bash
 # History files
 .Rhistory
 .Rapp.history
@@ -247,7 +253,7 @@ git push -u origin <branchname>
 
 * Shortcut to track everything (use carefully):
 
-```
+```bash
 git add .
 ```
 
@@ -259,13 +265,20 @@ git add .
 ## Rules
 
 
-**Homework and Labs**
+### Homework and Labs
+
 * You each have your own repo
+
 * You make a branch
-* *DO NOT* rename files
-* Make enough commits (2 for labs, 5 for HW).
+
+* .secondary.hand[DO NOT] rename files
+
+* Make enough commits (3 for labs, 5 for HW).
+
 * Push your changes (at anytime) and make a PR against `main` when done.
+
 * TAs review your work.
+
 * On HW, if you want to revise, make changes in response to feedback and push to the same branch.
 
 
@@ -321,7 +334,7 @@ git add .
     1. `develop` contains things not yet on `main`, but thoroughly tested
     1. On a schedule (once a week, once a month) `develop` gets merged to `main`
     1. You work on a `feature` branch off `develop` to build your new feature
-    1. You do a PR against `develop` 
+    1. You do a PR against `develop`. Supervisors review your contributions
     
 --
 
@@ -349,7 +362,7 @@ I and many DS/CS/Stat faculty use this workflow with my lab.
 
 .emphasis[
 If you try to push to `main`, it will give an error like
-```
+```bash
 remote: error: GH006: Protected branch update failed for refs/heads/main.
 ```
 ]
@@ -385,7 +398,7 @@ Covers:
 
 #### Command line versions (of the same)
 
-```
+```bash
 git add <name/of/file>
 git commit -m "some useful message"
 git push
@@ -400,7 +413,7 @@ git checkout -b <name/of/branch>
 
 .pull-left[
 .primary[Initializing]
-```
+```bash
 git config user.name --global "Daniel J. McDonald"
 git config user.email --global "daniel@stat.ubc.ca"
 git config core.editor --global nano 
@@ -409,13 +422,13 @@ git config core.editor --global nano
 
 
 .primary[Staging]
-```
+```bash
 git add name/of/file # stage 1 file
 git add . # stage all
 ```
 
 .primary[Committing]
-```
+```bash
 # stage/commit simultaneously
 git commit -am "message" 
 
@@ -424,7 +437,7 @@ git commit
 ```
 
 .primary[Pushing]
-```
+```bash
 # If branchname doesn't exist
 # on remote, create it and push
 git push -u origin branchname
@@ -433,7 +446,7 @@ git push -u origin branchname
 
 .pull-right[
 .primary[Branching]
-```
+```bash
 # switch to branchname, error if uncommitted changes
 git checkout branchname 
 # switch to a previous commit
@@ -456,7 +469,7 @@ git branch -v # list all branches
 ```
 
 .primary[Check the status]
-```
+```bash
 git status
 git remote -v # list remotes
 git log # show recent commits, msgs
@@ -475,7 +488,7 @@ Meaning that changes on one branch would overwrite changes on a different branch
 
 They look like this.
 
-```
+```bash
 Here are lines that are either unchanged from the common
 ancestor, or cleanly resolved because only one side changed.
 
@@ -526,15 +539,15 @@ But always delete the `<<<<<`, `======`, and `>>>>>` lines.
 
 .pull-left[
 **1.** Saved but not staged
-* In RStudio, select the file and click `r fa("cog", fill="blue")` `r fa("caret-down")` then select `r fa("undo", fill="red")` Revert...
-```
+* In RStudio, select the file and click `r fa("gear", fill="blue")` `r fa("caret-down")` then select `r fa("arrow-rotate-left", fill="red")` Revert...
+```bash
 # grab the previously committed version
 git checkout -- README.md 
 ```
 
 **2.** Staged but not committed
 * In RStudio, uncheck the box by the file, then use the method above.
-```
+```bash
 # unstage
 git reset HEAD README.md
 git checkout -- README.md
@@ -545,14 +558,14 @@ git checkout -- README.md
 
 **3.** Committed
 * Not easy to do in RStudio...
-```
+```bash
 # check the log to see where you made the chg, 
 git log
 # go one step before that (eg to 32b252)
 # and grab that earlier version
 git checkout 32b252 -- README.md
 ```
-```
+```bash
 # alternatively
 # if it happens to also be on another branch
 git checkout otherbranch -- README.md
@@ -564,7 +577,7 @@ git checkout otherbranch -- README.md
 ## Recovering from things
 
 1. Accidentally did work on main, Tried to Push but got refused
-```
+```bash
 # make a new branch with everything, but stay on main
 git branch newbranch
 # find out where to go to
@@ -575,7 +588,7 @@ git checkout newbranch
 ```
 
 2. Made a branch, did lots of work, realized it all s**ks
-```
+```bash
 git checkout main
 git branch -d badbranch
 ```
@@ -591,6 +604,9 @@ git branch -d badbranch
 # Example of setting up labs
 
 * Cloning your repo.
+
 * Creating a branch.
+
 * Knitting the Rmd.
+
 * Where to put answers.

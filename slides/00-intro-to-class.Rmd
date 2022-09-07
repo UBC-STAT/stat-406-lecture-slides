@@ -149,11 +149,31 @@ class: middle, center
 
 ---
 
+## Predictive models
+
+<br><br>
+
+### 1. Preprocessing 
+
+centering / scaling / factors-to-dummies / basis expansion / missing values / dimension reduction / discretization / transformations
+
+### 2. Model fitting
+
+Which box do you use?
+
+### 3. Prediction
+
+Repeat all the preprocessing on new data. But be careful.
+
+### 4. Postprocessing, interpretation, and evaluation
+
+---
+
 ## 6 modules
 
 
 .pull-left[
-1. Baby review
+1. Review (today and next week)
 
 2. Model accuracy and selection
 
@@ -179,6 +199,9 @@ class: middle, center
 
 ## Assessments
 
+
+### Effort-based
+
 Total across three components: 70 points, any way you want
 
 1. .secondary[Labs], up to 20 points (2 each)
@@ -187,6 +210,8 @@ Total across three components: 70 points, any way you want
 
 1. .secondary[Clickers], up to 10 points
 
+
+### Knowledge-based
 
 Final Exam, 30 points
 
@@ -214,6 +239,9 @@ Time expectations per week:
 * Labs: 1 hour  
 * Homework: 4 hours  
 
+???
+
+Show the course website https://ubc-stat.github.io/stat-406/
 
 ---
 
@@ -228,7 +256,7 @@ Time expectations per week:
 
 * Not easy, especially the first 2, especially if you are unfamiliar with R / Rmarkdown / ggplot
 
-* You may revise for 50% of missed points, see [Syllabus](https://ubc-stat.github.io/stat-406/syllabus/)
+* You may revise for 50% of missed points, see [Syllabus](https://ubc-stat.github.io/stat-406/syllabus/). Only if you get 10 or lower. Penalties can't be redeemed.
 
 * Don't leave these for the last minute
 
@@ -238,7 +266,7 @@ Time expectations per week:
 
 * They are due at 2300 on the day of your lab, lightly graded.
 
-* You may do them at home, but this is not advised (better to work in the lab)
+* You may do them at home, but you must submit individually (in lab, you may share submission)
 
 
 * Labs are lightly graded
@@ -256,9 +284,14 @@ Time expectations per week:
     * Average of 2 = 5 points
     * Average of 1 = 0 points
 
+* Be sure to sync your device in Canvas.
+
 .secondary[Average < 1 drops your Final Mark 1 letter grade]
 
+
 ]
+
+
 
 ---
 
@@ -294,7 +327,12 @@ If you're cool with B- and hate tests, then that's fine.
 * To compensate, I will record the class and post to Canvas.
 
 * In terms of last year's class, attendence in lecture and active engagement (asking questions, coming to office hours, etc.) is the best predictor of success. 
+
 ]
+
+--
+
+* Last year, I received 20+ requests for Letters of Recommendation. This year, if you don't make a habit of participation, I won't write a letter.
 
 --
 
@@ -317,6 +355,14 @@ Available **free** online: http://statlearning.com/
 *The Elements of Statistical Learning*, Hastie, Tibshirani, Friedman, 2009, Second Edition, Springer, New York. (denoted [ESL])
 
 Also available **free** online: https://web.stanford.edu/~hastie/ElemStatLearn/
+
+--
+
+ ---
+
+It's worth your time to read.
+
+If you need more practice, read the Worksheets.
 
 
 ---
@@ -375,9 +421,9 @@ Links to useful supplementary resources are available on the website.
 
 * Coding is hard. I hope you'll get better at it.
 
-* "In-person"/ Hybrid/ Remote classes are hard. Living at home, in another country, with your siblings/kids/family is hard. 
+* "In-person" / Hybrid / Remote classes are hard. Living at home, in another country, with your siblings/kids/family is hard. 
 
-* I strongly urge you to get up at the same time everyday. My plan is to go to the gym on M/W/F. It's really hard to sleep in until 10 on MWF and make class at 8 on T/Th.
+* I strongly urge you to get up at the same time everyday. My plan is to go to the gym on MWF. It's really hard to sleep in until 10 on MWF and make class at 8 on T/Th.
 
 --
 
@@ -399,6 +445,6 @@ class: middle, center
 
 https://ubc-stat.github.io/stat-406/
 
-https://learning.github.ubc.ca/STAT-406-101-2021W1
+https://github.com/stat-406-2022w/
 
 

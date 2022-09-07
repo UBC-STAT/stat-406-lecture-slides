@@ -24,7 +24,7 @@ class: center, middle, inverse, title-slide
 ### Daniel J. McDonald
 ]
 .date[
-### Last modified - 2022-08-24
+### Last modified - 2022-09-07
 ]
 
 ---
@@ -66,7 +66,7 @@ class: center, middle, inverse, title-slide
 
 * This is where you complete/submit assignments/projects/in-class-work
 
-* This is hosted by UBC &lt;https://learning.github.ubc.ca/STAT-406-101-2021W/&gt;
+* This is also hosted on Servers outside Canada &lt;https://github.com/stat-406-2022w/&gt;
 
 ---
 
@@ -74,13 +74,13 @@ class: center, middle, inverse, title-slide
 
 * Yes, some data is hosted on servers in the US.
 
-* But in the real world, no one uses Canvas/Piazza, so why not learn things they do use?
+* But in the real world, no one uses Canvas / Piazza, so why not learn things they do use?
 
 * Much easier to communicate, "mark" or comment on your work
 
 * Much more DS friendly
 
-* Note that MDS uses both of these, the department uses both, Google / Amazon / Facebook use things like these, etc.
+* Note that MDS uses both of these, the Stat and CS departments use both, many faculty use them, Google / Amazon / Facebook use things like these, etc.
 
 --
 
@@ -159,6 +159,7 @@ makes you stronger.
 
 ## Overview
 
+
 * `git` is a command line program that lives on your machine
 
 * If you want to track changes in a directory, you type `git init`
@@ -178,6 +179,11 @@ makes you stronger.
 ---
 
 ## Aside on built-in / command line
+
+.emphasis[
+First things first, RStudio and the Terminal
+]
+
 
 * Command line is the "old" type of computing. You type commands at a prompt and the computer "does stuff". 
 
@@ -200,20 +206,20 @@ makes you stronger.
 
 .pull-left[
 1. Download a repo from Github
-```
-git clone https://learning.github.ubc.ca/STAT-406-101-2021W/wkshts-labs-dajmcdon.git
+```bash
+git clone https://github.com/stat-406-2022W/labs-dajmcdon.git
 ```
 2. Create a **branch**
-```
+```bash
 git branch &lt;branchname&gt;
 ```
 3. Make changes to your files.
 4. Add your changes to be tracked ("stage" them)
-```
+```bash
 git add &lt;name/of/tracked/file&gt;
 ```
 5. Commit your changes
-```
+```bash
 git commit -m "Some explanatory message"
 ```
 
@@ -221,7 +227,7 @@ git commit -m "Some explanatory message"
 **Repeat 3--5 as needed. Once you're satisfied**
 
 * Push to Github
-```
+```bash
 git push
 git push -u origin &lt;branchname&gt;
 ```
@@ -255,7 +261,7 @@ git push -u origin &lt;branchname&gt;
 
 * A file called `.gitignore` tells `git` files or types to never track
 
-```
+```bash
 # History files
 .Rhistory
 .Rapp.history
@@ -269,7 +275,7 @@ git push -u origin &lt;branchname&gt;
 
 * Shortcut to track everything (use carefully):
 
-```
+```bash
 git add .
 ```
 
@@ -281,13 +287,20 @@ git add .
 ## Rules
 
 
-**Homework and Labs**
+### Homework and Labs
+
 * You each have your own repo
+
 * You make a branch
-* *DO NOT* rename files
-* Make enough commits (2 for labs, 5 for HW).
+
+* .secondary.hand[DO NOT] rename files
+
+* Make enough commits (3 for labs, 5 for HW).
+
 * Push your changes (at anytime) and make a PR against `main` when done.
+
 * TAs review your work.
+
 * On HW, if you want to revise, make changes in response to feedback and push to the same branch.
 
 
@@ -343,7 +356,7 @@ git add .
     1. `develop` contains things not yet on `main`, but thoroughly tested
     1. On a schedule (once a week, once a month) `develop` gets merged to `main`
     1. You work on a `feature` branch off `develop` to build your new feature
-    1. You do a PR against `develop` 
+    1. You do a PR against `develop`. Supervisors review your contributions
     
 --
 
@@ -371,7 +384,7 @@ I and many DS/CS/Stat faculty use this workflow with my lab.
 
 .emphasis[
 If you try to push to `main`, it will give an error like
-```
+```bash
 remote: error: GH006: Protected branch update failed for refs/heads/main.
 ```
 ]
@@ -407,7 +420,7 @@ Covers:
 
 #### Command line versions (of the same)
 
-```
+```bash
 git add &lt;name/of/file&gt;
 git commit -m "some useful message"
 git push
@@ -422,7 +435,7 @@ git checkout -b &lt;name/of/branch&gt;
 
 .pull-left[
 .primary[Initializing]
-```
+```bash
 git config user.name --global "Daniel J. McDonald"
 git config user.email --global "daniel@stat.ubc.ca"
 git config core.editor --global nano 
@@ -431,13 +444,13 @@ git config core.editor --global nano
 
 
 .primary[Staging]
-```
+```bash
 git add name/of/file # stage 1 file
 git add . # stage all
 ```
 
 .primary[Committing]
-```
+```bash
 # stage/commit simultaneously
 git commit -am "message" 
 
@@ -446,7 +459,7 @@ git commit
 ```
 
 .primary[Pushing]
-```
+```bash
 # If branchname doesn't exist
 # on remote, create it and push
 git push -u origin branchname
@@ -455,7 +468,7 @@ git push -u origin branchname
 
 .pull-right[
 .primary[Branching]
-```
+```bash
 # switch to branchname, error if uncommitted changes
 git checkout branchname 
 # switch to a previous commit
@@ -478,7 +491,7 @@ git branch -v # list all branches
 ```
 
 .primary[Check the status]
-```
+```bash
 git status
 git remote -v # list remotes
 git log # show recent commits, msgs
@@ -497,7 +510,7 @@ Meaning that changes on one branch would overwrite changes on a different branch
 
 They look like this.
 
-```
+```bash
 Here are lines that are either unchanged from the common
 ancestor, or cleanly resolved because only one side changed.
 
@@ -548,15 +561,15 @@ But always delete the `&lt;&lt;&lt;&lt;&lt;`, `======`, and `&gt;&gt;&gt;&gt;&gt
 
 .pull-left[
 **1.** Saved but not staged
-* In RStudio, select the file and click <svg aria-hidden="true" role="img" viewBox="0 0 512 512" style="height:1em;width:1em;vertical-align:-0.125em;margin-left:auto;margin-right:auto;font-size:inherit;fill:blue;overflow:visible;position:relative;"><path d="M487.4 315.7l-42.6-24.6c4.3-23.2 4.3-47 0-70.2l42.6-24.6c4.9-2.8 7.1-8.6 5.5-14-11.1-35.6-30-67.8-54.7-94.6-3.8-4.1-10-5.1-14.8-2.3L380.8 110c-17.9-15.4-38.5-27.3-60.8-35.1V25.8c0-5.6-3.9-10.5-9.4-11.7-36.7-8.2-74.3-7.8-109.2 0-5.5 1.2-9.4 6.1-9.4 11.7V75c-22.2 7.9-42.8 19.8-60.8 35.1L88.7 85.5c-4.9-2.8-11-1.9-14.8 2.3-24.7 26.7-43.6 58.9-54.7 94.6-1.7 5.4.6 11.2 5.5 14L67.3 221c-4.3 23.2-4.3 47 0 70.2l-42.6 24.6c-4.9 2.8-7.1 8.6-5.5 14 11.1 35.6 30 67.8 54.7 94.6 3.8 4.1 10 5.1 14.8 2.3l42.6-24.6c17.9 15.4 38.5 27.3 60.8 35.1v49.2c0 5.6 3.9 10.5 9.4 11.7 36.7 8.2 74.3 7.8 109.2 0 5.5-1.2 9.4-6.1 9.4-11.7v-49.2c22.2-7.9 42.8-19.8 60.8-35.1l42.6 24.6c4.9 2.8 11 1.9 14.8-2.3 24.7-26.7 43.6-58.9 54.7-94.6 1.5-5.5-.7-11.3-5.6-14.1zM256 336c-44.1 0-80-35.9-80-80s35.9-80 80-80 80 35.9 80 80-35.9 80-80 80z"/></svg> <svg aria-hidden="true" role="img" viewBox="0 0 320 512" style="height:1em;width:0.62em;vertical-align:-0.125em;margin-left:auto;margin-right:auto;font-size:inherit;fill:currentColor;overflow:visible;position:relative;"><path d="M31.3 192h257.3c17.8 0 26.7 21.5 14.1 34.1L174.1 354.8c-7.8 7.8-20.5 7.8-28.3 0L17.2 226.1C4.6 213.5 13.5 192 31.3 192z"/></svg> then select <svg aria-hidden="true" role="img" viewBox="0 0 512 512" style="height:1em;width:1em;vertical-align:-0.125em;margin-left:auto;margin-right:auto;font-size:inherit;fill:red;overflow:visible;position:relative;"><path d="M212.333 224.333H12c-6.627 0-12-5.373-12-12V12C0 5.373 5.373 0 12 0h48c6.627 0 12 5.373 12 12v78.112C117.773 39.279 184.26 7.47 258.175 8.007c136.906.994 246.448 111.623 246.157 248.532C504.041 393.258 393.12 504 256.333 504c-64.089 0-122.496-24.313-166.51-64.215-5.099-4.622-5.334-12.554-.467-17.42l33.967-33.967c4.474-4.474 11.662-4.717 16.401-.525C170.76 415.336 211.58 432 256.333 432c97.268 0 176-78.716 176-176 0-97.267-78.716-176-176-176-58.496 0-110.28 28.476-142.274 72.333h98.274c6.627 0 12 5.373 12 12v48c0 6.627-5.373 12-12 12z"/></svg> Revert...
-```
+* In RStudio, select the file and click <svg aria-hidden="true" role="img" viewBox="0 0 512 512" style="height:1em;width:1em;vertical-align:-0.125em;margin-left:auto;margin-right:auto;font-size:inherit;fill:blue;overflow:visible;position:relative;"><path d="M495.9 166.6C499.2 175.2 496.4 184.9 489.6 191.2L446.3 230.6C447.4 238.9 448 247.4 448 256C448 264.6 447.4 273.1 446.3 281.4L489.6 320.8C496.4 327.1 499.2 336.8 495.9 345.4C491.5 357.3 486.2 368.8 480.2 379.7L475.5 387.8C468.9 398.8 461.5 409.2 453.4 419.1C447.4 426.2 437.7 428.7 428.9 425.9L373.2 408.1C359.8 418.4 344.1 427 329.2 433.6L316.7 490.7C314.7 499.7 307.7 506.1 298.5 508.5C284.7 510.8 270.5 512 255.1 512C241.5 512 227.3 510.8 213.5 508.5C204.3 506.1 197.3 499.7 195.3 490.7L182.8 433.6C167 427 152.2 418.4 138.8 408.1L83.14 425.9C74.3 428.7 64.55 426.2 58.63 419.1C50.52 409.2 43.12 398.8 36.52 387.8L31.84 379.7C25.77 368.8 20.49 357.3 16.06 345.4C12.82 336.8 15.55 327.1 22.41 320.8L65.67 281.4C64.57 273.1 64 264.6 64 256C64 247.4 64.57 238.9 65.67 230.6L22.41 191.2C15.55 184.9 12.82 175.3 16.06 166.6C20.49 154.7 25.78 143.2 31.84 132.3L36.51 124.2C43.12 113.2 50.52 102.8 58.63 92.95C64.55 85.8 74.3 83.32 83.14 86.14L138.8 103.9C152.2 93.56 167 84.96 182.8 78.43L195.3 21.33C197.3 12.25 204.3 5.04 213.5 3.51C227.3 1.201 241.5 0 256 0C270.5 0 284.7 1.201 298.5 3.51C307.7 5.04 314.7 12.25 316.7 21.33L329.2 78.43C344.1 84.96 359.8 93.56 373.2 103.9L428.9 86.14C437.7 83.32 447.4 85.8 453.4 92.95C461.5 102.8 468.9 113.2 475.5 124.2L480.2 132.3C486.2 143.2 491.5 154.7 495.9 166.6V166.6zM256 336C300.2 336 336 300.2 336 255.1C336 211.8 300.2 175.1 256 175.1C211.8 175.1 176 211.8 176 255.1C176 300.2 211.8 336 256 336z"/></svg> <svg aria-hidden="true" role="img" viewBox="0 0 320 512" style="height:1em;width:0.62em;vertical-align:-0.125em;margin-left:auto;margin-right:auto;font-size:inherit;fill:currentColor;overflow:visible;position:relative;"><path d="M310.6 246.6l-127.1 128C176.4 380.9 168.2 384 160 384s-16.38-3.125-22.63-9.375l-127.1-128C.2244 237.5-2.516 223.7 2.438 211.8S19.07 192 32 192h255.1c12.94 0 24.62 7.781 29.58 19.75S319.8 237.5 310.6 246.6z"/></svg> then select <svg aria-hidden="true" role="img" viewBox="0 0 512 512" style="height:1em;width:1em;vertical-align:-0.125em;margin-left:auto;margin-right:auto;font-size:inherit;fill:red;overflow:visible;position:relative;"><path d="M480 256c0 123.4-100.5 223.9-223.9 223.9c-48.86 0-95.19-15.58-134.2-44.86c-14.14-10.59-17-30.66-6.391-44.81c10.61-14.09 30.69-16.97 44.8-6.375c27.84 20.91 61 31.94 95.89 31.94C344.3 415.8 416 344.1 416 256s-71.67-159.8-159.8-159.8C205.9 96.22 158.6 120.3 128.6 160H192c17.67 0 32 14.31 32 32S209.7 224 192 224H48c-17.67 0-32-14.31-32-32V48c0-17.69 14.33-32 32-32s32 14.31 32 32v70.23C122.1 64.58 186.1 32.11 256.1 32.11C379.5 32.11 480 132.6 480 256z"/></svg> Revert...
+```bash
 # grab the previously committed version
 git checkout -- README.md 
 ```
 
 **2.** Staged but not committed
 * In RStudio, uncheck the box by the file, then use the method above.
-```
+```bash
 # unstage
 git reset HEAD README.md
 git checkout -- README.md
@@ -567,14 +580,14 @@ git checkout -- README.md
 
 **3.** Committed
 * Not easy to do in RStudio...
-```
+```bash
 # check the log to see where you made the chg, 
 git log
 # go one step before that (eg to 32b252)
 # and grab that earlier version
 git checkout 32b252 -- README.md
 ```
-```
+```bash
 # alternatively
 # if it happens to also be on another branch
 git checkout otherbranch -- README.md
@@ -586,7 +599,7 @@ git checkout otherbranch -- README.md
 ## Recovering from things
 
 1. Accidentally did work on main, Tried to Push but got refused
-```
+```bash
 # make a new branch with everything, but stay on main
 git branch newbranch
 # find out where to go to
@@ -597,7 +610,7 @@ git checkout newbranch
 ```
 
 2. Made a branch, did lots of work, realized it all s**ks
-```
+```bash
 git checkout main
 git branch -d badbranch
 ```
@@ -607,6 +620,18 @@ git branch -d badbranch
 4. In the Lab next week, you'll practice 
     * Doing it right.
     * Recovering from some mistakes.
+    
+---
+
+# Example of setting up labs
+
+* Cloning your repo.
+
+* Creating a branch.
+
+* Knitting the Rmd.
+
+* Where to put answers.
     </textarea>
 <style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
 <script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>

@@ -18,8 +18,6 @@
     <script>window.xaringanExtraClipboard(null, {"button":"<i class=\"fa fa-clipboard\"><\/i>","success":"<i class=\"fa fa-check\" style=\"color: #90BE6D\"><\/i>","error":"Press Ctrl+C to Copy"})</script>
     <link href="materials/libs/font-awesome/css/all.css" rel="stylesheet" />
     <link href="materials/libs/font-awesome/css/v4-shims.css" rel="stylesheet" />
-    <link href="materials/libs/xaringanExtra-extra-styles/xaringanExtra-extra-styles.css" rel="stylesheet" />
-    <script src="materials/libs/xaringanExtra-progressBar/progress-bar.js"></script>
     <script src="https://kit.fontawesome.com/ae71192e04.js" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="materials/xaringan-themer.css" type="text/css" />
     <link rel="stylesheet" href="materials/slides-style.css" type="text/css" />
@@ -38,7 +36,7 @@ class: center, middle, inverse, title-slide
 ### Daniel J. McDonald
 ]
 .date[
-### Last modified - 2022-08-26
+### Last modified - 2022-09-07
 ]
 
 ---
@@ -48,26 +46,7 @@ class: middle, inverse, center
 
 
 
-<style>.panelset{--panel-tab-active-foreground: #2c365e;--panel-tab-hover-foreground: #e98a15;}</style><style>.xe__progress-bar__container {
-  top:0;
-  opacity: 1;
-  position:absolute;
-  right:0;
-  left: 0;
-}
-.xe__progress-bar {
-  height: 0.25em;
-  background-color: #2c365e;
-  width: calc(var(--slide-current) / var(--slide-total) * 100%);
-}
-.remark-visible .xe__progress-bar {
-  animation: xe__progress-bar__wipe 200ms forwards;
-  animation-timing-function: cubic-bezier(.86,0,.07,1);
-}
-@keyframes xe__progress-bar__wipe {
-  0% { width: calc(var(--slide-previous) / var(--slide-total) * 100%); }
-  100% { width: calc(var(--slide-current) / var(--slide-total) * 100%); }
-}</style>
+<style>.panelset{--panel-tab-active-foreground: #2c365e;--panel-tab-hover-foreground: #e98a15;}</style>
 
 
 
@@ -1107,7 +1086,6 @@ covid
 ##  9 ca        2022-08-05 confirmed_7dav_incidence_prop  40.6
 ## 10 wa        2022-08-05 confirmed_7dav_incidence_prop  34.6
 ## # … with 74 more rows
-## # ℹ Use `print(n = ...)` to see more rows
 ```
 
 ]
@@ -1148,7 +1126,7 @@ covid %&gt;%
 ## # A tibble: 4 × 3
 ##   geo_value signal        med
 ##   &lt;chr&gt;     &lt;chr&gt;       &lt;dbl&gt;
-## 1 ca        case_rate  32.8  
+## 1 ca        case_rate  33.2  
 ## 2 ca        death_rate  0.115
 ## 3 wa        case_rate  23.2  
 ## 4 wa        death_rate  0.178
@@ -1199,7 +1177,6 @@ covid %&gt;%
 ##  9 ca        2022-08-05      40.6      0.118
 ## 10 wa        2022-08-05      34.6      0.225
 ## # … with 32 more rows
-## # ℹ Use `print(n = ...)` to see more rows
 ```
 ]
 

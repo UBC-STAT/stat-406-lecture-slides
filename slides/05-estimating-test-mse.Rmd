@@ -226,32 +226,31 @@ text(2,1.5,'Testing data',cex=3,col=red)
 #' @param data The full data set
 #' @param estimator Function. Has 1 argument (some data) and fits a model. 
 #' @param predictor Function. Has 2 args (the fitted model, the_newdata) and produces predictions
+#' @param error_fun Function. Has one arg: the test data, with fits added.
 #' @param kfolds Integer. The number of folds.
-#' @param responsename Character. The column name of "y" in the data
-kfold_cv <- function(data, estimator, predictor, kfolds = 5, responsename = "y") {
+kfold_cv <- function(data, estimator, predictor, 
+                     error_fun, kfolds = 5) {
   n <- nrow(data)
   fold.labels <- sample(rep(1:kfolds, length.out = n))
-  mses <- double(kfolds)
+  errors <- double(kfolds)
   for (fold in 1:kfolds) {
     test.rows <- fold.labels == fold
     train <- data[!test.rows, ]
     test <- data[test.rows, ]
     current_model <- estimator(train)
-    predictions <- predictor(current_model, test)
-    test_responses <- test[, responsename]
-    test_errors <- test_responses - predictions
-    mses[fold] <- mean(test_errors^2)
+    test$.preds <- predictor(current_model, test)
+    errors[fold] <- error_fun(test)
   }
-  mean(mses)
+  mean(errors)
 }
 ```
 
 ```{r}
-# Example
 somedata <- data.frame(z = rnorm(100), x1 = rnorm(100), x2 = rnorm(100))
 est <- function(dataset) lm(z ~ ., data = dataset)
 pred <- function(mod, dataset) predict(mod, newdata = dataset)
-kfold_cv(somedata, est, pred, 5, "z")
+error_fun <- function(testdata) mutate(testdata, errs = (z - .preds)^2) %>% pull(errs) %>% mean()
+kfold_cv(somedata, est, pred, error_fun, 5)
 ```
 
 ---
