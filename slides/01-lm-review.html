@@ -5,7 +5,7 @@
     <meta charset="utf-8" />
     <meta name="author" content="STAT 406" />
     <meta name="author" content="Daniel J. McDonald" />
-    <meta name="date" content="2022-08-29" />
+    <meta name="date" content="2022-09-14" />
     <script src="materials/libs/header-attrs/header-attrs.js"></script>
     <script src="materials/libs/fabric/fabric.min.js"></script>
     <link href="materials/libs/xaringanExtra-scribble/scribble.css" rel="stylesheet" />
@@ -19,8 +19,6 @@
     <script>window.xaringanExtraClipboard(null, {"button":"<i class=\"fa fa-clipboard\"><\/i>","success":"<i class=\"fa fa-check\" style=\"color: #90BE6D\"><\/i>","error":"Press Ctrl+C to Copy"})</script>
     <link href="materials/libs/font-awesome/css/all.css" rel="stylesheet" />
     <link href="materials/libs/font-awesome/css/v4-shims.css" rel="stylesheet" />
-    <link href="materials/libs/xaringanExtra-extra-styles/xaringanExtra-extra-styles.css" rel="stylesheet" />
-    <script src="materials/libs/xaringanExtra-progressBar/progress-bar.js"></script>
     <script src="https://kit.fontawesome.com/ae71192e04.js" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="materials/xaringan-themer.css" type="text/css" />
     <link rel="stylesheet" href="materials/slides-style.css" type="text/css" />
@@ -39,7 +37,7 @@ class: center, middle, inverse, title-slide
 ### Daniel J. McDonald
 ]
 .date[
-### 2022-08-29
+### 2022-09-14
 ]
 
 ---
@@ -47,26 +45,7 @@ class: center, middle, inverse, title-slide
 
 
 
-<style>.panelset{--panel-tab-active-foreground: #2c365e;--panel-tab-hover-foreground: #e98a15;}</style><style>.xe__progress-bar__container {
-  top:0;
-  opacity: 1;
-  position:absolute;
-  right:0;
-  left: 0;
-}
-.xe__progress-bar {
-  height: 0.25em;
-  background-color: #2c365e;
-  width: calc(var(--slide-current) / var(--slide-total) * 100%);
-}
-.remark-visible .xe__progress-bar {
-  animation: xe__progress-bar__wipe 200ms forwards;
-  animation-timing-function: cubic-bezier(.86,0,.07,1);
-}
-@keyframes xe__progress-bar__wipe {
-  0% { width: calc(var(--slide-previous) / var(--slide-total) * 100%); }
-  100% { width: calc(var(--slide-current) / var(--slide-total) * 100%); }
-}</style>
+<style>.panelset{--panel-tab-active-foreground: #2c365e;--panel-tab-hover-foreground: #e98a15;}</style>
 
 
 ## The normal linear model
@@ -113,7 +92,7 @@ sigma &lt;- 2
 ```r
 epsilon &lt;- rnorm(n, sd = sigma) # this is random
 X &lt;- matrix(runif(n * p), n, p) # treat this as fixed, but I need numbers
-beta &lt;- rpois(p + 1, 5) # parameter, also fixed, but I again need numbers
+beta &lt;- (p + 1):1 # parameter, also fixed, but I again need numbers
 Y &lt;- cbind(1, X) %*% beta + epsilon # epsilon is random, so this is
 ## Equiv: Y &lt;- beta[1] + X %*% beta[-1] + epsilon
 ```
@@ -135,6 +114,8 @@ Suppose I want to find an estimator `\(\widehat\beta\)` which makes small errors
 
 I measure errors with the difference between predictions `\(\mathbf{X}\widehat\beta\)` and the responses `\(\mathbf{y}\)`.
 
+.pull-left[
+
 I don't care if the differences are positive or negative, so I try to measure the total error with
 
 
@@ -147,6 +128,12 @@ So I use
 
 
 `$$\sum_{i=1}^n ( y_i - x_i^\top \widehat\beta )^2.$$`
+]
+
+.pull-right[
+
+![:scale 75%](gfx/islr3_4.png)
+]
 
 
 ---

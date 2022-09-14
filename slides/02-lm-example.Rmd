@@ -18,8 +18,8 @@ source("rmd_config.R")
 
 
 ```{r}
-mobility <- readRDS("data/mobility.RDS")
 library(tidyverse)
+data(mobility, package = "Stat406")
 mobility
 ```
 
@@ -27,7 +27,7 @@ mobility
 
 Note how many observations and predictors it has.
 
-We'll use `mobility` as the response
+We'll use `Mobility` as the response
 
 
 ---
@@ -35,7 +35,7 @@ We'll use `mobility` as the response
 ## A linear model
 
 
-$$\mbox{mobility}_i = \beta_0 + \beta_1 \, \mbox{State}_i + \beta_2 \, \mbox{Urban}_i + \cdots + \epsilon_i$$ 
+$$\mbox{Mobility}_i = \beta_0 + \beta_1 \, \mbox{State}_i + \beta_2 \, \mbox{Urban}_i + \cdots + \epsilon_i$$ 
     
 or equivalently
 
@@ -59,13 +59,13 @@ $$E \left[ \biggl. \mbox{mobility} \, \biggr| \, \mbox{State}, \mbox{Urban},
 --
 
 ```{r}
-set.seed(20210901)
-mob <- mobility[complete.cases(mobility),]
+set.seed(20220914)
+mob <- mobility[complete.cases(mobility), ]
 n <- nrow(mob)
-mob <- mob %>% select(-Name,-ID,-State)
+mob <- mob %>% select(-Name, -ID, -State)
 set <- sample.int(n, floor(n * .75), FALSE)
-train <- mob[set,]  #<<
-test <- mob[setdiff(1:n, set),]
+train <- mob[set, ]
+test <- mob[setdiff(1:n, set), ]
 full <- lm(Mobility ~ ., data = train)
 ```
 
@@ -101,6 +101,35 @@ plot(full, 2)
 
 ---
 
+(Those were `plot` methods for objects of class `lm`)
+### Same thing in `ggplot`
+
+.pull-left[
+
+```{r, fig.height=5}
+stuff <- tibble(residuals = residuals(full), 
+                fitted = fitted(full),
+                stdresiduals = rstandard(full))
+ggplot(stuff, aes(fitted, residuals)) +
+  geom_point(colour = "salmon") +
+  geom_smooth(se = FALSE, colour = "steelblue") +
+  ggtitle("Residuals vs Fitted")
+```
+]
+
+.pull-right[
+```{r, fig.height=5}
+ggplot(stuff, aes(sample = stdresiduals)) +
+  geom_qq(colour = "plum") +
+  geom_qq_line(colour = "peachpuff") +
+  labs(x = "Theoretical quantiles", 
+       y = "Standardized residuals",
+       title = "Normal Q-Q")
+```
+]
+
+---
+
 ## Fit a reduced model
 
 ```{r}
@@ -108,8 +137,8 @@ reduced <- lm(
   Mobility ~ Commute + Gini_99 + Test_scores + HS_dropout +
     Manufacturing + Migration_in + Religious + Single_mothers, 
   data = train)
-reduced %>% broom::tidy()
-reduced %>% broom::glance()
+summary(reduced)$coefficients %>% as_tibble()
+reduced %>% broom::glance() %>% print(width = 120)
 ```
 
 ---
@@ -138,34 +167,39 @@ plot(reduced, 2)
 
 * Goodness of fit versus prediction power
 
+```{r}
+map( # smaller AIC is better
+  list(full = full, reduced = reduced), 
+  ~ c(aic = AIC(.x), rsq = summary(.x)$r.sq))
+```
+
 * Use both models to predict `Mobility` 
 
 * Compare both sets of predictions
 
 
 ```{r}
-test$full <- predict(full, newdata = test)
-test$reduced <- predict(reduced, newdata = test)
-
-mses <- function(preds, obs) mean( (obs - preds)^2 )
-
-summarize(
-  test, 
-  across(full:reduced, ~ mses(.x, Mobility))
-)
+mses <- function(preds, obs) round(mean((obs - preds)^2), 5)
+c(full = mses(predict(full, newdata = test), 
+              test$Mobility),
+  reduced = mses(predict(reduced, newdata = test), 
+                 test$Mobility))
 ```
 ]
 
 .pull-right[
 ```{r, echo=FALSE}
+test$full <- predict(full, newdata = test)
+test$reduced <- predict(reduced, newdata = test)
 test %>% 
   select(Mobility, full, reduced) %>%
   pivot_longer(-Mobility) %>%
-  ggplot(aes(Mobility,value)) + geom_point(color="orange") + 
+  ggplot(aes(Mobility,value)) + 
+  geom_point(color = "orange") + 
   facet_wrap(~name, 2) +
   xlab('observed mobility') + 
   ylab('predicted mobility') +
-  geom_abline(slope=1,intercept = 0,col="blue")
+  geom_abline(slope = 1, intercept = 0, col = "blue")
 ```
 
 ]

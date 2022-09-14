@@ -18,8 +18,6 @@
     <script>window.xaringanExtraClipboard(null, {"button":"<i class=\"fa fa-clipboard\"><\/i>","success":"<i class=\"fa fa-check\" style=\"color: #90BE6D\"><\/i>","error":"Press Ctrl+C to Copy"})</script>
     <link href="materials/libs/font-awesome/css/all.css" rel="stylesheet" />
     <link href="materials/libs/font-awesome/css/v4-shims.css" rel="stylesheet" />
-    <link href="materials/libs/xaringanExtra-extra-styles/xaringanExtra-extra-styles.css" rel="stylesheet" />
-    <script src="materials/libs/xaringanExtra-progressBar/progress-bar.js"></script>
     <script src="https://kit.fontawesome.com/ae71192e04.js" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="materials/xaringan-themer.css" type="text/css" />
     <link rel="stylesheet" href="materials/slides-style.css" type="text/css" />
@@ -38,7 +36,7 @@ class: center, middle, inverse, title-slide
 ### Daniel J. McDonald
 ]
 .date[
-### Last modified - 2022-08-29
+### Last modified - 2022-09-14
 ]
 
 ---
@@ -46,26 +44,7 @@ class: center, middle, inverse, title-slide
 
 
 
-<style>.panelset{--panel-tab-active-foreground: #2c365e;--panel-tab-hover-foreground: #e98a15;}</style><style>.xe__progress-bar__container {
-  top:0;
-  opacity: 1;
-  position:absolute;
-  right:0;
-  left: 0;
-}
-.xe__progress-bar {
-  height: 0.25em;
-  background-color: #2c365e;
-  width: calc(var(--slide-current) / var(--slide-total) * 100%);
-}
-.remark-visible .xe__progress-bar {
-  animation: xe__progress-bar__wipe 200ms forwards;
-  animation-timing-function: cubic-bezier(.86,0,.07,1);
-}
-@keyframes xe__progress-bar__wipe {
-  0% { width: calc(var(--slide-previous) / var(--slide-total) * 100%); }
-  100% { width: calc(var(--slide-current) / var(--slide-total) * 100%); }
-}</style>
+<style>.panelset{--panel-tab-active-foreground: #2c365e;--panel-tab-hover-foreground: #e98a15;}</style>
 
 
 ## Economic mobility
@@ -73,25 +52,25 @@ class: center, middle, inverse, title-slide
 
 
 ```r
-mobility &lt;- readRDS("data/mobility.RDS")
 library(tidyverse)
+data(mobility, package = "Stat406")
 mobility
 ```
 
 ```
 ## # A tibble: 741 × 43
-##       ID Name  Mobil…¹ State Popul…² Urban Black Seg_r…³ Seg_i…⁴ Seg_p…⁵ Seg_a…⁶
-##    &lt;dbl&gt; &lt;chr&gt;   &lt;dbl&gt; &lt;chr&gt;   &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;
-##  1   100 John…  0.0622 TN     576081     1 0.021   0.09    0.035   0.03    0.038
-##  2   200 Morr…  0.0537 TN     227816     1 0.02    0.093   0.026   0.028   0.025
-##  3   301 Midd…  0.0726 TN      66708     0 0.015   0.064   0.024   0.015   0.026
-##  4   302 Knox…  0.0563 TN     727600     1 0.056   0.21    0.092   0.084   0.102
-##  5   401 Wins…  0.0448 NC     493180     1 0.174   0.262   0.072   0.061   0.081
-##  6   402 Mart…  0.0518 VA      92753     0 0.224   0.137   0.024   0.015   0.028
-##  7   500 Gree…  0.0474 NC    1055133     1 0.218   0.22    0.068   0.058   0.077
-##  8   601 Nort…  0.0517 NC      90016     0 0.032   0.114   0.012   0.009   0.012
-##  9   602 Galax  0.0796 VA      64676     0 0.029   0.131   0.005   0.004   0.006
-## 10   700 Spar…  0.0431 SC     354533     1 0.207   0.139   0.045   0.044   0.045
+##       ID Name    Mobil…¹ State Popul…² Urban Black Seg_r…³ Seg_i…⁴ Seg_p…⁵ Seg_a…⁶
+##    &lt;dbl&gt; &lt;chr&gt;     &lt;dbl&gt; &lt;chr&gt;   &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;
+##  1   100 Johnso…  0.0622 TN     576081     1 0.021   0.09    0.035   0.03    0.038
+##  2   200 Morris…  0.0537 TN     227816     1 0.02    0.093   0.026   0.028   0.025
+##  3   301 Middle…  0.0726 TN      66708     0 0.015   0.064   0.024   0.015   0.026
+##  4   302 Knoxvi…  0.0563 TN     727600     1 0.056   0.21    0.092   0.084   0.102
+##  5   401 Winsto…  0.0448 NC     493180     1 0.174   0.262   0.072   0.061   0.081
+##  6   402 Martin…  0.0518 VA      92753     0 0.224   0.137   0.024   0.015   0.028
+##  7   500 Greens…  0.0474 NC    1055133     1 0.218   0.22    0.068   0.058   0.077
+##  8   601 North …  0.0517 NC      90016     0 0.032   0.114   0.012   0.009   0.012
+##  9   602 Galax    0.0796 VA      64676     0 0.029   0.131   0.005   0.004   0.006
+## 10   700 Sparta…  0.0431 SC     354533     1 0.207   0.139   0.045   0.044   0.045
 ## # … with 731 more rows, 32 more variables: Commute &lt;dbl&gt;, Income &lt;dbl&gt;,
 ## #   Gini &lt;dbl&gt;, Share01 &lt;dbl&gt;, Gini_99 &lt;dbl&gt;, Middle_class &lt;dbl&gt;,
 ## #   Local_tax_rate &lt;dbl&gt;, Local_gov_spending &lt;dbl&gt;, Progressivity &lt;dbl&gt;,
@@ -105,7 +84,7 @@ mobility
 
 Note how many observations and predictors it has.
 
-We'll use `mobility` as the response
+We'll use `Mobility` as the response
 
 
 ---
@@ -113,7 +92,7 @@ We'll use `mobility` as the response
 ## A linear model
 
 
-`$$\mbox{mobility}_i = \beta_0 + \beta_1 \, \mbox{State}_i + \beta_2 \, \mbox{Urban}_i + \cdots + \epsilon_i$$` 
+`$$\mbox{Mobility}_i = \beta_0 + \beta_1 \, \mbox{State}_i + \beta_2 \, \mbox{Urban}_i + \cdots + \epsilon_i$$` 
     
 or equivalently
 
@@ -138,13 +117,13 @@ or equivalently
 
 
 ```r
-set.seed(20210901)
-mob &lt;- mobility[complete.cases(mobility),]
+set.seed(20220914)
+mob &lt;- mobility[complete.cases(mobility), ]
 n &lt;- nrow(mob)
-mob &lt;- mob %&gt;% select(-Name,-ID,-State)
+mob &lt;- mob %&gt;% select(-Name, -ID, -State)
 set &lt;- sample.int(n, floor(n * .75), FALSE)
-*train &lt;- mob[set,]
-test &lt;- mob[setdiff(1:n, set),]
+train &lt;- mob[set, ]
+test &lt;- mob[setdiff(1:n, set), ]
 full &lt;- lm(Mobility ~ ., data = train)
 ```
 
@@ -168,57 +147,57 @@ summary(full)
 ## lm(formula = Mobility ~ ., data = train)
 ## 
 ## Residuals:
-##      Min       1Q   Median       3Q      Max 
-## -0.08062 -0.01088 -0.00049  0.01009  0.12369 
+##       Min        1Q    Median        3Q       Max 
+## -0.072092 -0.010256 -0.001452  0.009170  0.090428 
 ## 
 ## Coefficients:
 ##                             Estimate Std. Error t value Pr(&gt;|t|)    
-## (Intercept)                1.792e-01  9.034e-02   1.984  0.04828 *  
-## Population                 1.544e-09  3.065e-09   0.504  0.61479    
-## Urban                      1.681e-03  4.281e-03   0.393  0.69491    
-## Black                      9.918e-02  3.005e-02   3.300  0.00109 ** 
-## Seg_racial                -3.879e-02  2.021e-02  -1.919  0.05600 .  
-## Seg_income                 1.120e+00  1.040e+00   1.076  0.28269    
-## Seg_poverty               -9.580e-01  5.548e-01  -1.727  0.08534 .  
-## Seg_affluence             -3.396e-01  5.315e-01  -0.639  0.52341    
-## Commute                    8.022e-02  3.251e-02   2.468  0.01422 *  
-## Income                     1.300e-07  7.628e-07   0.170  0.86483    
-## Gini                       4.682e+00  3.562e+00   1.314  0.18981    
-## Share01                   -4.697e-02  3.563e-02  -1.318  0.18853    
-## Gini_99                   -4.749e+00  3.563e+00  -1.333  0.18366    
-## Middle_class               1.068e-01  5.452e-02   1.959  0.05110 .  
-## Local_tax_rate             1.331e-01  2.955e-01   0.450  0.65280    
-## Local_gov_spending        -1.385e-06  3.364e-06  -0.412  0.68087    
-## Progressivity              5.823e-03  1.330e-03   4.380 1.70e-05 ***
-## EITC                      -5.584e-04  4.975e-04  -1.123  0.26261    
-## School_spending           -1.380e-03  2.483e-03  -0.556  0.57882    
-## Student_teacher_ratio     -7.143e-04  1.233e-03  -0.580  0.56269    
-## Test_scores                4.931e-04  3.310e-04   1.489  0.13753    
-## HS_dropout                -3.276e-01  9.914e-02  -3.304  0.00108 ** 
-## Colleges                  -5.200e-02  9.220e-02  -0.564  0.57326    
-## Tuition                    3.740e-07  4.808e-07   0.778  0.43732    
-## Graduation                -2.843e-02  1.489e-02  -1.909  0.05729 .  
-## Labor_force_participation -1.798e-02  5.944e-02  -0.302  0.76256    
-## Manufacturing             -1.899e-01  3.192e-02  -5.949 8.22e-09 ***
-## Chinese_imports           -8.892e-04  8.063e-04  -1.103  0.27111    
-## Teenage_labor             -2.939e+00  2.377e+00  -1.236  0.21737    
-## Migration_in               3.248e-01  4.074e-01   0.797  0.42600    
-## Migration_out             -8.789e-01  4.591e-01  -1.915  0.05660 .  
-## Foreign_born               1.213e-01  6.681e-02   1.815  0.07060 .  
-## Social_capital            -1.579e-03  3.096e-03  -0.510  0.61035    
-## Religious                  6.075e-02  1.389e-02   4.374 1.74e-05 ***
-## Violent_crime             -3.046e+00  1.853e+00  -1.644  0.10136    
-## Single_mothers            -3.723e-01  1.031e-01  -3.613  0.00036 ***
-## Divorced                   4.017e-02  1.677e-01   0.240  0.81082    
-## Married                   -1.212e-01  8.614e-02  -1.407  0.16070    
-## Longitude                  1.467e-04  2.507e-04   0.585  0.55882    
-## Latitude                   1.140e-03  6.468e-04   1.762  0.07918 .  
+## (Intercept)                1.849e-01  8.083e-02   2.288 0.022920 *  
+## Population                 3.378e-09  2.478e-09   1.363 0.173916    
+## Urban                      2.853e-03  3.892e-03   0.733 0.464202    
+## Black                      7.807e-02  2.859e-02   2.731 0.006735 ** 
+## Seg_racial                -5.626e-02  1.780e-02  -3.160 0.001754 ** 
+## Seg_income                 8.677e-01  9.355e-01   0.928 0.354453    
+## Seg_poverty               -7.416e-01  5.014e-01  -1.479 0.140316    
+## Seg_affluence             -2.224e-01  4.763e-01  -0.467 0.640874    
+## Commute                    6.313e-02  2.838e-02   2.225 0.026915 *  
+## Income                     4.207e-07  6.997e-07   0.601 0.548112    
+## Gini                       3.592e+00  3.357e+00   1.070 0.285578    
+## Share01                   -3.635e-02  3.357e-02  -1.083 0.279925    
+## Gini_99                   -3.657e+00  3.356e+00  -1.090 0.276704    
+## Middle_class               1.031e-01  4.835e-02   2.133 0.033828 *  
+## Local_tax_rate             2.268e-01  2.620e-01   0.866 0.387487    
+## Local_gov_spending         1.273e-07  3.016e-06   0.042 0.966374    
+## Progressivity              4.983e-03  1.324e-03   3.764 0.000205 ***
+## EITC                      -3.324e-04  4.528e-04  -0.734 0.463549    
+## School_spending           -9.019e-04  2.272e-03  -0.397 0.691658    
+## Student_teacher_ratio     -1.639e-03  1.123e-03  -1.459 0.145748    
+## Test_scores                2.487e-04  3.137e-04   0.793 0.428519    
+## HS_dropout                -1.698e-01  9.352e-02  -1.816 0.070529 .  
+## Colleges                  -2.811e-02  7.661e-02  -0.367 0.713942    
+## Tuition                    3.459e-07  4.362e-07   0.793 0.428417    
+## Graduation                -1.702e-02  1.425e-02  -1.194 0.233650    
+## Labor_force_participation -7.850e-02  5.405e-02  -1.452 0.147564    
+## Manufacturing             -1.605e-01  2.816e-02  -5.700  3.1e-08 ***
+## Chinese_imports           -5.165e-04  1.004e-03  -0.514 0.607378    
+## Teenage_labor             -1.019e+00  2.111e+00  -0.483 0.629639    
+## Migration_in               4.490e-02  3.480e-01   0.129 0.897436    
+## Migration_out             -4.475e-01  4.093e-01  -1.093 0.275224    
+## Foreign_born               9.137e-02  5.494e-02   1.663 0.097454 .  
+## Social_capital            -1.114e-03  2.728e-03  -0.408 0.683245    
+## Religious                  4.570e-02  1.298e-02   3.520 0.000506 ***
+## Violent_crime             -3.393e+00  1.622e+00  -2.092 0.037373 *  
+## Single_mothers            -3.590e-01  9.442e-02  -3.802 0.000177 ***
+## Divorced                   1.707e-02  1.603e-01   0.107 0.915250    
+## Married                   -5.894e-02  7.246e-02  -0.813 0.416720    
+## Longitude                 -4.239e-05  2.239e-04  -0.189 0.850001    
+## Latitude                   6.725e-04  5.687e-04   1.182 0.238037    
 ## ---
 ## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 ## 
-## Residual standard error: 0.02347 on 273 degrees of freedom
-## Multiple R-squared:  0.7731,	Adjusted R-squared:  0.7407 
-## F-statistic: 23.85 on 39 and 273 DF,  p-value: &lt; 2.2e-16
+## Residual standard error: 0.02128 on 273 degrees of freedom
+## Multiple R-squared:  0.7808,	Adjusted R-squared:  0.7494 
+## F-statistic: 24.93 on 39 and 273 DF,  p-value: &lt; 2.2e-16
 ```
 
 ---
@@ -246,6 +225,41 @@ plot(full, 2)
 
 ---
 
+(Those were `plot` methods for objects of class `lm`)
+### Same thing in `ggplot`
+
+.pull-left[
+
+
+```r
+stuff &lt;- tibble(residuals = residuals(full), 
+                fitted = fitted(full),
+                stdresiduals = rstandard(full))
+ggplot(stuff, aes(fitted, residuals)) +
+  geom_point(colour = "salmon") +
+  geom_smooth(se = FALSE, colour = "steelblue") +
+  ggtitle("Residuals vs Fitted")
+```
+
+![](rmd_gfx/02-lm-example/unnamed-chunk-6-1.svg)&lt;!-- --&gt;
+]
+
+.pull-right[
+
+```r
+ggplot(stuff, aes(sample = stdresiduals)) +
+  geom_qq(colour = "plum") +
+  geom_qq_line(colour = "peachpuff") +
+  labs(x = "Theoretical quantiles", 
+       y = "Standardized residuals",
+       title = "Normal Q-Q")
+```
+
+![](rmd_gfx/02-lm-example/unnamed-chunk-7-1.svg)&lt;!-- --&gt;
+]
+
+---
+
 ## Fit a reduced model
 
 
@@ -254,35 +268,36 @@ reduced &lt;- lm(
   Mobility ~ Commute + Gini_99 + Test_scores + HS_dropout +
     Manufacturing + Migration_in + Religious + Single_mothers, 
   data = train)
-reduced %&gt;% broom::tidy()
+summary(reduced)$coefficients %&gt;% as_tibble()
 ```
 
 ```
-## # A tibble: 9 × 5
-##   term            estimate std.error statistic  p.value
-##   &lt;chr&gt;              &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;    &lt;dbl&gt;
-## 1 (Intercept)     0.157     0.0193        8.12 1.16e-14
-## 2 Commute         0.0788    0.0173        4.55 7.88e- 6
-## 3 Gini_99        -0.115     0.0423       -2.72 6.93e- 3
-## 4 Test_scores     0.000346  0.000274      1.26 2.08e- 1
-## 5 HS_dropout     -0.316     0.0922       -3.42 6.99e- 4
-## 6 Manufacturing  -0.158     0.0235       -6.74 7.97e-11
-## 7 Migration_in   -0.450     0.187        -2.40 1.68e- 2
-## 8 Religious       0.0487    0.0114        4.29 2.43e- 5
-## 9 Single_mothers -0.271     0.0482       -5.63 4.19e- 8
+## # A tibble: 9 × 4
+##    Estimate `Std. Error` `t value` `Pr(&gt;|t|)`
+##       &lt;dbl&gt;        &lt;dbl&gt;     &lt;dbl&gt;      &lt;dbl&gt;
+## 1  0.166        0.0178        9.36   1.83e-18
+## 2  0.0637       0.0149        4.27   2.62e- 5
+## 3 -0.109        0.0390       -2.79   5.64e- 3
+## 4  0.000500     0.000256      1.95   5.19e- 2
+## 5 -0.216        0.0820       -2.64   8.81e- 3
+## 6 -0.159        0.0202       -7.89   5.65e-14
+## 7 -0.389        0.172        -2.26   2.42e- 2
+## 8  0.0436       0.0105        4.16   4.08e- 5
+## 9 -0.286        0.0466       -6.15   2.44e- 9
 ```
 
 ```r
-reduced %&gt;% broom::glance()
+reduced %&gt;% broom::glance() %&gt;% print(width = 120)
 ```
 
 ```
 ## # A tibble: 1 × 12
-##   r.squared adj.r.s…¹  sigma stati…²  p.value    df logLik    AIC    BIC devia…³
-##       &lt;dbl&gt;     &lt;dbl&gt;  &lt;dbl&gt;   &lt;dbl&gt;    &lt;dbl&gt; &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;   &lt;dbl&gt;
-## 1     0.701     0.693 0.0255    89.0 4.65e-75     8   708. -1397. -1359.   0.198
-## # … with 2 more variables: df.residual &lt;int&gt;, nobs &lt;int&gt;, and abbreviated
-## #   variable names ¹​adj.r.squared, ²​statistic, ³​deviance
+##   r.squared adj.r.squared  sigma statistic  p.value    df logLik    AIC    BIC
+##       &lt;dbl&gt;         &lt;dbl&gt;  &lt;dbl&gt;     &lt;dbl&gt;    &lt;dbl&gt; &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;
+## 1     0.718         0.711 0.0229      96.9 5.46e-79     8   743. -1466. -1429.
+##   deviance df.residual  nobs
+##      &lt;dbl&gt;       &lt;int&gt; &lt;int&gt;
+## 1    0.159         304   313
 ```
 
 ---
@@ -295,7 +310,7 @@ reduced %&gt;% broom::glance()
 plot(reduced, 1)
 ```
 
-![](rmd_gfx/02-lm-example/unnamed-chunk-7-1.svg)&lt;!-- --&gt;
+![](rmd_gfx/02-lm-example/unnamed-chunk-9-1.svg)&lt;!-- --&gt;
 ]
 
 .pull-right[
@@ -304,7 +319,7 @@ plot(reduced, 1)
 plot(reduced, 2)
 ```
 
-![](rmd_gfx/02-lm-example/unnamed-chunk-8-1.svg)&lt;!-- --&gt;
+![](rmd_gfx/02-lm-example/unnamed-chunk-10-1.svg)&lt;!-- --&gt;
 
 ]
 
@@ -317,6 +332,23 @@ plot(reduced, 2)
 
 * Goodness of fit versus prediction power
 
+
+```r
+map( # smaller AIC is better
+  list(full = full, reduced = reduced), 
+  ~ c(aic = AIC(.x), rsq = summary(.x)$r.sq))
+```
+
+```
+## $full
+##           aic           rsq 
+## -1482.5981023     0.7807509 
+## 
+## $reduced
+##          aic          rsq 
+## -1466.088492     0.718245
+```
+
 * Use both models to predict `Mobility` 
 
 * Compare both sets of predictions
@@ -324,27 +356,21 @@ plot(reduced, 2)
 
 
 ```r
-test$full &lt;- predict(full, newdata = test)
-test$reduced &lt;- predict(reduced, newdata = test)
-
-mses &lt;- function(preds, obs) mean( (obs - preds)^2 )
-
-summarize(
-  test, 
-  across(full:reduced, ~ mses(.x, Mobility))
-)
+mses &lt;- function(preds, obs) round(mean((obs - preds)^2), 5)
+c(full = mses(predict(full, newdata = test), 
+              test$Mobility),
+  reduced = mses(predict(reduced, newdata = test), 
+                 test$Mobility))
 ```
 
 ```
-## # A tibble: 1 × 2
-##       full  reduced
-##      &lt;dbl&gt;    &lt;dbl&gt;
-## 1 0.000451 0.000463
+##    full reduced 
+## 0.00072 0.00084
 ```
 ]
 
 .pull-right[
-![](rmd_gfx/02-lm-example/unnamed-chunk-10-1.svg)&lt;!-- --&gt;
+![](rmd_gfx/02-lm-example/unnamed-chunk-13-1.svg)&lt;!-- --&gt;
 
 ]
 
