@@ -5,7 +5,7 @@
     <meta charset="utf-8" />
     <meta name="author" content="STAT 406" />
     <meta name="author" content="Daniel J. McDonald" />
-    <meta name="date" content="2022-09-14" />
+    <meta name="date" content="2022-09-15" />
     <script src="materials/libs/header-attrs/header-attrs.js"></script>
     <script src="materials/libs/fabric/fabric.min.js"></script>
     <link href="materials/libs/xaringanExtra-scribble/scribble.css" rel="stylesheet" />
@@ -37,7 +37,7 @@ class: center, middle, inverse, title-slide
 ### Daniel J. McDonald
 ]
 .date[
-### 2022-09-14
+### 2022-09-15
 ]
 
 ---
@@ -163,9 +163,9 @@ We differentiate and set to zero
 
 `\begin{aligned}
 &amp; \frac{\partial}{\partial \beta} \frac{1}{n}\sum_{i=1}^n ( y_i - x_i^\top \beta )^2\\
-&amp;= \frac{2}{n}\sum_{i=1}^n x_i (y_i - x_i^\top\beta)\\
-&amp;= \frac{2}{n}\sum_{i=1}^n - x_i x_i^\top \beta + x_i y_i\\
-0 &amp;\equiv \sum_{i=1}^n - x_i x_i^\top \beta + x_i y_i\\
+&amp;= -\frac{2}{n}\sum_{i=1}^n x_i (y_i - x_i^\top\beta)\\
+&amp;= \frac{2}{n}\sum_{i=1}^n x_i x_i^\top \beta - x_i y_i\\
+0 &amp;\equiv \sum_{i=1}^n x_i x_i^\top \beta - x_i y_i\\
 &amp;\Rightarrow \sum_{i=1}^n x_i x_i^\top \beta = \sum_{i=1}^n x_i y_i\\
 &amp;\Rightarrow \beta = \left(\sum_{i=1}^n x_i x_i^\top\right)^{-1}\sum_{i=1}^n x_i y_i
 \end{aligned}`

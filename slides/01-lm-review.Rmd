@@ -127,9 +127,9 @@ We differentiate and set to zero
 
 \begin{aligned}
 & \frac{\partial}{\partial \beta} \frac{1}{n}\sum_{i=1}^n ( y_i - x_i^\top \beta )^2\\
-&= \frac{2}{n}\sum_{i=1}^n x_i (y_i - x_i^\top\beta)\\
-&= \frac{2}{n}\sum_{i=1}^n - x_i x_i^\top \beta + x_i y_i\\
-0 &\equiv \sum_{i=1}^n - x_i x_i^\top \beta + x_i y_i\\
+&= -\frac{2}{n}\sum_{i=1}^n x_i (y_i - x_i^\top\beta)\\
+&= \frac{2}{n}\sum_{i=1}^n x_i x_i^\top \beta - x_i y_i\\
+0 &\equiv \sum_{i=1}^n x_i x_i^\top \beta - x_i y_i\\
 &\Rightarrow \sum_{i=1}^n x_i x_i^\top \beta = \sum_{i=1}^n x_i y_i\\
 &\Rightarrow \beta = \left(\sum_{i=1}^n x_i x_i^\top\right)^{-1}\sum_{i=1}^n x_i y_i
 \end{aligned}
