@@ -4,19 +4,8 @@ author:
   - "STAT 406"
   - "Daniel J. McDonald"
 date: 'Last modified - `r Sys.Date()`'
-output:
-  xaringan::moon_reader:
-    includes:
-      in_header: 
-        - materials/load-fa.html
-    lib_dir: libs
-    css: ["materials/xaringan-themer.css","slides-style.css"]
-    nature:
-      highlightStyle: zenburn
-      highlightLines: true
-      countIncrementalSlides: false
-      ratio: "16:9"
 ---
+
 
 ## Why this class?
 
@@ -32,15 +21,11 @@ More idiosyncratic:
 
 --
 
-"Machine Learning Hype / It is magical"
+(Paraphrase) "Was going to drop since it's 8am + Clickers, but your website is cool"
 
 --
 
-"YOU"
-
---
-
-Some is hoping to learn "NLP & NLU"
+"Learn strategies."
 
 --
  
@@ -53,12 +38,16 @@ Some is hoping to learn "NLP & NLU"
 
 ```{r setup, include=FALSE}
 source("rmd_config.R")
-quiz = readr::read_csv("../grade-processing/quiz0-for-R.csv")
+theme_set(theme_bw(16))
+quiz <- readRDS(here::here("..", "..", "WinterT1-2022", "quiz0", "quiz0-3.rds"))
 ```
 
-```{r, echo=FALSE, fig.height=6, fig.align='center'}
-quiz %>% ggplot(aes(str_wrap(syllabus,20))) + geom_bar(fill=blue) + 
-  xlab("") + theme_cowplot()
+```{r, echo=FALSE, fig.height=6, fig.align='center', fig.width=12}
+quiz %>% 
+  ggplot(aes(str_wrap(syllabus, 20))) + 
+  geom_bar(fill = blue) + 
+  scale_y_continuous(expand = expansion(c(0,0.05))) +
+  xlab("") 
 ```
 
 ---
@@ -66,8 +55,10 @@ quiz %>% ggplot(aes(str_wrap(syllabus,20))) + geom_bar(fill=blue) +
 ## Programming languages
 
 ```{r, echo=FALSE, fig.height=6, fig.width=12, fig.align='center'}
-quiz %>% ggplot(aes(str_wrap(R,20))) + geom_bar(fill=blue) + 
-  xlab("") + theme_cowplot()
+quiz %>% 
+  ggplot(aes(str_wrap(R,20))) + geom_bar(fill=blue) + 
+  scale_y_continuous(expand = expansion(c(0,0.05))) +
+  xlab("")
 library(MASS)
 ```
 
@@ -100,14 +91,17 @@ solve(t(X) %*% X) %*% t(X) %*% y
 ## Pets and plans
 
 ```{r, echo=FALSE, fig.height=6, fig.width=12, fig.align='center'}
+library(cowplot)
 p1 = quiz %>% 
-  ggplot(aes(str_wrap(pets,30))) + geom_bar(fill=blue) + 
+  ggplot(aes(str_wrap(pet,30))) + geom_bar(fill=blue) + 
   coord_flip() + 
-  xlab("") + theme_cowplot()
+  scale_y_continuous(expand = expansion(c(0,0.05))) +
+  xlab("")
 p2 = quiz %>% 
-  ggplot(aes(str_wrap(plans,20))) + geom_bar(fill=orange) + 
+  ggplot(aes(str_wrap(post_grad,20))) + geom_bar(fill=orange) + 
   coord_flip() + 
-  xlab("") + theme_cowplot()
+  scale_y_continuous(expand = expansion(c(0,0.05))) +
+  xlab("")
 plot_grid(p1,p2)
 ```
 
@@ -115,16 +109,27 @@ plot_grid(p1,p2)
 
 ## Grade predictions
 
-```{r, echo=FALSE, fig.height=6, fig.width=12, fig.align='center'}
-s406 = as.factor(rep(c("50-54%","55-59%","60-63%","64-67%","68-71%","72-75%","76-79%","80-84%","85-89%","90-100%"), times=c(3,1,3,9,5,13,10,11,20,27)))
-preds = cut(quiz$grade[!is.na(quiz$grade)], 
+```{r, echo=FALSE, fig.height=4, fig.width=12, fig.align='center'}
+s406 = as.factor(rep(c("50-54%","55-59%","60-63%","64-67%","68-71%","72-75%","76-79%","80-84%","85-89%","90-100%"), times=c(0,0,3,7,4,18,28,24,20,11)))
+preds = cut(quiz$final_grade[!is.na(quiz$final_grade)], 
             c(0,50,54,59,63,67,71,75,79,84,89,101),
             c("<50%","50-54%","55-59%","60-63%","64-67%","68-71%","72-75%","76-79%","80-84%","85-89%","90-100%"))
-data.frame(name=rep(c("2018 distribution", "your predictions"), 
+data.frame(name=rep(c("2021 distribution", "your predictions"), 
                     times=c(length(s406),length(preds))), 
            value=fct_c(s406,preds)) %>%
   mutate(value = fct_relevel(value, "<50%")) %>%
   ggplot(aes(value, fill=name)) + geom_bar(position = position_dodge()) +
-  scale_fill_manual(values=c(blue,orange)) + theme_cowplot()
-
+  scale_y_continuous(expand = expansion(c(0,0.05))) +
+  scale_fill_manual(values=c(blue,orange))
 ```
+
+* 3 people say 100%
+* 26 say 90%
+* 36 say 85%
+* 27 say 80%
+* Lots of clumping
+
+
+--
+
+1 said 76.83, which is a really specific B+
