@@ -36,7 +36,7 @@ class: center, middle, inverse, title-slide
 ### Daniel J. McDonald
 ]
 .date[
-### Last modified - 2022-09-21
+### Last modified - 2022-09-22
 ]
 
 ---
@@ -94,7 +94,7 @@ Recall that:
 &amp;= \Expect{(Y- f(X) + f(X) - \widehat{f}(X))^2}\\
 &amp;= \Expect{(Y-f(X))^2 + (f(X) - \widehat{f}(X))^2 + 2(Y-f(X))(f(X) - \widehat{f}(X)))}\\
 &amp;= \Expect{(Y-f(X))^2} + \Expect{(f(X) - \widehat{f}(X))^2} + 2\Expect{(Y-f(X))(f(X) - \widehat{f}(X)))}\\
-&amp;= \sigma^2 + \Expect{\left(f(X) - \Expect{\widehat{f}(X)} + \Expect{\widehat{f}(X)}+ \widehat{f}(X)\right)^2} + 2\Expect{Y-f(X)}\Expect{f(X) - \widehat{f}(X)}\\
+&amp;= \sigma^2 + \Expect{\left(f(X) - \Expect{\widehat{f}(X)} + \Expect{\widehat{f}(X)} - \widehat{f}(X)\right)^2} + 2\Expect{Y-f(X)}\Expect{f(X) - \widehat{f}(X)}\\
 &amp;= \sigma^2 + \Expect{\left(f(X) - \Expect{\widehat{f}(X)}\right)^2} + \Expect{\left(\Expect{\widehat{f}(X)} - \widehat{f}(X)\right)^2} +\\
 &amp;\quad\quad 2\Expect{\left(f(X) - \Expect{\widehat{f}(X)}\right) \left(\Expect{\widehat{f}(X)} - \widehat{f}(X)\right)} + 0\\
 &amp; = \sigma^2 + \left(f(X) - \Expect{\widehat{f}(X)}\right)^2 + \Var{\widehat{f}(X)} + 0\\
