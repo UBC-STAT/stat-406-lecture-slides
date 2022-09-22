@@ -18,8 +18,6 @@
     <script>window.xaringanExtraClipboard(null, {"button":"<i class=\"fa fa-clipboard\"><\/i>","success":"<i class=\"fa fa-check\" style=\"color: #90BE6D\"><\/i>","error":"Press Ctrl+C to Copy"})</script>
     <link href="materials/libs/font-awesome/css/all.css" rel="stylesheet" />
     <link href="materials/libs/font-awesome/css/v4-shims.css" rel="stylesheet" />
-    <link href="materials/libs/xaringanExtra-extra-styles/xaringanExtra-extra-styles.css" rel="stylesheet" />
-    <script src="materials/libs/xaringanExtra-progressBar/progress-bar.js"></script>
     <script src="https://kit.fontawesome.com/ae71192e04.js" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="materials/xaringan-themer.css" type="text/css" />
     <link rel="stylesheet" href="materials/slides-style.css" type="text/css" />
@@ -38,7 +36,7 @@ class: center, middle, inverse, title-slide
 ### Daniel J. McDonald
 ]
 .date[
-### Last modified - 2022-08-29
+### Last modified - 2022-09-22
 ]
 
 ---
@@ -46,26 +44,7 @@ class: center, middle, inverse, title-slide
 
 
 
-<style>.panelset{--panel-tab-active-foreground: #2c365e;--panel-tab-hover-foreground: #e98a15;}</style><style>.xe__progress-bar__container {
-  top:0;
-  opacity: 1;
-  position:absolute;
-  right:0;
-  left: 0;
-}
-.xe__progress-bar {
-  height: 0.25em;
-  background-color: #2c365e;
-  width: calc(var(--slide-current) / var(--slide-total) * 100%);
-}
-.remark-visible .xe__progress-bar {
-  animation: xe__progress-bar__wipe 200ms forwards;
-  animation-timing-function: cubic-bezier(.86,0,.07,1);
-}
-@keyframes xe__progress-bar__wipe {
-  0% { width: calc(var(--slide-previous) / var(--slide-total) * 100%); }
-  100% { width: calc(var(--slide-current) / var(--slide-total) * 100%); }
-}</style>
+<style>.panelset{--panel-tab-active-foreground: #2c365e;--panel-tab-hover-foreground: #e98a15;}</style>
 
 
 
@@ -75,7 +54,8 @@ class: center, middle, inverse, title-slide
 
 Suppose we have a pile of predictors.
 
-We estimate models with different subsets of predictors and use CV/Cp/AIC/BIC to decide which is best.
+We estimate models with different subsets of predictors and use CV / Cp / AIC 
+/ BIC to decide which is preferred.
 
 Sometimes you might have a few plausible subsets. Easy enough to choose with our criterion.
 
@@ -85,7 +65,8 @@ Sometimes you might just have a bunch of predictors, then what do you do?
 --
 
 .pull-right[
-__All subsets__: estimate model based on every possible subset, use one with lowest AIC 
+__All subsets__: estimate model based on every possible subset of size `\(\min\{n, p\}\)`, use one with 
+lowest risk estimate
 
 __Forward selection__: start with `\(\mathcal{S}=\varnothing\)`, add predictors greedily
 
@@ -103,7 +84,7 @@ __All subsets__:
 
 <svg aria-hidden="true" role="img" viewBox="0 0 512 512" style="height:1em;width:1em;vertical-align:-0.125em;margin-left:auto;margin-right:auto;font-size:inherit;fill:#0a8754;overflow:visible;position:relative;"><path d="M128 447.1V223.1c0-17.67-14.33-31.1-32-31.1H32c-17.67 0-32 14.33-32 31.1v223.1c0 17.67 14.33 31.1 32 31.1h64C113.7 479.1 128 465.6 128 447.1zM512 224.1c0-26.5-21.48-47.98-48-47.98h-146.5c22.77-37.91 34.52-80.88 34.52-96.02C352 56.52 333.5 32 302.5 32c-63.13 0-26.36 76.15-108.2 141.6L178 186.6C166.2 196.1 160.2 210 160.1 224c-.0234 .0234 0 0 0 0L160 384c0 15.1 7.113 29.33 19.2 38.39l34.14 25.59C241 468.8 274.7 480 309.3 480H368c26.52 0 48-21.47 48-47.98c0-3.635-.4805-7.143-1.246-10.55C434 415.2 448 397.4 448 376c0-9.148-2.697-17.61-7.139-24.88C463.1 347 480 327.5 480 304.1c0-12.5-4.893-23.78-12.72-32.32C492.2 270.1 512 249.5 512 224.1z"/></svg> estimates each subset
 
-<svg aria-hidden="true" role="img" viewBox="0 0 512 512" style="height:1em;width:1em;vertical-align:-0.125em;margin-left:auto;margin-right:auto;font-size:inherit;fill:#e98a15;overflow:visible;position:relative;"><path d="M440.8 4.994C441.9 1.99 444.8 0 448 0C451.2 0 454.1 1.99 455.2 4.994L469.3 42.67L507 56.79C510 57.92 512 60.79 512 64C512 67.21 510 70.08 507 71.21L469.3 85.33L455.2 123C454.1 126 451.2 128 448 128C444.8 128 441.9 126 440.8 123L426.7 85.33L388.1 71.21C385.1 70.08 384 67.21 384 64C384 60.79 385.1 57.92 388.1 56.79L426.7 42.67L440.8 4.994zM289.4 97.37C301.9 84.88 322.1 84.88 334.6 97.37L363.3 126.1L380.7 108.7C386.9 102.4 397.1 102.4 403.3 108.7C409.6 114.9 409.6 125.1 403.3 131.3L385.9 148.7L414.6 177.4C427.1 189.9 427.1 210.1 414.6 222.6L403.8 233.5C411.7 255.5 416 279.3 416 304C416 418.9 322.9 512 208 512C93.12 512 0 418.9 0 304C0 189.1 93.12 96 208 96C232.7 96 256.5 100.3 278.5 108.3L289.4 97.37zM95.1 296C95.1 238.6 142.6 192 199.1 192H207.1C216.8 192 223.1 184.8 223.1 176C223.1 167.2 216.8 160 207.1 160H199.1C124.9 160 63.1 220.9 63.1 296V304C63.1 312.8 71.16 320 79.1 320C88.84 320 95.1 312.8 95.1 304V296z"/></svg> takes `\(2^p\)` model fits. If `\(p=50\)`, this is about `\(10^{15}\)` models. 
+<svg aria-hidden="true" role="img" viewBox="0 0 512 512" style="height:1em;width:1em;vertical-align:-0.125em;margin-left:auto;margin-right:auto;font-size:inherit;fill:#e98a15;overflow:visible;position:relative;"><path d="M440.8 4.994C441.9 1.99 444.8 0 448 0C451.2 0 454.1 1.99 455.2 4.994L469.3 42.67L507 56.79C510 57.92 512 60.79 512 64C512 67.21 510 70.08 507 71.21L469.3 85.33L455.2 123C454.1 126 451.2 128 448 128C444.8 128 441.9 126 440.8 123L426.7 85.33L388.1 71.21C385.1 70.08 384 67.21 384 64C384 60.79 385.1 57.92 388.1 56.79L426.7 42.67L440.8 4.994zM289.4 97.37C301.9 84.88 322.1 84.88 334.6 97.37L363.3 126.1L380.7 108.7C386.9 102.4 397.1 102.4 403.3 108.7C409.6 114.9 409.6 125.1 403.3 131.3L385.9 148.7L414.6 177.4C427.1 189.9 427.1 210.1 414.6 222.6L403.8 233.5C411.7 255.5 416 279.3 416 304C416 418.9 322.9 512 208 512C93.12 512 0 418.9 0 304C0 189.1 93.12 96 208 96C232.7 96 256.5 100.3 278.5 108.3L289.4 97.37zM95.1 296C95.1 238.6 142.6 192 199.1 192H207.1C216.8 192 223.1 184.8 223.1 176C223.1 167.2 216.8 160 207.1 160H199.1C124.9 160 63.1 220.9 63.1 296V304C63.1 312.8 71.16 320 79.1 320C88.84 320 95.1 312.8 95.1 304V296z"/></svg> takes `\(2^p\)` model fits ($p&lt;n$). If `\(p=50\)`, this is about `\(10^{15}\)` models. 
 
 __Forward selection__: 
 
