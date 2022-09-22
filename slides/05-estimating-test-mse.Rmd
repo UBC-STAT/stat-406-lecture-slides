@@ -20,13 +20,17 @@ source("rmd_config.R")
 
 Last time, we saw
 
-prediction risk  =  $\mathrm{bias}^2$  +  variance  +  irreducible error 
-
 $R_n(\widehat{f}) = E[(Y-\widehat{f}(X))^2]$
+
+
+prediction risk  =  $\textrm{bias}^2$  +  variance  +  irreducible error 
+
 
 We argued that we want procedures that produce $\widehat{f}$ with small $R_n$.
 
-__How do we estimate $R_n$?__
+.emphasis[
+How do we estimate $R_n$?
+]
 
 $$
 \newcommand{\Expect}[1]{E\left[ #1 \right]}
@@ -34,6 +38,7 @@ $$
 \newcommand{\Cov}[2]{\mathrm{Cov}\left[#1,\ #2\right]}
 \newcommand{\given}{\ \vert\ }
 $$
+
 
 
 ---
@@ -69,17 +74,23 @@ Recall that:
 ## Don't use training error
 
 
-Although
+The training error in regression is
 
-$$\widehat{R}_n(\widehat{f})  \approx R_n(\widehat{f}),$$
+$$\widehat{R}_n(\widehat{f}) = \frac{1}{n} \sum_{i=1}^n (y_i - \hat{f}(x_i))^2$$
 
-this approximation can be very bad.
+Here, the $n$ is doubly used (annoying, but simple): $n$ observations to create $\widehat{f}$ and $n$ terms in the sum.
 
-Lab00 demonstrates this $R^2$ ( $R^2$ is the same as "training error").
+.emphasis[
+Training error is a bad estimator for $R_n(\widehat{f})$.
+]
+
+`lab00-rsq` demonstrates this with $R^2$ ( $R^2$ roughly is the same as "training error", recall its definition).
 
 So we should __never__ use it.
 
 --
+
+ ---
 
 You should not use `anova` or the $p$-values from the `lm` output for this purpose.
 
@@ -106,7 +117,9 @@ One option is to have a separate "held out" or "validation set".
 
 --
 
-Sometimes also called a "test set". This is not the same as "new data". It's data I have, that I'm not using to fit my model.
+ ---
+
+Sometimes also called a "validation set". This is not the same as "new data". It's data I have, that I'm not using to fit my model.
 
 
 ---
@@ -134,6 +147,8 @@ Then we test our prediction:
 $$\widetilde{R}_1(\widehat{f}^{(1)}) = (y_1 -\widehat{f}^{(1)}(x_1))^2.$$
 
 
+(why the notation $\widetilde{R}_1$? Because we're estimating the risk with 1 observation. )
+
 ---
 
 ## Keep going
@@ -143,14 +158,14 @@ But that was only one data point $(y_1, x_1)$. Why stop there?
 Do the same with $(y_2, x_2)$! Get an estimate $\widehat{f}^{(2)}$ 
 without using it, then
 
-$$\widetilde{R}_2(\widehat{f}^{(2)}) = (y_2 -\widehat{f}^{(2)}(x_2))^2.$$
+$$\widetilde{R}_1(\widehat{f}^{(2)}) = (y_2 -\widehat{f}^{(2)}(x_2))^2.$$
 
 We can keep doing this until we try it for every data point.
 
 And then average them! (Averages are good)
 
 
-$$\mbox{LOO-CV} = \frac{1}{n}\sum_{i=1}^n \widetilde{R}_i(\widehat{f}^{(i)}) = \frac{1}{n}\sum_{i=1}^n 
+$$\mbox{LOO-CV} = \frac{1}{n}\sum_{i=1}^n \widetilde{R}_1(\widehat{f}^{(i)}) = \frac{1}{n}\sum_{i=1}^n 
 (y_i - \widehat{f}^{(i)}(x_i))^2$$
 
 --
@@ -198,7 +213,9 @@ To alleviate some of these problems, people usually use $K$-fold cross validatio
 
 `r con` LOO-CV is (nearly) unbiased for $R_n$
 
-`r con` The risk depends on how much data you use to estimate the model. $R_n$ depends on $n$.
+`r con` K-fold CV is unbiased for $R_{n-K/n}$
+
+The risk depends on how much data you use to estimate the model. $R_n$ depends on $n$.
 
 ]
 
@@ -219,7 +236,7 @@ text(2,1.5,'Testing data',cex=3,col=red)
 
 ---
 
-## Pseudocode
+## Code
 
 
 ```{r}
@@ -231,12 +248,12 @@ text(2,1.5,'Testing data',cex=3,col=red)
 kfold_cv <- function(data, estimator, predictor, 
                      error_fun, kfolds = 5) {
   n <- nrow(data)
-  fold.labels <- sample(rep(1:kfolds, length.out = n))
+  fold_labels <- sample(rep(1:kfolds, length.out = n))
   errors <- double(kfolds)
-  for (fold in 1:kfolds) {
-    test.rows <- fold.labels == fold
-    train <- data[!test.rows, ]
-    test <- data[test.rows, ]
+  for (fold in seq_len(kfolds)) {
+    test_rows <- fold_labels == fold
+    train <- data[!test_rows, ]
+    test <- data[test_rows, ]
     current_model <- estimator(train)
     test$.preds <- predictor(current_model, test)
     errors[fold] <- error_fun(test)
@@ -262,7 +279,7 @@ __For nice models__, one can show
 
 (after pages of tedious algebra which I wouldn't wish on my worst enemy, but might, in a fit of rage assign as homework to beligerant students) 
 
-if $\widehat{f}(x_i) = \widehat{y}_i = h_i^\top \mathbf{y}$, for some vector $h_i(\mathbf{X})$
+if $\widehat{y}_i = \widehat{f}(x_i) = h_i^\top \mathbf{y}$, for some vector $h_i(\mathbf{X})$
 ]
 
 $$\mbox{LOO-CV} = \frac{1}{n} \sum_{i=1}^n \frac{(y_i -\widehat{y}_i)^2}{(1-h_{ii})^2} = \frac{1}{n} \sum_{i=1}^n \frac{\widehat{e}_i^2}{(1-h_{ii})^2}.$$
@@ -272,7 +289,7 @@ $$\mbox{LOO-CV} = \frac{1}{n} \sum_{i=1}^n \frac{(y_i -\widehat{y}_i)^2}{(1-h_{i
 * You still have to calculate this for each model!
 
 ```{r}
-cv_nice <- function(mdl) mean((residuals(mdl) / (1 - hatvalues(mdl)))^2)
+cv_nice <- function(mdl) mean( (residuals(mdl) / (1 - hatvalues(mdl)))^2 )
 ```
 
 ---

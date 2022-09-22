@@ -18,8 +18,6 @@
     <script>window.xaringanExtraClipboard(null, {"button":"<i class=\"fa fa-clipboard\"><\/i>","success":"<i class=\"fa fa-check\" style=\"color: #90BE6D\"><\/i>","error":"Press Ctrl+C to Copy"})</script>
     <link href="materials/libs/font-awesome/css/all.css" rel="stylesheet" />
     <link href="materials/libs/font-awesome/css/v4-shims.css" rel="stylesheet" />
-    <link href="materials/libs/xaringanExtra-extra-styles/xaringanExtra-extra-styles.css" rel="stylesheet" />
-    <script src="materials/libs/xaringanExtra-progressBar/progress-bar.js"></script>
     <script src="https://kit.fontawesome.com/ae71192e04.js" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="materials/xaringan-themer.css" type="text/css" />
     <link rel="stylesheet" href="materials/slides-style.css" type="text/css" />
@@ -38,40 +36,46 @@ class: center, middle, inverse, title-slide
 ### Daniel J. McDonald
 ]
 .date[
-### Last modified - 2022-08-29
+### Last modified - 2022-09-19
 ]
 
 ---
 
+class: middle
 
 
 
 
 
-<style>.panelset{--panel-tab-active-foreground: #2c365e;--panel-tab-hover-foreground: #e98a15;}</style><style>.xe__progress-bar__container {
-  top:0;
-  opacity: 1;
-  position:absolute;
-  right:0;
-  left: 0;
-}
-.xe__progress-bar {
-  height: 0.25em;
-  background-color: #2c365e;
-  width: calc(var(--slide-current) / var(--slide-total) * 100%);
-}
-.remark-visible .xe__progress-bar {
-  animation: xe__progress-bar__wipe 200ms forwards;
-  animation-timing-function: cubic-bezier(.86,0,.07,1);
-}
-@keyframes xe__progress-bar__wipe {
-  0% { width: calc(var(--slide-previous) / var(--slide-total) * 100%); }
-  100% { width: calc(var(--slide-current) / var(--slide-total) * 100%); }
-}</style>
+<style>.panelset{--panel-tab-active-foreground: #2c365e;--panel-tab-hover-foreground: #e98a15;}</style>
+
+$$
+\newcommand{\Expect}[1]{E\left[ #1 \right]}
+\newcommand{\Var}[1]{\mathrm{Var}\left[ #1 \right]}
+\newcommand{\Cov}[2]{\mathrm{Cov}\left[#1,\ #2\right]}
+\newcommand{\given}{\ \vert\ }
+$$
 
 
 
-## What is bias?
+.alert[
+We just talked about 
+
+* Variance of an estimator.
+
+* Irriducible error when making predictions.
+
+* These are 2 of the 3 components of the "Prediction Risk" `\(R_n\)`
+]
+
+
+
+---
+
+## Component 3, the Bias
+
+
+
 
 We need to be more specific about what we mean when we say __bias__.
 
@@ -87,18 +91,12 @@ A very simple example: let `\(Z_1,\ldots,Z_n \sim N(\mu, 1)\)`.
   
       3. `\(\widehat{\mu}_3=\overline{Z}\)`.
   
-  - The __bias__ (by definition) of my estimator is `\(E\left[\widehat{\mu}\right]-\mu\)`.
+  - The __bias__ (by definition) of my estimator is `\(E\left[\widehat{\mu_i}\right]-\mu\)`.
   
 --
 
 Calculate the bias and variance of each estimator.
 
-$$
-\newcommand{\Expect}[1]{E\left[ #1 \right]}
-\newcommand{\Var}[1]{\mathrm{Var}\left[ #1 \right]}
-\newcommand{\Cov}[2]{\mathrm{Cov}\left[#1,\ #2\right]}
-\newcommand{\given}{\ \vert\ }
-$$
   
 ---
 
@@ -112,6 +110,14 @@ $$
 $$
 
 So the __bias__ of using a linear model is __not__ zero.
+
+ ---
+
+Why? Because
+
+$$
+\Expect{Y\given X=x}-x^\top\beta \neq \Expect{Y\given X=x} - \mu(x) = 0.
+$$
 
 We can include as many predictors as we like, 
 
@@ -219,7 +225,9 @@ Why care about `\(R_n(f)\)`?
 ## Bias-variance decomposition
 
 
-So,
+
+`$$R_n(\widehat{Y}_a)=(a - 1)^2\mu^2 + \frac{a^2}{n} + 1$$`
+
 
 1. prediction risk  =  `\(\textrm{bias}^2\)`  +  variance  +  irreducible error 
 
@@ -236,14 +244,38 @@ What is `\(R_n(\widehat{Y}_a)\)` for our estimator `\(\widehat{Y}_a=a\overline{Y
 \sigma^2 &amp;= \Expect{(Y-\mu)^2}=1
 \end{aligned}`
 
---
+---
+class: inverse
 
-That is: `\(R_n(\widehat{Y}_a)=(a - 1)^2\mu^2 + \frac{a^2}{n} + 1\)`
+## This decomposition holds generally
+
+`\begin{aligned}
+R_n(\hat{Y}) 
+&amp;= \Expect{(Y-\hat{Y})^2} \\
+&amp;= \Expect{(Y-\mu + \mu - \hat{Y})^2} \\
+&amp;= \Expect{(Y-\mu)^2} + \Expect{(\mu - \hat{Y})^2} + 
+2\Expect{(Y-\mu)(\mu-\hat{Y})}\\
+&amp;= \Expect{(Y-\mu)^2} + \Expect{(\mu - \hat{Y})^2} + 0\\
+&amp;= \text{irr. error} + \text{estimation risk}\\
+&amp;= \sigma^2 + \Expect{(\mu - E[\hat{Y}] + E[\hat{Y}] - \hat{Y})^2}\\
+&amp;= \sigma^2 + \Expect{(\mu - E[\hat{Y}])^2} + \Expect{(E[\hat{Y}] - \hat{Y})^2} + 2\Expect{(\mu-E[\hat{Y}])(E[\hat{Y}] - \hat{Y})}\\
+&amp;= \sigma^2 + \Expect{(\mu - E[\hat{Y}])^2} + \Expect{(E[\hat{Y}] - \hat{Y})^2} + 0\\
+&amp;= \text{irr. error} + \text{squared bias} + \text{variance}
+\end{aligned}`
 
 
 ---
 
 ## Bias-variance decomposition
+
+`\begin{aligned}
+R_n(\hat{Y}) 
+&amp;= \Expect{(Y-\hat{Y})^2} \\
+&amp;= \text{irr. error} + \text{estimation risk}\\
+&amp;= \text{irr. error} + \text{squared bias} + \text{variance}
+\end{aligned}`
+
+
 
 .alert[  
 __Important implication:__ prediction risk is proportional to estimation risk.  However, defining estimation risk requires stronger assumptions.
@@ -277,7 +309,11 @@ In order to make good predictions, we want our prediction risk to be small.  Thi
 
 --
 
-Since we can't take expectations...
+
+.emphasis[
+Since we can't evaluate any expectations with real data...
+]
+
 
 ---
 class: inverse, center, middle

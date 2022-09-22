@@ -18,8 +18,6 @@
     <script>window.xaringanExtraClipboard(null, {"button":"<i class=\"fa fa-clipboard\"><\/i>","success":"<i class=\"fa fa-check\" style=\"color: #90BE6D\"><\/i>","error":"Press Ctrl+C to Copy"})</script>
     <link href="materials/libs/font-awesome/css/all.css" rel="stylesheet" />
     <link href="materials/libs/font-awesome/css/v4-shims.css" rel="stylesheet" />
-    <link href="materials/libs/xaringanExtra-extra-styles/xaringanExtra-extra-styles.css" rel="stylesheet" />
-    <script src="materials/libs/xaringanExtra-progressBar/progress-bar.js"></script>
     <script src="https://kit.fontawesome.com/ae71192e04.js" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="materials/xaringan-themer.css" type="text/css" />
     <link rel="stylesheet" href="materials/slides-style.css" type="text/css" />
@@ -38,7 +36,7 @@ class: center, middle, inverse, title-slide
 ### Daniel J. McDonald
 ]
 .date[
-### Last modified - 2022-08-29
+### Last modified - 2022-09-21
 ]
 
 ---
@@ -46,26 +44,7 @@ class: center, middle, inverse, title-slide
 
 
 
-<style>.panelset{--panel-tab-active-foreground: #2c365e;--panel-tab-hover-foreground: #e98a15;}</style><style>.xe__progress-bar__container {
-  top:0;
-  opacity: 1;
-  position:absolute;
-  right:0;
-  left: 0;
-}
-.xe__progress-bar {
-  height: 0.25em;
-  background-color: #2c365e;
-  width: calc(var(--slide-current) / var(--slide-total) * 100%);
-}
-.remark-visible .xe__progress-bar {
-  animation: xe__progress-bar__wipe 200ms forwards;
-  animation-timing-function: cubic-bezier(.86,0,.07,1);
-}
-@keyframes xe__progress-bar__wipe {
-  0% { width: calc(var(--slide-previous) / var(--slide-total) * 100%); }
-  100% { width: calc(var(--slide-current) / var(--slide-total) * 100%); }
-}</style>
+<style>.panelset{--panel-tab-active-foreground: #2c365e;--panel-tab-hover-foreground: #e98a15;}</style>
 
 
 ## Generalized CV
@@ -89,7 +68,7 @@ Idea: replace `\(h_{ii}\)` with `\(\frac{1}{n}\sum_{i=1}^n h_{ii} = \frac{1}{n}\
 
 Let's call `\(\textrm{tr}(\mathbf{H})\)` the __effective degrees-of-freedom__ (or just __df__)
 
-`$$\textrm{GCV} = \frac{1}{n} \sum_{i=1}^n \frac{\widehat{e}_i^2}{(1-\textrm{df}/n)^2} = \frac{MSE}{(1-\textrm{df}/n)^2}$$`
+`$$\textrm{GCV} = \frac{1}{n} \sum_{i=1}^n \frac{\widehat{e}_i^2}{(1-\textrm{df}/n)^2} = \frac{\textrm{MSE}}{(1-\textrm{df}/n)^2}$$`
 
 --
 
@@ -188,39 +167,47 @@ Forms above are in [ESL] eq. (7.29) and (7.35). [ISLR] gives special cases in Se
 
 ## Over-fitting vs. Under-fitting
 
-.emphasis[Over-fitting means estimating a really complicated function when you don't have enough data.]
+.emphasis[
+Over-fitting means estimating a really complicated function when you don't have enough data.
+]
 
-This is likely a low-bias/high-variance situation.
+This is likely a .hand[low-bias / high-variance] situation.
 
-.emphasis[Under-fitting means estimating a really simple function when you have lots of data. ]
+.emphasis[
+Under-fitting means estimating a really simple function when you have lots of data. 
+]
 
-This is likely a high-bias/low-variance situation.
+This is likely a .hand[high-bias / low-variance] situation.
 
-Both of these outcomes are bad (they have high risk).
+Both of these outcomes are bad (they have high risk `\(=\)` big `\(R_n\)` ).
 
 The best way to avoid them is to use a reasonable estimate of __prediction risk__ to choose how complicated your model should be.
 
 ---
 
+## Recommendations
+
 .emphasis[
-When comparing models, choose one criterion: CV/AIC/BIC/Cp/GCV. 
+When comparing models, choose one criterion: CV / AIC / BIC / Cp / GCV. 
 
 CV is usually easiest to make sense of and doesn't depend on other unknown parameters.
 
-But requires refitting the model.
+But, it requires refitting the model.
 
-Also, can be strange in cases with discrete data, time series, replications, etc.
+Also, it can be strange in cases with discrete predictors, time series, repeated measurements, graph structures, etc.
 ]
 
-High-level discussion of these:
+--
+
+High-level intuition of these:
 
 * GCV tends to choose "dense" models.
 
-* AIC should choose the "best predictor" asymptotically
+* Theory says AIC chooses the "best predictor" asymptotically.
 
-* BIC should choose the "true model" asymptotically, tends to select fewer predictors
+* Theory says BIC should choose the "true model" asymptotically, tends to select fewer predictors.
 
-* In some special cases, AIC = Cp = SURE
+* In some special cases, AIC = Cp = SURE `\(\approx\)` LOO-CV
 
 --
 
@@ -232,6 +219,31 @@ This material is more challenging than the level of this course, and is easily a
 
 .hand-blue[My recommendation: Use CV]
 
+---
+
+## A few more caveats
+
+It is often tempting to "just compare" risk estimates from vastly different models. 
+
+For example, 
+
+* different transformations of the predictors, 
+
+* different transformations of the response, 
+
+* Poisson likelihood vs. Gaussian likelihood in `glm()`
+
+.emphasis[
+**This is not always justified.** 
+
+1. The "high-level intuition" is for "nested" models.
+
+1. Different likelihoods aren't comparable.
+
+1. Residuals / response variables on different scales aren't directly comparable.
+]
+
+"Validation set" is easy, because you're always comparing to the "right" thing. But it has lots of drawbacks.
 ---
 class: middle, inverse, center
 
