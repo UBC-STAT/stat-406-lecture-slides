@@ -22,7 +22,8 @@ library(cowplot)
 
 Suppose we have a pile of predictors.
 
-We estimate models with different subsets of predictors and use CV/Cp/AIC/BIC to decide which is best.
+We estimate models with different subsets of predictors and use CV / Cp / AIC 
+/ BIC to decide which is preferred.
 
 Sometimes you might have a few plausible subsets. Easy enough to choose with our criterion.
 
@@ -32,7 +33,8 @@ Sometimes you might just have a bunch of predictors, then what do you do?
 --
 
 .pull-right[
-__All subsets__: estimate model based on every possible subset, use one with lowest AIC 
+__All subsets__: estimate model based on every possible subset of size $\min\{n, p\}$, use one with 
+lowest risk estimate
 
 __Forward selection__: start with $\mathcal{S}=\varnothing$, add predictors greedily
 
