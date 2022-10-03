@@ -36,9 +36,9 @@ Let's use 3 neighbors
 .pull-right[
 ```{r load-lidar, echo=FALSE}
 library(cowplot)
-data(lidar, package="SemiPar")
+data(lidar, package = "SemiPar")
 set.seed(12345)
-lidar_unif = lidar[sample.int(nrow(lidar), 40),] %>% arrange(range)
+lidar_unif <- lidar[sample.int(nrow(lidar), 40),] %>% arrange(range)
 pt = 15
 nn = 3
 neibs = sort.int(abs(lidar_unif$range-lidar_unif$range[pt]), 
@@ -83,13 +83,14 @@ data(lidar, package="SemiPar")
 library(FNN)
 lidar_unif <- lidar[sample.int(nrow(lidar), 40),] %>% 
   arrange(range)
-new_range <- seq(min(lidar_unif$range), max(lidar_unif$range),
+new_range <- seq(min(lidar_unif$range), 
+                 max(lidar_unif$range),
                  length.out = 101)
 knn3 <- knn.reg(
-      lidar_unif$range, # train X
-      matrix(range, ncol=1), # where to predict (really wants a matrix)
-      y = lidar_unif$logratio, # train Y
-      k = 3) # the default
+  train = lidar_unif$range, 
+  test = matrix(range, ncol = 1), 
+  y = lidar_unif$logratio, 
+  k = 3)
 ```
 
 
@@ -101,9 +102,9 @@ You should imagine what $S$ looks like.
 
 What is the effective degrees of freedom of KNN?
 
-KNN averages the nearest points with equal weight.
+KNN averages the neighbors with equal weight.
 
-But some sets of neighbors are "closer" than other sets.
+But some neighbors are "closer" than other neighbors.
 ]
 
 ---
@@ -147,14 +148,14 @@ ggplot(lidar_unif, aes(range, logratio)) + geom_point(color=blue) +
   geom_line(data=boxcar,color=orange)
 ```
 
-This one gives non-zero weight to points within $\pm 15$ range
+This one gives the same non-zero weight to all points within $\pm 15$ range.
 
 ---
 
 
 ## Other kernels
 
-Most of the time, we don't use the boxcar because the weights are weird.
+Most of the time, we don't use the boxcar because the weights are weird. (constant)
 
 A more common one is the Gaussian kernel:
 
@@ -168,7 +169,7 @@ ggplot(lidar_unif, aes(range, logratio+1)) + geom_point(color=blue) +
 
 For the plot, I made $\sigma=7.5$. 
 
-Now the weights "die away" for points farther from where we're predicting.
+Now the weights "die away" for points farther from where we're predicting. (but all nonzero!!)
 
 ---
 
@@ -201,7 +202,7 @@ The following code gives $S$ for Gaussian kernel smoothers with different $\sigm
 dmat = as.matrix(dist(x))
 Sgauss <- function(sigma) {
   gg <-  dnorm(dmat, sd = sigma) # not an argument, uses the global dmat
-  sweep(gg, 1, rowSums(gg),'/') # make the rows sum to 1.
+  sweep(gg, 1, rowSums(gg), '/') # make the rows sum to 1.
 }
 ```
 
@@ -272,27 +273,53 @@ Therefore we can use our model selection criteria from before
 
 ```{r}
 dmat <- as.matrix(dist(lidar$range))
-loocvs <- double(100)
 sigmas <- 10^(seq(log10(300), log10(.3), length=100))
-for (i in seq_along(sigmas)) {
-  S <- Sgauss(sigmas[i])
-  loocvs[i] <- loocv(lidar$logratio, S)
-}
-bests = which.min(loocvs)
-lidar$smoothed = Sgauss(sigmas[bests]) %*% lidar$logratio
+loocvs <- map_dbl(sigmas, ~ loocv(lidar$logratio, Sgauss(.x)))
+best_s <- sigmas[which.min(loocvs)]
+lidar$smoothed <- Sgauss(best_s) %*% lidar$logratio
 ```
 
 ```{r smoothed-lidar, echo=FALSE, fig.width=10, fig.height=4,fig.align="center"}
 g3 = ggplot(data.frame(sigma=sigmas, loocv=loocvs), aes(sigma,loocv)) + 
-  geom_point(color=blue) + geom_vline(xintercept=sigmas[bests], color=red) +
+  geom_point(color=blue) + geom_vline(xintercept=best_s, color=red) +
   scale_x_log10() + 
-  xlab(sprintf("Sigma, best is sig = %.2f", sigmas[bests]))
+  xlab(sprintf("Sigma, best is sig = %.2f", best_s))
 g4 = ggplot(lidar, aes(range, logratio)) + geom_point(color=blue) +
   geom_line(aes(y=smoothed), color=orange, size=2)
 plot_grid(g3,g4,nrow=1)
 ```
 
-I considered $\sigma \in [0.3,\ 300]$ and used $`r round(sigmas[bests],2)`$.
+I considered $\sigma \in [0.3,\ 300]$ and used $`r round(best_s, 2)`$.
+
+---
+
+## Smoothing manually
+
+I did Kernel Smoothing "manually"
+
+1. For a fixed bandwidth
+
+2. Compute the smoothing matrix
+
+3. Make the predictions
+
+4. Repeat and compute CV using our "nice" formula
+
+The point is to "show how it works". It's also really easy.
+
+There are a number of other ways to do this in R
+
+```{r, eval=FALSE, echo=TRUE, error=TRUE}
+loess()
+ksmooth()
+KernSmooth::locpoly()
+mgcv::gam()
+np::npreg()
+```
+
+These have tricks and ways of doing CV and other things automatically.
+
+Note: all I needed was the distance matrix `dist(x)`. Given a distance function (say, $d(\mathbf{x}_i, \mathbf{x}_j) = ||\mathbf{x}_i - \mathbf{x}_j||_2 + I(x_{i,3} = x_{j,3})$), I can use these methods.
 
 ---
 class: middle, center, inverse

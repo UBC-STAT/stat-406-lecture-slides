@@ -18,8 +18,6 @@
     <script>window.xaringanExtraClipboard(null, {"button":"<i class=\"fa fa-clipboard\"><\/i>","success":"<i class=\"fa fa-check\" style=\"color: #90BE6D\"><\/i>","error":"Press Ctrl+C to Copy"})</script>
     <link href="materials/libs/font-awesome/css/all.css" rel="stylesheet" />
     <link href="materials/libs/font-awesome/css/v4-shims.css" rel="stylesheet" />
-    <link href="materials/libs/xaringanExtra-extra-styles/xaringanExtra-extra-styles.css" rel="stylesheet" />
-    <script src="materials/libs/xaringanExtra-progressBar/progress-bar.js"></script>
     <script src="https://kit.fontawesome.com/ae71192e04.js" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="materials/xaringan-themer.css" type="text/css" />
     <link rel="stylesheet" href="materials/slides-style.css" type="text/css" />
@@ -38,7 +36,7 @@ class: center, middle, inverse, title-slide
 ### Daniel J. McDonald
 ]
 .date[
-### Last modified - 2022-08-29
+### Last modified - 2022-10-03
 ]
 
 ---
@@ -46,26 +44,7 @@ class: center, middle, inverse, title-slide
 
 
 
-<style>.panelset{--panel-tab-active-foreground: #2c365e;--panel-tab-hover-foreground: #e98a15;}</style><style>.xe__progress-bar__container {
-  top:0;
-  opacity: 1;
-  position:absolute;
-  right:0;
-  left: 0;
-}
-.xe__progress-bar {
-  height: 0.25em;
-  background-color: #2c365e;
-  width: calc(var(--slide-current) / var(--slide-total) * 100%);
-}
-.remark-visible .xe__progress-bar {
-  animation: xe__progress-bar__wipe 200ms forwards;
-  animation-timing-function: cubic-bezier(.86,0,.07,1);
-}
-@keyframes xe__progress-bar__wipe {
-  0% { width: calc(var(--slide-previous) / var(--slide-total) * 100%); }
-  100% { width: calc(var(--slide-current) / var(--slide-total) * 100%); }
-}</style>
+<style>.panelset{--panel-tab-active-foreground: #2c365e;--panel-tab-hover-foreground: #e98a15;}</style>
 
 
 ## Last time...
@@ -110,13 +89,14 @@ data(lidar, package="SemiPar")
 library(FNN)
 lidar_unif &lt;- lidar[sample.int(nrow(lidar), 40),] %&gt;% 
   arrange(range)
-new_range &lt;- seq(min(lidar_unif$range), max(lidar_unif$range),
+new_range &lt;- seq(min(lidar_unif$range), 
+                 max(lidar_unif$range),
                  length.out = 101)
 knn3 &lt;- knn.reg(
-      lidar_unif$range, # train X
-      matrix(range, ncol=1), # where to predict (really wants a matrix)
-      y = lidar_unif$logratio, # train Y
-      k = 3) # the default
+  train = lidar_unif$range, 
+  test = matrix(range, ncol = 1), 
+  y = lidar_unif$logratio, 
+  k = 3)
 ```
 
 
@@ -128,9 +108,9 @@ You should imagine what `\(S\)` looks like.
 
 What is the effective degrees of freedom of KNN?
 
-KNN averages the nearest points with equal weight.
+KNN averages the neighbors with equal weight.
 
-But some sets of neighbors are "closer" than other sets.
+But some neighbors are "closer" than other neighbors.
 ]
 
 ---
@@ -159,14 +139,14 @@ The boxes have width 30.
 
 &lt;img src="rmd_gfx/11-kernel-smoothers/boxcar-1.svg" style="display: block; margin: auto;" /&gt;
 
-This one gives non-zero weight to points within `\(\pm 15\)` range
+This one gives the same non-zero weight to all points within `\(\pm 15\)` range.
 
 ---
 
 
 ## Other kernels
 
-Most of the time, we don't use the boxcar because the weights are weird.
+Most of the time, we don't use the boxcar because the weights are weird. (constant)
 
 A more common one is the Gaussian kernel:
 
@@ -174,7 +154,7 @@ A more common one is the Gaussian kernel:
 
 For the plot, I made `\(\sigma=7.5\)`. 
 
-Now the weights "die away" for points farther from where we're predicting.
+Now the weights "die away" for points farther from where we're predicting. (but all nonzero!!)
 
 ---
 
@@ -201,7 +181,7 @@ The following code gives `\(S\)` for Gaussian kernel smoothers with different `\
 dmat = as.matrix(dist(x))
 Sgauss &lt;- function(sigma) {
   gg &lt;-  dnorm(dmat, sd = sigma) # not an argument, uses the global dmat
-  sweep(gg, 1, rowSums(gg),'/') # make the rows sum to 1.
+  sweep(gg, 1, rowSums(gg), '/') # make the rows sum to 1.
 }
 ```
 
@@ -259,19 +239,46 @@ Therefore we can use our model selection criteria from before
 
 ```r
 dmat &lt;- as.matrix(dist(lidar$range))
-loocvs &lt;- double(100)
 sigmas &lt;- 10^(seq(log10(300), log10(.3), length=100))
-for (i in seq_along(sigmas)) {
-  S &lt;- Sgauss(sigmas[i])
-  loocvs[i] &lt;- loocv(lidar$logratio, S)
-}
-bests = which.min(loocvs)
-lidar$smoothed = Sgauss(sigmas[bests]) %*% lidar$logratio
+loocvs &lt;- map_dbl(sigmas, ~ loocv(lidar$logratio, Sgauss(.x)))
+best_s &lt;- sigmas[which.min(loocvs)]
+lidar$smoothed &lt;- Sgauss(best_s) %*% lidar$logratio
 ```
 
 &lt;img src="rmd_gfx/11-kernel-smoothers/smoothed-lidar-1.svg" style="display: block; margin: auto;" /&gt;
 
 I considered `\(\sigma \in [0.3,\ 300]\)` and used `\(14.93\)`.
+
+---
+
+## Smoothing manually
+
+I did Kernel Smoothing "manually"
+
+1. For a fixed bandwidth
+
+2. Compute the smoothing matrix
+
+3. Make the predictions
+
+4. Repeat and compute CV using our "nice" formula
+
+The point is to "show how it works". It's also really easy.
+
+There are a number of other ways to do this in R
+
+
+```r
+loess()
+ksmooth()
+KernSmooth::locpoly()
+mgcv::gam()
+np::npreg()
+```
+
+These have tricks and ways of doing CV and other things automatically.
+
+Note: all I needed was the distance matrix `dist(x)`. Given a distance function (say, `\(d(\mathbf{x}_i, \mathbf{x}_j) = ||\mathbf{x}_i - \mathbf{x}_j||_2 + I(x_{i,3} = x_{j,3})\)`), I can use these methods.
 
 ---
 class: middle, center, inverse
