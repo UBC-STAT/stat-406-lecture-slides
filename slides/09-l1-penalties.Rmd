@@ -35,13 +35,13 @@ $$\newcommand{\Expect}[1]{\mathbb{E}\left[ #1 \right]}
 
 
 
-Ridge regression: $\min ||\y-\X\beta||_2^2 \textrm{ subject to } ||\beta||_2^2 \leq s$ 
+Ridge regression: $\min \frac{1}{n}||\y-\X\beta||_2^2 \textrm{ subject to } ||\beta||_2^2 \leq s$ 
 
-Best linear regression model of size $t$: $\min ||\y-\X\beta||_2^2 \textrm{ subject to } ||\beta||_0 \leq t$
+Best (in sample) linear regression model of size $s$: $\min \frac 1n ||\y-\X\beta||_2^2 \textrm{ subject to } ||\beta||_0 \leq s$
 
 $||\beta||_0$ is the number of nonzero elements in $\beta$
 
-Finding the best linear model (of size $s$, among these predictors) is a nonconvex optimization problem (In fact, it is NP-hard)
+Finding the "best" linear model (of size $s$, among these predictors, in sample) is a nonconvex optimization problem (In fact, it is NP-hard)
 
 Ridge regression is convex (easy to solve), but doesn't do model selection
 
@@ -84,7 +84,7 @@ lballmax <- function(ed,q=1,tol=1e-6){
 ```
 
 
-```{r convexity,echo=FALSE, dev="svg", fig.height=6,fig.width=13,fig.align="center"}
+```{r convexity,echo=FALSE, dev="svg", fig.height=7,fig.width=13,fig.align="center"}
 nbs = list()
 nbs[[1]] = normBall(0,1)
 qs = c(.5,.75,1,1.5,2)
@@ -154,18 +154,20 @@ $$\bll = \arg\min_{\beta} \frac{1}{n}||\y-\X\beta||_2^2 + \lambda ||\beta||_1$$
 
 While the ridge solution can be easily computed 
 
-$$\brl = \arg\min_{\beta} ||\y-\X\beta||_2^2 + \lambda ||\beta||_2^2 = (\X^{\top}\X + \lambda \mathbf{I})^{-1} \X^{\top}\y$$
+$$\brl = \arg\min_{\beta} \frac 1n ||\y-\X\beta||_2^2 + \lambda ||\beta||_2^2 = (\X^{\top}\X + \lambda \mathbf{I})^{-1} \X^{\top}\y$$
 
 
 the lasso solution
 
 
-$$\bll = \arg\min_{\beta} ||\y-\X\beta||_2^2 + \lambda ||\beta||_1 = \; ??$$
+$$\bll = \arg\min_{\beta} \frac 1n||\y-\X\beta||_2^2 + \lambda ||\beta||_1 = \; ??$$
 
 doesn't have a closed form solution.
 
 
 However, because the optimization problem is convex, there exist efficient algorithms for computing it
+
+(The best are Iterative Soft Thresholding or Coordinate Descent. Gradient Descent doesn't work very well in practice.)
 
 ---
 
@@ -204,6 +206,19 @@ bind_rows(df,df1) %>%
 
 ---
 
+## Same but against Lambda
+
+```{r ridge-v-lasso-again, fig.width=11, fig.height=5}
+op <- par()
+par(mfrow = c(1, 2), mar = c(5,3,3,.1))
+plot(lasso, main = "Lasso", xvar = "lambda")
+plot(ridge, main = "Ridge", xvar = "lambda")
+par(op)
+
+```
+
+---
+
 ## Packages
 
 There are two main `R` implementations for finding lasso
@@ -211,7 +226,7 @@ There are two main `R` implementations for finding lasso
 
 `{glmnet}`: `lasso.out = glmnet(X, Y, alpha=1)`.  
 
-* Setting `alpha=0` gives ridge regression (as does `lm.ridge` in the `MASS` package)
+* Setting `alpha = 0` gives ridge regression (as does `lm.ridge` in the `MASS` package)
 * Setting `alpha` $\in (0,1)$ gives a method called the "elastic net" which combines ridge regression and lasso, more on that next lecture.
 * If you don't specify `alpha`, it does lasso
 
@@ -223,6 +238,7 @@ There are two main `R` implementations for finding lasso
 ## (lots of others, but these are the biggies)
 
 1. `lars` (this one came first)
+
 2. `glmnet` (this one is faster)
 
 Use different algorithms, but both compute the solution for a range of $\lambda$.
@@ -266,23 +282,30 @@ However, the way to do it differs from package to package
 .pull-left[
 ```{r}
 # 1. Estimate cv and model at once
-# no formula version
-lasso.glmnet = cv.glmnet(X, Y) 
-# NEVER use glmnet() itself
+#   no formula version
+lasso.glmnet <- cv.glmnet(X, Y) 
+#   no good reason to call glmnet() itself
 # 2. Look at the CV curve
 # 3. If the dashed lines are at the 
-# boundaries, redo with better lambda
-best.lam = lasso.glmnet$lambda.min 
-# the value, not the location 
-# (or use lasso$lambda.1se)
+#   boundaries, redo with better lambda
+best.lam <- lasso.glmnet$lambda.min 
+#   the value, not the location 
+#   (or use lasso$lambda.1se)
 # 4. Return the coefs/predictions 
-# for the best model
-coefs.glmnet = coefficients(
-  lasso.glmnet, s = "lambda.min")
-preds.glmnet = predict(
-  lasso.glmnet, newx = X, s = "lambda.1se") 
+#   for the best model
+coefs.glmnet <- coefficients(
+  lasso.glmnet, s = "lambda.min"
+)
+
+preds.glmnet <- predict(
+  lasso.glmnet, newx = X, s = "lambda.1se"
+) 
 # must supply `newx`
 ```
+
+* $\widehat{R}_{CV}$ is an estimator of $R_n$, it has bias and variance
+* Because we did CV, we actually have 10 $\widehat{R}$ values, 1 per split.
+* Calculate the mean (that's what we've been using), but what about SE?
 ]
 
 .pull-right[
@@ -302,13 +325,13 @@ par(op)
 ## Paths with chosen lambda
 
 ```{r, fig.width=11,fig.align="center",dev="svg",fig.height=4}
-ridge.glmnet = cv.glmnet(X, Y, alpha = 0, lambda.min.ratio = 1e-10) # added to get a minimum
+ridge.glmnet <- cv.glmnet(X, Y, alpha = 0, lambda.min.ratio = 1e-10) # added to get a minimum
 par(mfrow = c(1, 4))
-plot(ridge.glmnet)
-plot(lasso.glmnet)
-plot(ridge.glmnet$glmnet.fit, main = 'Ridge')
+plot(ridge.glmnet, main = "Ridge")
+plot(lasso.glmnet, main = "Lasso")
+plot(ridge.glmnet$glmnet.fit, main = "Ridge")
 abline(v = sum(abs(coef(ridge.glmnet)))) # defaults to `lambda.1se`
-plot(lasso.glmnet$glmnet.fit, main = 'Lasso')
+plot(lasso.glmnet$glmnet.fit, main = "Lasso")
 abline(v = sum(abs(coef(lasso.glmnet)))) # again, `lambda.1se` unless told otherwise
 ```
 
