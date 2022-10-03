@@ -70,7 +70,11 @@ $$\textrm{MSE}(\hat{f}) = \frac{C_1}{n^{4/5}} + \frac{C_2}{n^{4/5}} + \sigma^2$$
 
 ---
 
-_you don't need to memorize these formulas_
+.alert[
+
+_you don't need to memorize these formulas_ but you should know the intuition
+
+]
 
 ---
 
@@ -80,7 +84,17 @@ Recall, this decomposition is **squared bias** + **variance** + **irreducible er
 
 $$\textrm{MSE}(\hat{f}) = C_1 h^4 + \frac{C_2}{nh} + \sigma^2$$ 
 
-* Using $h= = cn^{-1/5}$ **balances** squared bias and variance, leads to the above rate.
+* Using $h = cn^{-1/5}$ **balances** squared bias and variance, leads to the above rate.
+
+---
+
+
+
+.emphasis[
+### Intuition: 
+
+as you collect data, use a smaller bandwidth and the MSE (on future data) decreases
+]
 
 ---
 
@@ -88,7 +102,7 @@ $$\textrm{MSE}(\hat{f}) = C_1 h^4 + \frac{C_2}{nh} + \sigma^2$$
 
 __Bias__  
     
-1. The bias of using a linear model **if the truth nonlinear** is a number $b$ which doesn't depend on $n$.
+1. The bias of using a linear model **if the truth nonlinear** is a number $b > 0$ which doesn't depend on $n$.
 2. The bias of using kernel regression is $C_1/n^{4/5}$. This goes to 0 as $n\rightarrow\infty$.
   
 __Variance__
@@ -100,7 +114,7 @@ __Variance__
 
 ### To conclude: 
 
-* bias of kernels goes to zero (not for lines)
+* bias of kernels goes to zero, bias of lines doesn't (unless the truth is linear).
 
 * but variance of lines goes to zero faster than for kernels.
 
@@ -124,13 +138,13 @@ $$\textrm{MSE}(\hat{f}) = \frac{C_1}{n^{4/5}} + \frac{C_2}{n^{4/5}} + \sigma^2$$
 
 That is for $p=1$. It's not __that much__ slower than $C/n$, the variance for linear models.
 
-If $d>1$ similar calculations show,
+If $p>1$ similar calculations show,
 
 $$\textrm{MSE}(\hat f) = \frac{C_1+C_2}{n^{4/(4+p)}} + \sigma^2 \hspace{2em} \textrm{MSE}(\hat \beta)  = b + \frac{Cp}{n} + \sigma^2 .$$
 
 --
 
-What if $d$ is big (and $n$ is really big)?
+What if $p$ is big (and $n$ is really big)?
 
 1. Then $(C_1 + C_2) / n^{4/(4+p)}$ is still big.
 2. But $Cp / n$ is small.

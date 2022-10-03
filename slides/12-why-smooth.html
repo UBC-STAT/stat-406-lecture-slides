@@ -18,8 +18,6 @@
     <script>window.xaringanExtraClipboard(null, {"button":"<i class=\"fa fa-clipboard\"><\/i>","success":"<i class=\"fa fa-check\" style=\"color: #90BE6D\"><\/i>","error":"Press Ctrl+C to Copy"})</script>
     <link href="materials/libs/font-awesome/css/all.css" rel="stylesheet" />
     <link href="materials/libs/font-awesome/css/v4-shims.css" rel="stylesheet" />
-    <link href="materials/libs/xaringanExtra-extra-styles/xaringanExtra-extra-styles.css" rel="stylesheet" />
-    <script src="materials/libs/xaringanExtra-progressBar/progress-bar.js"></script>
     <script src="https://kit.fontawesome.com/ae71192e04.js" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="materials/xaringan-themer.css" type="text/css" />
     <link rel="stylesheet" href="materials/slides-style.css" type="text/css" />
@@ -38,7 +36,7 @@ class: center, middle, inverse, title-slide
 ### Daniel J. McDonald
 ]
 .date[
-### Last modified - 2022-08-29
+### Last modified - 2022-10-03
 ]
 
 ---
@@ -46,26 +44,7 @@ class: center, middle, inverse, title-slide
 
 
 
-<style>.panelset{--panel-tab-active-foreground: #2c365e;--panel-tab-hover-foreground: #e98a15;}</style><style>.xe__progress-bar__container {
-  top:0;
-  opacity: 1;
-  position:absolute;
-  right:0;
-  left: 0;
-}
-.xe__progress-bar {
-  height: 0.25em;
-  background-color: #2c365e;
-  width: calc(var(--slide-current) / var(--slide-total) * 100%);
-}
-.remark-visible .xe__progress-bar {
-  animation: xe__progress-bar__wipe 200ms forwards;
-  animation-timing-function: cubic-bezier(.86,0,.07,1);
-}
-@keyframes xe__progress-bar__wipe {
-  0% { width: calc(var(--slide-previous) / var(--slide-total) * 100%); }
-  100% { width: calc(var(--slide-current) / var(--slide-total) * 100%); }
-}</style>
+<style>.panelset{--panel-tab-active-foreground: #2c365e;--panel-tab-hover-foreground: #e98a15;}</style>
 
 
 
@@ -124,7 +103,11 @@ For `\(p=1\)`, one can show that for kernels (with the correct bandwidth)
 
 ---
 
-_you don't need to memorize these formulas_
+.alert[
+
+_you don't need to memorize these formulas_ but you should know the intuition
+
+]
 
 ---
 
@@ -134,7 +117,17 @@ Recall, this decomposition is **squared bias** + **variance** + **irreducible er
 
 `$$\textrm{MSE}(\hat{f}) = C_1 h^4 + \frac{C_2}{nh} + \sigma^2$$` 
 
-* Using `\(h= = cn^{-1/5}\)` **balances** squared bias and variance, leads to the above rate.
+* Using `\(h = cn^{-1/5}\)` **balances** squared bias and variance, leads to the above rate.
+
+---
+
+
+
+.emphasis[
+### Intuition: 
+
+as you collect data, use a smaller bandwidth and the MSE (on future data) decreases
+]
 
 ---
 
@@ -142,7 +135,7 @@ Recall, this decomposition is **squared bias** + **variance** + **irreducible er
 
 __Bias__  
     
-1. The bias of using a linear model **if the truth nonlinear** is a number `\(b\)` which doesn't depend on `\(n\)`.
+1. The bias of using a linear model **if the truth nonlinear** is a number `\(b &gt; 0\)` which doesn't depend on `\(n\)`.
 2. The bias of using kernel regression is `\(C_1/n^{4/5}\)`. This goes to 0 as `\(n\rightarrow\infty\)`.
   
 __Variance__
@@ -154,7 +147,7 @@ __Variance__
 
 ### To conclude: 
 
-* bias of kernels goes to zero (not for lines)
+* bias of kernels goes to zero, bias of lines doesn't (unless the truth is linear).
 
 * but variance of lines goes to zero faster than for kernels.
 
@@ -178,13 +171,13 @@ First, lets look again at
 
 That is for `\(p=1\)`. It's not __that much__ slower than `\(C/n\)`, the variance for linear models.
 
-If `\(d&gt;1\)` similar calculations show,
+If `\(p&gt;1\)` similar calculations show,
 
 `$$\textrm{MSE}(\hat f) = \frac{C_1+C_2}{n^{4/(4+p)}} + \sigma^2 \hspace{2em} \textrm{MSE}(\hat \beta)  = b + \frac{Cp}{n} + \sigma^2 .$$`
 
 --
 
-What if `\(d\)` is big (and `\(n\)` is really big)?
+What if `\(p\)` is big (and `\(n\)` is really big)?
 
 1. Then `\((C_1 + C_2) / n^{4/(4+p)}\)` is still big.
 2. But `\(Cp / n\)` is small.
