@@ -228,7 +228,7 @@ $$\brt = \arg \min_{ || \beta ||_2^2 \leq s} \frac{1}{n}\sum_i (y_i-x^\top_i \be
 is in the __Lagrangian__ form
 
 
-$$\brl = \arg \min_{ \beta} \sum_i (y_i-x^\top_i \beta)^2 + \lambda || \beta ||_2^2.$$
+$$\brl = \arg \min_{ \beta} \frac{1}{n}\sum_i (y_i-x^\top_i \beta)^2 + \lambda || \beta ||_2^2.$$
 
 
 
@@ -247,7 +247,6 @@ Observe:
 
 Note: $\lambda$ and $s$ are known as __tuning parameters__
 
-Note also: I'm going to stop multiplying by $1/n$. The effect is to scale $\lambda$.
 
 ---
 
@@ -308,7 +307,13 @@ $$\brl = (\X^\top\X + \lambda \mathbf{I})^{-1}\X^\top \y$$
 
 * However, computations and interpretation are simplified if we examine the Singular Value Decomposition of $\X = \mathbf{UDV}^\top$.
 
-* Here $\mathbf{D}$ is diagonal and $\mathbf{U}$ and $\mathbf{V}$ are orthonormal
+* Recall: any matrix has an SVD.
+
+* Here $\mathbf{D}$ is diagonal and $\mathbf{U}$ and $\mathbf{V}$ are orthonormal: $\mathbf{U}^\top\mathbf{U} = \mathbf{I}$.
+
+* Note that $\mathbf{X}^\top\mathbf{X} = \mathbf{VDU}^\top\mathbf{UDV}^\top = \mathbf{V}\mathbf{D}^2\mathbf{V}^\top$.
+
+
 
 * Then,
 
@@ -316,7 +321,7 @@ $$\brl = (\X^\top\X + \lambda \mathbf{I})^{-1}\X^\top \y$$
 $$\brl = (\X^\top \X + \lambda \mathbf{I})^{-1}\X^\top \y = (\mathbf{VD}^2\mathbf{V}^\top + \lambda \mathbf{I})^{-1}\mathbf{VDU}^\top \y
 = \mathbf{V}(\mathbf{D}^2+\lambda \mathbf{I})^{-1} \mathbf{DU}^\top \y.$$
 
-* For computations, now we only need to invert $D$.
+* For computations, now we only need to invert $\mathbf{D}$.
 
 ---
 
@@ -346,15 +351,21 @@ __Multicollinearity:__  a linear combination of predictor variables is nearly eq
 Some comments:
 
 * A better phrase: $\X$ is ill-conditioned
+
 * AKA "(numerically) rank-deficient".
+
 * $\X = \mathbf{U D V}^\top$ ill-conditioned $\Longleftrightarrow$ some elements of $\mathbf{D} \approx 0$
+
 * $\bls= \mathbf{V D}^{-1} \mathbf{U}^\top \y$, so small entries of $\mathbf{D}$ $\Longleftrightarrow$ huge elements of $\mathbf{D}^{-1}$
+
 * Means huge variance: $\Var{\bls} =  \sigma^2(\X^\top \X)^{-1} = \sigma^2 \mathbf{V D}^{-2} \mathbf{V}^\top$
 
 
 Ridge Regression fixes this problem by preventing the division by a near-zero number
 
 __Conclusion:__ $(\X^{\top}\X)^{-1}$ can be really unstable, while $(\X^{\top}\X + \lambda \mathbf{I})^{-1}$ is not.
+
+__Aside:__ Engineering approach to solving linear systems is to always do this with small $\lambda$. The thinking is about the numerics rather than the statistics.
 
 ---
 layout: true
@@ -370,6 +381,7 @@ To recap:
 
 * If the LM is **true**, 
     1. OLS is unbiased, but Variance depends on $\mathbf{D}^{-2}$. Can be big.
+    
     2. Ridge is biased (can you find the bias?). But Variance is smaller than OLS.
 
 * Ridge regression does not perform variable selection.
@@ -378,14 +390,14 @@ To recap:
 
 ---
 
-Ridge regression: $\min \frac{1}{n}||\y-\X\beta||_2^2 \textrm{ subject to } ||\beta||_2^2 \leq s$ 
+__Ridge regression__: $\min \frac{1}{n}||\y-\X\beta||_2^2 \textrm{ subject to } ||\beta||_2^2 \leq s$ 
 
-Best linear regression model of size $t$: $\min \frac{1}{n}||\y-\X\beta||_2^2 \textrm{ subject to } ||\beta||_0 \leq t$
+__Best (in-sample) linear regression model of size $s$__: $\min \frac{1}{n}||\y-\X\beta||_2^2 \textrm{ subject to } ||\beta||_0 \leq s$
 
 
 $||\beta||_0$ is the number of nonzero elements in $\beta$
 
-Finding the best linear model (of size $s$, among these predictors) is a nonconvex optimization problem (In fact, it is NP-hard)
+Finding the best in-sample linear model (of size $s$, among these predictors) is a nonconvex optimization problem (In fact, it is NP-hard)
 
 Ridge regression is convex (easy to solve), but doesn't do __variable__ selection
 
