@@ -36,7 +36,7 @@ class: center, middle, inverse, title-slide
 ### Daniel J. McDonald
 ]
 .date[
-### Last modified - 2022-10-03
+### Last modified - 2022-10-10
 ]
 
 ---
@@ -65,7 +65,7 @@ We've been discussing smoothing methods in 1-dimension:
 
 We looked at basis expansions, e.g.:
 
-`$$f(x) \approx \beta_0 + \beta_1 x + \beta_2 x^2 + \cdots + \beta_p x^p$$` 
+`$$f(x) \approx \beta_0 + \beta_1 x + \beta_2 x^2 + \cdots + \beta_p x^k$$` 
 
 We looked at local methods, e.g.:
 
@@ -73,7 +73,11 @@ We looked at local methods, e.g.:
 
 --
 
-What if `\(x \in \R^d\)` and `\(d&gt;1\)`?
+What if `\(x \in \R^p\)` and `\(p&gt;1\)`?
+
+.alert[
+Note that `\(p\)` means the dimension of `\(x\)`, not the dimension of the space of the polynomial basis or something else. That's why I put `\(k\)` above.
+]
 
 ---
 
@@ -86,7 +90,7 @@ This is trying essentially to find `\(\widehat{f}(x_1,\ldots,x_p)\)`.
 
 Therefore, this function __by construction__ includes interactions, handles categorical data, etc. etc.
 
-This is in contrast with __linear models__ which need you to specify these things.
+This is in contrast with explicit __linear models__ which need you to specify these things.
 
 This extra complexity (automatically including interactions, as well as other things) comes with tradeoffs.
 
@@ -117,7 +121,7 @@ Recall, this decomposition is **squared bias** + **variance** + **irreducible er
 
 `$$\textrm{MSE}(\hat{f}) = C_1 h^4 + \frac{C_2}{nh} + \sigma^2$$` 
 
-* Using `\(h = cn^{-1/5}\)` **balances** squared bias and variance, leads to the above rate.
+* Using `\(h = cn^{-1/5}\)` **balances** squared bias and variance, leads to the above rate. (That balance minimizes the MSE)
 
 ---
 
@@ -158,6 +162,15 @@ But if it's wrong, you (eventually) lose as `\(n\)` grows.
 How do you know if you have enough data? 
 
 Compare of the kernel version with CV-selected tuning parameter with the estimate of the risk for the linear model.
+
+---
+layout: false
+class: middle
+
+.alert[
+<svg aria-hidden="true" role="img" viewBox="0 0 448 512" style="height:2em;width:1.75em;vertical-align:-0.125em;margin-left:auto;margin-right:auto;font-size:inherit;fill:#a8201a;overflow:visible;position:relative;"><path d="M368 128C368 172.4 342.6 211.5 304 234.4V256C304 273.7 289.7 288 272 288H175.1C158.3 288 143.1 273.7 143.1 256V234.4C105.4 211.5 79.1 172.4 79.1 128C79.1 57.31 144.5 0 223.1 0C303.5 0 368 57.31 368 128V128zM167.1 176C185.7 176 199.1 161.7 199.1 144C199.1 126.3 185.7 112 167.1 112C150.3 112 135.1 126.3 135.1 144C135.1 161.7 150.3 176 167.1 176zM280 112C262.3 112 248 126.3 248 144C248 161.7 262.3 176 280 176C297.7 176 312 161.7 312 144C312 126.3 297.7 112 280 112zM3.378 273.7C11.28 257.9 30.5 251.5 46.31 259.4L223.1 348.2L401.7 259.4C417.5 251.5 436.7 257.9 444.6 273.7C452.5 289.5 446.1 308.7 430.3 316.6L295.6 384L430.3 451.4C446.1 459.3 452.5 478.5 444.6 494.3C436.7 510.1 417.5 516.5 401.7 508.6L223.1 419.8L46.31 508.6C30.5 516.5 11.28 510.1 3.378 494.3C-4.526 478.5 1.881 459.3 17.69 451.4L152.4 384L17.69 316.6C1.881 308.7-4.526 289.5 3.378 273.7V273.7z"/></svg> 
+You can't just compare the CVM for the kernel version to the CVM for the LM. This is because you used CVM to select the tuning parameter, so we're back to the usual problem of using the data twice. You have to do .hand[another] CV to estimate the risk of the kernel version at CV selected tuning parameter.
+]
 
 ---
 layout: false

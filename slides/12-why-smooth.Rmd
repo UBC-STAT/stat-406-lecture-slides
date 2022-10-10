@@ -32,7 +32,7 @@ $$\Expect{Y\given X=x} = f(x),\quad x\in\R$$
 
 We looked at basis expansions, e.g.:
 
-$$f(x) \approx \beta_0 + \beta_1 x + \beta_2 x^2 + \cdots + \beta_p x^p$$ 
+$$f(x) \approx \beta_0 + \beta_1 x + \beta_2 x^2 + \cdots + \beta_p x^k$$ 
 
 We looked at local methods, e.g.:
 
@@ -40,7 +40,11 @@ $$f(x_i) \approx  s_i^\top \y$$
 
 --
 
-What if $x \in \R^d$ and $d>1$?
+What if $x \in \R^p$ and $p>1$?
+
+.alert[
+Note that $p$ means the dimension of $x$, not the dimension of the space of the polynomial basis or something else. That's why I put $k$ above.
+]
 
 ---
 
@@ -53,7 +57,7 @@ This is trying essentially to find $\widehat{f}(x_1,\ldots,x_p)$.
 
 Therefore, this function __by construction__ includes interactions, handles categorical data, etc. etc.
 
-This is in contrast with __linear models__ which need you to specify these things.
+This is in contrast with explicit __linear models__ which need you to specify these things.
 
 This extra complexity (automatically including interactions, as well as other things) comes with tradeoffs.
 
@@ -84,7 +88,7 @@ Recall, this decomposition is **squared bias** + **variance** + **irreducible er
 
 $$\textrm{MSE}(\hat{f}) = C_1 h^4 + \frac{C_2}{nh} + \sigma^2$$ 
 
-* Using $h = cn^{-1/5}$ **balances** squared bias and variance, leads to the above rate.
+* Using $h = cn^{-1/5}$ **balances** squared bias and variance, leads to the above rate. (That balance minimizes the MSE)
 
 ---
 
@@ -125,6 +129,15 @@ But if it's wrong, you (eventually) lose as $n$ grows.
 How do you know if you have enough data? 
 
 Compare of the kernel version with CV-selected tuning parameter with the estimate of the risk for the linear model.
+
+---
+layout: false
+class: middle
+
+.alert[
+`r fa("skull-crossbones", fill=red, height="2em")` 
+You can't just compare the CVM for the kernel version to the CVM for the LM. This is because you used CVM to select the tuning parameter, so we're back to the usual problem of using the data twice. You have to do .hand[another] CV to estimate the risk of the kernel version at CV selected tuning parameter.
+]
 
 ---
 layout: false
