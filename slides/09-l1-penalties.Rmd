@@ -336,6 +336,33 @@ abline(v = sum(abs(coef(lasso.glmnet)))) # again, `lambda.1se` unless told other
 ```
 
 ---
+
+## Degrees of freedom
+
+Remember: Lasso is **not** a linear smoother. There is no matrix $S$ such that $\widehat{y} = Sy$ for the predicted values from lasso.
+
+* We can't use `cv_nice()`.
+
+* We don't have $tr(S) = \textrm{df}$ because there is no $S$.
+
+However,
+
+* One can show that $\textrm{df}_\lambda = \#(\widehat{\beta}_\lambda \neq 0) = ||\widehat{\beta}_\lambda||_0$
+
+* The proof is PhD-level material
+
+Note that the $\textrm{df}_\lambda$ is plotted on the CV plot and that `lasso.glmnet$glmnet.fit$df` contains this value for all $\lambda$.
+
+--
+
+One might suspect, then, that for Elastic Net
+
+$$\min_\beta \frac{1}{n} || \mathbf{y} - \mathbf{X}\beta||_2 + \alpha\lambda||\beta||_1 + (1-\alpha)\lambda||\beta||^2_2$$
+
+We have $\textrm{df}_\lambda = \alpha ||\beta_\lambda||_0 + (1-\alpha) tr (S_\lambda)$ where $S$ comes from the ridge penalty. 
+
+This is an OK approximation in practice, but not quite right. 
+---
 class: middle, inverse, center
 
 # Next time...
