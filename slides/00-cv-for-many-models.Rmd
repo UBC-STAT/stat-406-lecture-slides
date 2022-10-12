@@ -69,7 +69,8 @@ library(glmnet)
 mod1 <- function(dataset, ...) cv.glmnet(xmat(dataset), dataset$Mobility, type.measure = "mae", ...)
 mod2 <- function(dataset, ...) cv.glmnet(xmat(dataset), dataset$Mobility, alpha = 0, type.measure = "mae", ...)
 mod3 <- function(dataset, ...) glmnet(xmat(dataset), dataset$Mobility, lambda = 0, ...) # just does lm()
-mod4 <- function(dataset, ...) cv.glmnet(xmat(dataset), dataset$Mobility, relax = TRUE, gamma = 1, type.measure = "mae", ...)
+mod4 <- function(dataset, ...) cv.glmnet(xmat(dataset), dataset$Mobility, relax = TRUE, gamma = 1, 
+                                         type.measure = "mae", ...)
 
 # this will still "work" on mod3, because there's only 1 s
 predictor <- function(modle, dataset) drop(predict(modle, newx = xmat(dataset), s = "lambda.min"))
