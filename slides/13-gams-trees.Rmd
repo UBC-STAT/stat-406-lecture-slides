@@ -107,11 +107,13 @@ $\Expect{Y \given X=x} = \beta_0 + f_1(x_{1})+\cdots+f_p(x_{p}),$
 
 then
 
-$\textrm{MSE}(\hat f)-\sigma^2 = \frac{Cp}{n^{4/5}}.$
+$\textrm{MSE}(\hat f) = \frac{Cp}{n^{4/5}} + \sigma^2.$
+
+* Exponent no longer depends on $p$. Converges faster. (if truth separates like this)
 
 * You could also use the same methods to include "some" interactions like
 
-$$\begin{aligned}&\Expect{Y \given X=x}\\ &= \beta_0 + f_{12}(x_{1},x_{2})+f_3(x_3)+\cdots+f_p(x_{p}),\end{aligned}$$
+$$\begin{aligned}&\Expect{Y \given X=x}\\ &= \beta_0 + f_{12}(x_{1},\ x_{2})+f_3(x_3)+\cdots+f_p(x_{p}),\end{aligned}$$
 ]
 
 .pull-right[
@@ -178,7 +180,7 @@ par(mar=c(0,0,0,0),oma=c(0,0,0,0))
 ```
 
 ```{r small-tree, fig.align="center", fig.width=10,fig.height=4}
-bigtree <- tree(Mobility~ ., data = mob)
+bigtree <- tree(Mobility ~ ., data = mob)
 smalltree = prune.tree(bigtree, k = .09)
 draw.tree(smalltree, digits = 2)
 ```
@@ -189,12 +191,13 @@ This is called the __dendrogram__
 
 ## Partition view
 
-```{r partition-view, echo=TRUE, fig.width=10,fig.height=4,fig.align="center"}
+```{r partition-view, echo=TRUE, fig.width=10,fig.height=3.5,fig.align="center"}
 mob$preds <- predict(smalltree)
-par(mfrow = c(1, 2))
+par(mfrow = c(1, 2), mar = c(5, 3, 0, 0))
 draw.tree(smalltree, digits = 2)
-cols <- viridisLite::viridis(20, direction = -1)[cut(log(mob$Mobility),20)]
-plot(mob$Black, mob$Commute, pch=19, cex=.4, bty='n', las=1, col=cols, ylab = "Commute time", xlab = "% Black")
+cols <- viridisLite::viridis(20, direction = -1)[cut(log(mob$Mobility), 20)]
+plot(mob$Black, mob$Commute, pch = 19, cex = .4, bty = 'n', las = 1, col = cols, 
+     ylab = "Commute time", xlab = "% Black")
 partition.tree(smalltree, add = TRUE, ordvars = c("Black","Commute"))
 ```
 
@@ -232,6 +235,12 @@ The interior nodes lead to branches.
 
 `r con` Full trees badly overfit, so we "prune" them using CV 
 
+--
+
+
+.hand[
+We'll talk more about trees next module for Classification.
+]
 
 ---
 class: middle
