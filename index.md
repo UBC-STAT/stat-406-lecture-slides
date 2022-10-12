@@ -95,7 +95,7 @@ Optional reading
 | 4 Oct 21  | [Ridge](slides/08-ridge-regression.html), [Lasso](slides/09-l1-penalties.html)   |           |
 | 6 Oct 21  | [NP 1](slides/10-basis-expansions.html), [NP 2](slides/11-kernel-smoothers.html) |           |
 | 11 Oct 21 | [Why smoothing?](slides/12-why-smooth.html)                                      |           |
-| 13 Oct 21 | [Other](slides/13-gams-trees.html)                                               |           |
+| 13 Oct 21 | [CV for comparison](slides/00-cv-for-many-models.html), [Other](slides/13-gams-trees.html) |           |
 | 18 Oct 21 |                                                                                  | HW 2 due  |
 {: .table .table-striped}
 
