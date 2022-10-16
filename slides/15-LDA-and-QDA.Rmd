@@ -246,6 +246,24 @@ plot_grid(g1,gq1)
 ```
 
 ---
+
+## Notes
+
+* LDA is a linear classifier. It is not a linear smoother.
+  - It is derived from Bayes rule.
+  - Assume each class-conditional density in Gaussian
+  - It assumes the classes have different mean vectors, but the same (common) covariance matrix.
+  - It estimates densities and probabilities and "plugs in" 
+
+QDA is not a linear classifier. It depends on quadratic functions of the data.
+  - It is derived from Bayes rule.
+  - Assume each class-conditional density in Gaussian
+  - It assumes the classes have different mean vectors and different covariance matrices.
+  - It estimates densities and probabilities and "plugs in" 
+
+.hand[It is hard (maybe impossible) to come up with reasonable classifiers that are linear smoothers. Many "look" like a linear smoother, but then apply a nonlinear transformation.]
+
+---
 class: middle, inverse, center
 
 # Next time...
