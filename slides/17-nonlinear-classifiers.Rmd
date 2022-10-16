@@ -324,7 +324,7 @@ ggplot(pg, aes(x1,x2)) + geom_raster(aes(fill=knn)) +
 
 * How should we choose $k$?
 
-* Scaling is also very important. "Nearness" is determined bydistance, so better to standardize your data first.
+* Scaling is also very important. "Nearness" is determined by distance, so better to standardize your data first.
 
 * If there are ties, break randomly. So even $k$ is strange.
 
