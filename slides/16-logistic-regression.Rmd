@@ -37,7 +37,7 @@ $$g_*(X) = \begin{cases}
 
 where $p_1(X) = Pr(X \given Y=1)$ and $p_0(X) = Pr(X \given Y=0)$
 
-* We then looked at what happens if we assume $Pr(X \given Y=y)$ is Normally distributed.
+* We then looked at what happens if we **assume** $Pr(X \given Y=y)$ is Normally distributed.
 
 We then used this distribution and the class prior $\pi$ to find the __posterior__ $Pr(Y=1 \given X=x)$.
 
@@ -155,7 +155,7 @@ Logistic regression for two classes simplifies to a likelihood:
 
 Write $p_i(\beta) = \P(Y_i = 1 | X = x_i,\beta)$
 
-* $P(Y_i = y_i \given X = x_i, \beta) = p_i^{y_i}(1-p_i)^{1-y_i}$
+* $P(Y_i = y_i \given X = x_i, \beta) = p_i^{y_i}(1-p_i)^{1-y_i}$ (...Bernoulli distribution)
 
 * $P(\mathbf{Y} \given \mathbf{X}, \beta) = \prod_{i=1}^n p_i^{y_i}(1-p_i)^{1-y_i}$. 
 $$\begin{aligned}
@@ -211,16 +211,16 @@ But the parameters are estimated differently.
 
 Examine the joint distribution of $(X,\ Y)$:  
 
-- LDA: $\prod_i f(X_i,\ Y_i) = \underbrace{\prod_i f(X_i \given Y_i)}_{\textrm{Gaussian}}\underbrace{\prod_i f(Y_i)}_{\textrm{Bernoulli}}$
-- Logistic Regression: $\prod_i f(X_i,Y_i) = \underbrace{\prod_i f(Y_i\given X_i)}_{\textrm{Logistic}}\underbrace{\prod_i f(X_i)}_{\textrm{Ignored}}$
+- LDA: $f(X_i,\ Y_i) = \underbrace{ f(X_i \given Y_i)}_{\textrm{Gaussian}}\underbrace{ f(Y_i)}_{\textrm{Bernoulli}}$
+- Logistic Regression: $f(X_i,Y_i) = \underbrace{ f(Y_i\given X_i)}_{\textrm{Logistic}}\underbrace{ f(X_i)}_{\textrm{Ignored}}$
   
-* LDA estimates the joint, but Logistic estimates only the conditional distribution. But this is really all we need.
+* LDA estimates the joint, but Logistic estimates only the conditional (posterior) distribution. .hand[But this is really all we need.]
 
 * So logistic requires fewer assumptions.
 
-* But if the two classes are perfectly separable, logistic crashes (and the MLE is undefined)
+* But if the two classes are perfectly separable, logistic crashes (and the MLE is undefined, too many solutions)
 
-* LDA works even if the conditional isn't normal, but works poorly if any X is qualitative
+* LDA "works" even if the conditional isn't normal, but works very poorly if any X is qualitative
 
 ---
 
@@ -229,7 +229,7 @@ Examine the joint distribution of $(X,\ Y)$:
 
 * Recall: this gives a "quadratic" decision boundary (it's a curve).
 
-* If we have many columns in $X$ $(p)$
+* If we have $p$ columns in $X$
     - Logistic estimates $p+1$ parameters
     - LDA estimates $2p + p(p+1)/2 + 1$
     - QDA estimates $2p + p(p+1) + 1$
