@@ -20,7 +20,7 @@ library(tidyverse)
 # library(cowplot)
 library(fontawesome)
 library(knitr)
-theme_set(theme_bw(18, "Fira Sans"))
+theme_set(theme_bw(18))
 # library(countdown)
 
 pro = fa("thumbs-up", fill=green)
