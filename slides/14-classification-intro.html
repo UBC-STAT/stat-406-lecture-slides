@@ -36,7 +36,7 @@ class: center, middle, inverse, title-slide
 ### Daniel J. McDonald
 ]
 .date[
-### Last modified - 2022-10-16
+### Last modified - 2022-10-17
 ]
 
 ---
@@ -177,7 +177,7 @@ Again, we appeal to risk
 total probability, this can be written
 `$$R_n(g) = E_X \sum_{y=1}^K \ell(y,\; g(X)) Pr(Y = y \given X)$$`
 We minimize this over a class of options `\(\mathcal{G}\)`, to produce
-`$$g_*(X) = \arg\min_{g\in\mathcal{G}} \sum_{y=1}^K \ell(y,g(X)) Pr(Y = y \given X)$$`
+`$$g_*(X) = \arg\min_{g\in\mathcal{G}} E_X \sum_{y=1}^K \ell(y,g(X)) Pr(Y = y \given X)$$`
 
 
 `\(g_*\)` is named the __Bayes' classifier__ for loss `\(\ell\)` in class `\(\mathcal{G}\)`. 
@@ -227,7 +227,7 @@ Under this loss, we have
 
 **Classifier approach 1** (empirical risk minimization):
 
-Choose some class of classifiers $\mathcal{G}. 
+Choose some class of classifiers `\(\mathcal{G}\)`. 
 
 Find `\(\argmin_{g\in\mathcal{G}} \sum_{i = 1}^n I(g(x_i) \neq y_i)\)`
 
@@ -357,7 +357,7 @@ Easiest classifier when `\(y\in \{0,\ 1\}\)`:
 
 
 ```r
-ghat &lt;- round(predict(lm(y~., trainingdata)))
+ghat &lt;- round(predict(lm(y ~ ., data = trainingdata)))
 ```
 
 Think about why this may not be very good. (At least 2 reasons I can think of.)

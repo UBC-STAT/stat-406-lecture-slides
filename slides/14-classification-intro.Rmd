@@ -144,7 +144,7 @@ $$R_n(g) = E [\ell(Y,g(X))]$$ If we use the law of
 total probability, this can be written
 $$R_n(g) = E_X \sum_{y=1}^K \ell(y,\; g(X)) Pr(Y = y \given X)$$
 We minimize this over a class of options $\mathcal{G}$, to produce
-$$g_*(X) = \arg\min_{g\in\mathcal{G}} \sum_{y=1}^K \ell(y,g(X)) Pr(Y = y \given X)$$
+$$g_*(X) = \arg\min_{g\in\mathcal{G}} E_X \sum_{y=1}^K \ell(y,g(X)) Pr(Y = y \given X)$$
 
 
 $g_*$ is named the __Bayes' classifier__ for loss $\ell$ in class $\mathcal{G}$. 
@@ -194,7 +194,7 @@ $$g_*(X) = \argmin_{g} Pr(g(X) \neq Y) = \argmin_{g} \left[ 1 - Pr(Y = g(x) | X=
 
 **Classifier approach 1** (empirical risk minimization):
 
-Choose some class of classifiers $\mathcal{G}. 
+Choose some class of classifiers $\mathcal{G}$. 
 
 Find $\argmin_{g\in\mathcal{G}} \sum_{i = 1}^n I(g(x_i) \neq y_i)$
 
@@ -353,7 +353,7 @@ Easiest classifier when $y\in \{0,\ 1\}$:
 (stupidest version of the third case...)
 
 ```{r eval=FALSE}
-ghat <- round(predict(lm(y~., trainingdata)))
+ghat <- round(predict(lm(y ~ ., data = trainingdata)))
 ```
 
 Think about why this may not be very good. (At least 2 reasons I can think of.)
