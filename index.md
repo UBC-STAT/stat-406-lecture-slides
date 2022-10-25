@@ -116,8 +116,8 @@ Optional reading
 |:----------|:---------------------------------------------------------------------------------------------------------------|:----------|
 | 20 Oct 21 | [Classification](slides/14-classification-intro.html), [LDA and QDA](slides/15-LDA-and-QDA.html)               |           |
 | 25 Oct 21 | No class  |           |
-| 27 Oct 21 | [Gradient descent](slides/00-gradient-descent.html), [Logistic regression](slides/16-logistic-regression.html)        |           |
-| 1 Nov 21  | [Nonlinear](slides/17-nonlinear-classifiers.html)                                                                   |       |
+| 27 Oct 21 | [Logistic regression](slides/16-logistic-regression.html), [Gradient descent](slides/00-gradient-descent.html)        |           |
+| 1 Nov 21  | [Other losses](slides/00-classification-losses.html), [Nonlinear](slides/17-nonlinear-classifiers.html)                                                                   |       |
 {: .table .table-striped}
 
 
@@ -173,9 +173,9 @@ Optional reading
 
 ## F Final exam
 
-__TBA__ Schedule set by the University in early October. 
+Sunday, December 18 from 1900&ndash;2100 (in-person)
 
-<div class="alert alert-danger" role="alert">Do not purchase flights prior to the release of the final exam date.</div>
+<div class="alert alert-danger" role="alert">Do not leave Vancouver the final exam date.</div>
 
 <!--
 
