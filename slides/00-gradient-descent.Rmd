@@ -67,7 +67,7 @@ gam <- 0.1
 x <- double(niter)
 x[1] <- 23
 grad <- function(x) 2 * (x - 6)
-for (i in 2:niter) x[i] = x[i-1] - gam * grad(x[i - 1])
+for (i in 2:niter) x[i] = x[i - 1] - gam * grad(x[i - 1])
 ```
 
 
@@ -100,6 +100,8 @@ __Heuristic interpretation:__
 
 * go that way, but not too far (or we'll miss it)
 
+--
+
 __More rigorous interpretation:__
 
 - Taylor expansion
@@ -114,8 +116,11 @@ $$
 $$
 
 ---
+layout: true
 
 ## Visually
+
+---
 
 ```{r, fig.height=6, fig.width=12, fig.align="center", echo=FALSE}
 f <- function(x) (x-1)^2*(x>1) + log(1+exp(-2*x))
@@ -134,6 +139,20 @@ ggplot(data.frame(x=c(-2,3)), aes(x)) +
 
 ---
 
+```{r, fig.height=6, fig.width=12, fig.align="center", echo=FALSE}
+ggplot(data.frame(x=c(-2,3)), aes(x)) + 
+  stat_function(fun=f, color=blue) + 
+  geom_point(data=data.frame(x=x,y=f(x)),aes(x,y),color=red) +
+  stat_function(fun=quad, args = list(x0=-1.75, gam = .25), color=red) +
+  stat_function(fun=quad, args = list(x0=-1, gam = .25), color=red) +
+  stat_function(fun=quad, args = list(x0=-.5, gam = .25), color=red) +
+  coord_cartesian(ylim=c(0,4)) + ggtitle("gamma = 0.25")
+```
+
+
+---
+layout: false
+
 ## What $\gamma$? (more details than we have time for)
 
 What to use for $\gamma_k$? 
@@ -144,10 +163,9 @@ __Fixed__
 - Only works if $\gamma$ is exactly right 
 - Usually does not work
 
-__Sequence__ 
+__Decay on a schedule__ 
 
-$$\gamma_k \quad s.t.\quad\sum_{k=1}^{\infty} \gamma_k = \infty ,\quad
-              \sum_{k=1}^{\infty} \gamma^{2}_k < \infty$$
+$$\gamma_{k+1} = \frac{\gamma_k}{1+ck} \quad \textrm{or} \quad \gamma_{k} = \gamma_0 b^k$$
 
 
 
@@ -222,8 +240,8 @@ x[1,] <- c(1,1)
 ```
 
 ```{r, echo=TRUE}
-gamma <- .5 # medium, but decrease it
-for (k in 2:40) x[k, ] <- x[k - 1, ] - gamma / sqrt(k) * grad(x[k - 1, ]) 
+gamma <- .9 # big, but decrease it on schedule
+for (k in 2:40) x[k, ] <- x[k - 1, ] - gamma * .9^k * grad(x[k - 1, ]) 
 ```
 
 ```{r, echo=FALSE, fig.align='center', fig.height=4, fig.width=8}
@@ -231,6 +249,23 @@ b = tibble(b1=x[,1],b2=x[,2])
 g + geom_path(data=b,aes(b1,b2)) + geom_point(data=b,aes(b1,b2),size=2)
 ```
 
+---
+
+
+```{r, message=FALSE, echo=FALSE, fig.align='center'}
+x <- matrix(0, 40, 2)
+x[1,] <- c(1,1)
+```
+
+```{r, echo=TRUE}
+gamma <- .5 # theoretically optimal
+for (k in 2:40) x[k, ] <- x[k - 1, ] - gamma * grad(x[k - 1, ]) 
+```
+
+```{r, echo=FALSE, fig.align='center', fig.height=4, fig.width=8}
+b = tibble(b1=x[,1],b2=x[,2])
+g + geom_path(data=b,aes(b1,b2)) + geom_point(data=b,aes(b1,b2),size=2)
+```
 
 
 
@@ -422,7 +457,7 @@ g <- ggplot(ppp, aes(a, negll)) +
   scale_y_log10() + 
   scale_color_brewer(palette = "Set1") +
   theme(legend.position = "bottom") 
-coef(glm(y ~ x - 1, family = "binomial"))
+round(coef(glm(y ~ x - 1, family = "binomial")), 3)
 ```
 ]
 
