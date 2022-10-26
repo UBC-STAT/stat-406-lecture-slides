@@ -466,12 +466,31 @@ g &lt;- ggplot(ppp, aes(a, negll)) +
   scale_y_log10() + 
   scale_color_brewer(palette = "Set1") +
   theme(legend.position = "bottom") 
-round(coef(glm(y ~ x - 1, family = "binomial")), 3)
+summary(glm(y ~ x - 1, family = "binomial"))
 ```
 
 ```
-##     x 
-## 1.917
+## 
+## Call:
+## glm(formula = y ~ x - 1, family = "binomial")
+## 
+## Deviance Residuals: 
+##      Min        1Q    Median        3Q       Max  
+## -1.26228  -0.06652   0.01671   0.15655   2.26728  
+## 
+## Coefficients:
+##   Estimate Std. Error z value Pr(&gt;|z|)    
+## x   1.9174     0.4785   4.008 6.13e-05 ***
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+## 
+## (Dispersion parameter for binomial family taken to be 1)
+## 
+##     Null deviance: 138.629  on 100  degrees of freedom
+## Residual deviance:  32.335  on  99  degrees of freedom
+## AIC: 34.335
+## 
+## Number of Fisher Scoring iterations: 7
 ```
 ]
 

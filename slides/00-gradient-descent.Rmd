@@ -457,7 +457,7 @@ g <- ggplot(ppp, aes(a, negll)) +
   scale_y_log10() + 
   scale_color_brewer(palette = "Set1") +
   theme(legend.position = "bottom") 
-round(coef(glm(y ~ x - 1, family = "binomial")), 3)
+summary(glm(y ~ x - 1, family = "binomial"))
 ```
 ]
 
