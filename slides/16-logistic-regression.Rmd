@@ -172,7 +172,7 @@ least squares.
 
 ---
 
-## IRWLS for logistic regression
+## IRWLS for logistic regression (skip for now)
 
 (This is preparation for Neural Networks.)
 
@@ -209,7 +209,7 @@ Both decision boundaries are linear in $x$:
 
 But the parameters are estimated differently.
 
-Examine the joint distribution of $(X,\ Y)$:  
+Examine the joint distribution of $(X,\ Y)$ .tiny[(not the posterior)]:  
 
 - LDA: $f(X_i,\ Y_i) = \underbrace{ f(X_i \given Y_i)}_{\textrm{Gaussian}}\underbrace{ f(Y_i)}_{\textrm{Bernoulli}}$
 - Logistic Regression: $f(X_i,Y_i) = \underbrace{ f(Y_i\given X_i)}_{\textrm{Logistic}}\underbrace{ f(X_i)}_{\textrm{Ignored}}$
@@ -245,9 +245,9 @@ Examine the joint distribution of $(X,\ Y)$:
 
 --
 
-__Final note:__ while logistic regression and LDA produce linear decision boundaries, they are **not** linear smoothers
+__Note again:__ while logistic regression and LDA produce linear decision boundaries, they are **not** linear smoothers
 
-AIC/BIC/Cp work if you use the likelihood correctly and count parameters correctly
+AIC/BIC/Cp work if you use the likelihood correctly and count degrees-of-freedom correctly
 
 Must people use either test set or CV
 

@@ -175,19 +175,22 @@ Optional reading
 
 Sunday, December 18 from 1900&ndash;2100 (in-person)
 
-<div class="alert alert-danger" role="alert">Do not leave Vancouver the final exam date.</div>
+<div class="alert alert-danger" role="alert">Do not leave Vancouver before the final exam date.</div>
 
-<!--
+
 
 * In person attendance is required (per Faculty of Science guidelines)
-* You must bring your computer as the exam will be given through Canvas with "lockdown browser"
+* You must bring your computer as the exam will be given through Canvas
 * Please [arrange to borrow](https://services.library.ubc.ca/computers-technology/technology-borrowing/) one from the library if you do not have your own
 * There are plenty of outlets in the room
 * You may bring 2 sheets of front/back 8.5x11 paper with any notes you want to use
 * There will be no required coding, but I may show code or output and ask questions about it.
 * It will be entirely multiple choice / True-False / matching, etc.
-* Questions will be similar to Quizzes or Homework.
-* Practice Exam and Solution are on Canvas.
+* Questions will be similar to Clickers / Homework
+* Practice Exam and Solution will be on Canvas.
+
+
+<!--
 
 ### Procedures (shown in Canvas Announcement)
 

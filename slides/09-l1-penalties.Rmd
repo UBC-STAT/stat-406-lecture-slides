@@ -43,7 +43,7 @@ $||\beta||_0$ is the number of nonzero elements in $\beta$
 
 Finding the "best" linear model (of size $s$, among these predictors, in sample) is a nonconvex optimization problem (In fact, it is NP-hard)
 
-Ridge regression is convex (easy to solve), but doesn't do model selection
+Ridge regression is convex (easy to solve), but doesn't do variable selection
 
 Can we somehow "interpolate" to get both?
 
