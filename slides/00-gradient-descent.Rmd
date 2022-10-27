@@ -293,16 +293,18 @@ Suppose $f(x) = \frac{1}{n}\sum_{i=1}^n f_i(x)$
 
 Like if $f(\beta) = \frac{1}{n}\sum_{i=1}^n (y_i - x^\top_i\beta)^2$.
 
-Then $f'(x) = \frac{1}{n}\sum_{i=1}^n f'_i(x)$
+Then $f'(\beta) = \frac{1}{n}\sum_{i=1}^n f'_i(\beta) = \frac{1}{n} \sum_{i=1}^n -2x_i^\top(y_i - x^\top_i\beta)$ 
 
 If $n$ is really big, it may take a long time to compute $f'$
 
-So, just sample some $\mathcal{M} = \{i_1,i_2,\ldots,i_m\}$
+So, just sample some partition our data into mini-batches $\mathcal{M}_j$
 
-And approximate
-$$f'(x) = \frac{1}{n}\sum_{i=1}^n f_i(x) \approx \frac{1}{m}\sum_{i\in\mathcal{M}}f'_{i}(x)$$
+And approximate (imagine the Law of Large Numbers, use a sample to approximate the population)
+$$f'(x) = \frac{1}{n}\sum_{i=1}^n f'_i(x) \approx \frac{1}{m}\sum_{i\in\mathcal{M}_j}f'_{i}(x)$$
 
-Usually cycle through "mini-batches" $\mathcal{M}$ until we've seen all $n$ points.
+Usually cycle through "mini-batches":
+* Use a different mini-batch at each iteration of GD
+* Cycle through until we see all the data
 
 --
 
