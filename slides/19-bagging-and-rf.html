@@ -18,8 +18,6 @@
     <script>window.xaringanExtraClipboard(null, {"button":"<i class=\"fa fa-clipboard\"><\/i>","success":"<i class=\"fa fa-check\" style=\"color: #90BE6D\"><\/i>","error":"Press Ctrl+C to Copy"})</script>
     <link href="materials/libs/font-awesome/css/all.css" rel="stylesheet" />
     <link href="materials/libs/font-awesome/css/v4-shims.css" rel="stylesheet" />
-    <link href="materials/libs/xaringanExtra-extra-styles/xaringanExtra-extra-styles.css" rel="stylesheet" />
-    <script src="materials/libs/xaringanExtra-progressBar/progress-bar.js"></script>
     <script src="materials/libs/kePrint/kePrint.js"></script>
     <link href="materials/libs/lightable/lightable.css" rel="stylesheet" />
     <script src="https://kit.fontawesome.com/ae71192e04.js" crossorigin="anonymous"></script>
@@ -40,7 +38,7 @@ class: center, middle, inverse, title-slide
 ### Daniel J. McDonald
 ]
 .date[
-### Last modified - 2022-08-29
+### Last modified - 2022-11-01
 ]
 
 ---
@@ -51,26 +49,7 @@ class: center, middle, inverse, title-slide
 
 
 
-<style>.panelset{--panel-tab-active-foreground: #2c365e;--panel-tab-hover-foreground: #e98a15;}</style><style>.xe__progress-bar__container {
-  top:0;
-  opacity: 1;
-  position:absolute;
-  right:0;
-  left: 0;
-}
-.xe__progress-bar {
-  height: 0.25em;
-  background-color: #2c365e;
-  width: calc(var(--slide-current) / var(--slide-total) * 100%);
-}
-.remark-visible .xe__progress-bar {
-  animation: xe__progress-bar__wipe 200ms forwards;
-  animation-timing-function: cubic-bezier(.86,0,.07,1);
-}
-@keyframes xe__progress-bar__wipe {
-  0% { width: calc(var(--slide-previous) / var(--slide-total) * 100%); }
-  100% { width: calc(var(--slide-current) / var(--slide-total) * 100%); }
-}</style>
+<style>.panelset{--panel-tab-active-foreground: #2c365e;--panel-tab-hover-foreground: #e98a15;}</style>
 
 
 
@@ -174,17 +153,17 @@ The procedure for trees is the following
 
 Each tree, since it is unpruned, will have 
 
-* .primary[low]/.secondary[high] variance
+* .primary[low] / .secondary[high] variance
 
-* .primary[low]/.secondary[high] bias
+* .primary[low] / .secondary[high] bias
 
 
 
 Therefore averaging many trees results in an estimator that has 
 
-* .primary[lower]/.secondary[higher] variance and 
+* .primary[lower] / .secondary[higher] variance and 
 
-* .primary[low]/.secondary[high] bias.
+* .primary[low] / .secondary[high] bias.
 
 ]
 
@@ -234,7 +213,7 @@ But:
 
 --
 
-A new sample of size `\(m\)` of the predictors is taken at each split. 
+A new sample of size `\(m\)` of the predictors is taken .secondary[at each split]. 
 
 Usually, we use about `\(m = \sqrt{p}\)` 
 
@@ -269,7 +248,7 @@ Bagging Trees is Random Forest when `\(m = p\)`, that is, when we can consider a
 ```r
 library(kableExtra)
 library(randomForest)
-mob &lt;- readRDS("data/mobility.RDS") %&gt;%
+mob &lt;- Stat406::mobility %&gt;%
   mutate(mobile = as.factor(Mobility &gt; .1)) %&gt;%
   dplyr::select(-ID, -Name, -Mobility, -State) %&gt;% 
   drop_na()

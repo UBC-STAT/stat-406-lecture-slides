@@ -118,17 +118,17 @@ The procedure for trees is the following
 
 Each tree, since it is unpruned, will have 
 
-* .primary[low]/.secondary[high] variance
+* .primary[low] / .secondary[high] variance
 
-* .primary[low]/.secondary[high] bias
+* .primary[low] / .secondary[high] bias
 
 
 
 Therefore averaging many trees results in an estimator that has 
 
-* .primary[lower]/.secondary[higher] variance and 
+* .primary[lower] / .secondary[higher] variance and 
 
-* .primary[low]/.secondary[high] bias.
+* .primary[low] / .secondary[high] bias.
 
 ]
 
@@ -178,7 +178,7 @@ $m$ of the possible $p$ predictors as candidates for the split.
 
 --
 
-A new sample of size $m$ of the predictors is taken at each split. 
+A new sample of size $m$ of the predictors is taken .secondary[at each split]. 
 
 Usually, we use about $m = \sqrt{p}$ 
 
@@ -212,7 +212,7 @@ Bagging Trees is Random Forest when $m = p$, that is, when we can consider all t
 ```{r mobility-rf}
 library(kableExtra)
 library(randomForest)
-mob <- readRDS("data/mobility.RDS") %>%
+mob <- Stat406::mobility %>%
   mutate(mobile = as.factor(Mobility > .1)) %>%
   dplyr::select(-ID, -Name, -Mobility, -State) %>% 
   drop_na()
