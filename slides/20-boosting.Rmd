@@ -19,7 +19,7 @@ source("rmd_config.R")
 ```
 
 
-We learned about bagging, for averaging low-bias / high-variance estimators.
+We learned about bagging, for averaging .secondary[low-bias] / .primary[high-variance] estimators.
 
 Today, we examine it's opposite: __Boosting__.
 
