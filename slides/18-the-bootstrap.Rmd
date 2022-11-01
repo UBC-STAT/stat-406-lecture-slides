@@ -87,7 +87,7 @@ layout: false
 
 ## Example of unknown sampling distribution
 
-I estimate a classification tree on some data.
+I estimate a LDA on some data.
 
 I get a new $x_0$ and produce $\widehat{Pr}(y_0 =1 \given x_0)$.
 
@@ -103,7 +103,7 @@ Can I get a 95% confidence interval for $Pr(y_0=1 \given x_0)$?
 __Procedure__
 
 1. Resample your training data w/ replacement.
-2. Calculate a new tree on this sample.
+2. Calculate a LDA on this sample.
 3. Produce a new prediction, call it $\widehat{Pr}_b(y_0 =1 \given x_0)$.
 4. Repeat 1-3 $b = 1,\ldots,B$ times.
 5. CI: $\left[2\widehat{Pr}(y_0 =1 \given x_0) - \widehat{F}_{boot}(1-\alpha/2),\ 2\widehat{Pr}(y_0 =1 \given x_0) - \widehat{F}_{boot}(\alpha/2)\right]$
@@ -134,12 +134,12 @@ $$\bar{X} \pm 2*s/\sqrt{n}$$
 ---
 
 ```{r, fig.align='center', fig.height=4}
-ggplot(data.frame(x=c(0,12)), aes(x)) + 
-  stat_function(fun=function(x) dexp(x, 1/5), color=orange) +
-  geom_vline(xintercept = 5, color=blue) + # mean
-  geom_vline(xintercept = qexp(.5,1/5), color=red)+ # median
+ggplot(data.frame(x = c(0, 12)), aes(x)) + 
+  stat_function(fun = function(x) dexp(x, 1 / 5), color = orange) +
+  geom_vline(xintercept = 5, color = blue) + # mean
+  geom_vline(xintercept = qexp(.5,1/5), color = red)+ # median
   annotate("label", x = c(2.5, 5.5, 10), y = c(.15, .15, .05), 
-           label = c("median","bar(x)", "pdf"), parse = TRUE,
+           label = c("median", "bar(x)", "pdf"), parse = TRUE,
            color = c(red, blue, orange), size = 6)
 ```
 
@@ -160,8 +160,8 @@ n = 500
 ---
 
 ```{r, fig.align='center', fig.height=3, fig.width=8}
-set.seed(2020-10-05)
-x <- rexp(n, 1/5)
+set.seed(2022-11-01)
+x <- rexp(n, 1 / 5)
 (med <- median(x)) # sample median
 B <- 100
 alpha <- 0.05
@@ -173,15 +173,15 @@ CI <- 2 * med - quantile(Fhat, probs = c(1 - alpha / 2, alpha / 2))
 ```{r, echo = FALSE, fig.height=3, fig.align='center'}
 ggplot(data.frame(Fhat), aes(Fhat)) + 
   geom_density(color = orange) +
-  geom_vline(xintercept = CI, color=orange, linetype=2) + 
-  geom_vline(xintercept = med, col=blue) + 
-  geom_vline(xintercept = qexp(.5, 1/5), col=red) +
+  geom_vline(xintercept = CI, color = orange, linetype = 2) + 
+  geom_vline(xintercept = med, col = blue) + 
+  geom_vline(xintercept = qexp(.5, 1/5), col = red) +
   annotate("label", x = c(3.15, 3.5, 3.75), y = c(.5, .5, 1),
            color = c(orange, red, blue),
            label = c("widehat(F)", "true~median", "widehat(median)"),
-           parse = TRUE)
-
-
+           parse = TRUE) +
+  xlab("x") +
+  geom_rug(aes(2*med-Fhat))
 ```
 
 
@@ -209,14 +209,14 @@ ggplot(data.frame(Fhat), aes(Fhat)) +
 ```{r, echo=FALSE}
 library(MASS)
 fatcats <- cats
-fatcats$Hwt <- fitted(lm(Hwt~Bwt + 0, data=cats)) + rt(nrow(fatcats), 1)
+fatcats$Hwt <- fitted(lm(Hwt~Bwt + 0, data=cats)) + rt(nrow(fatcats), 2)
 fatcats <- fatcats %>% mutate(Hwt = pmin(pmax(Hwt, 3), 900*Bwt))
 ```
 
 .pull-left[
 ```{r, fig.width=8, fig.height=6, fig.align='center'}
 ggplot(fatcats, aes(Bwt, Hwt)) + 
-  geom_point(color=blue) + 
+  geom_point(color = blue) + 
   xlab("Cat body weight (Kg)") + 
   ylab("Cat heart weight (g)")
 ```
@@ -262,7 +262,7 @@ for (b in 1:B) {
 }
 
 2 * coef(cats.lm) - # Bootstrap CI
-  quantile(bhats, probs = c(1-alpha/2, alpha/2))
+  quantile(bhats, probs = c(1 - alpha / 2, alpha / 2))
 confint(cats.lm) # Original CI
 ```
 ]
@@ -273,7 +273,7 @@ confint(cats.lm) # Original CI
 
 * So far, I didn't use any information about the data-generating process. 
 
-* We've done the "non-parametric bootstrap"
+* We've done the **non-parametric bootstrap**
 
 * This is easiest, and most common for the methods in this module
 
@@ -315,8 +315,8 @@ confint(cats.lm) # Original CI
 **Parametric bootstrap**
 
 1. Assume that the linear model is TRUE.
-2. Then, $\texttt{Hwt}_i = \beta\times \texttt{Bwt}_i + \epsilon$
-3. The $\epsilon_i$ is random, just resample those.
+2. Then, $\texttt{Hwt}_i = \widehat{\beta}\times \texttt{Bwt}_i + \widehat{e}_i$, $\widehat{e}_i \approx \epsilon_i$
+3. The $\epsilon_i$ is random $\longrightarrow$ just resample $\widehat{e}_i$.
 
 ```{r}
 B <- 500

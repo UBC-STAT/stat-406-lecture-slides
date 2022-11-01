@@ -18,8 +18,6 @@
     <script>window.xaringanExtraClipboard(null, {"button":"<i class=\"fa fa-clipboard\"><\/i>","success":"<i class=\"fa fa-check\" style=\"color: #90BE6D\"><\/i>","error":"Press Ctrl+C to Copy"})</script>
     <link href="materials/libs/font-awesome/css/all.css" rel="stylesheet" />
     <link href="materials/libs/font-awesome/css/v4-shims.css" rel="stylesheet" />
-    <link href="materials/libs/xaringanExtra-extra-styles/xaringanExtra-extra-styles.css" rel="stylesheet" />
-    <script src="materials/libs/xaringanExtra-progressBar/progress-bar.js"></script>
     <script src="https://kit.fontawesome.com/ae71192e04.js" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="materials/xaringan-themer.css" type="text/css" />
     <link rel="stylesheet" href="materials/slides-style.css" type="text/css" />
@@ -38,7 +36,7 @@ class: center, middle, inverse, title-slide
 ### Daniel J. McDonald
 ]
 .date[
-### Last modified - 2022-08-29
+### Last modified - 2022-11-01
 ]
 
 ---
@@ -76,26 +74,7 @@ background-size: cover
 ## A small detour...
 
 
-<style>.panelset{--panel-tab-active-foreground: #2c365e;--panel-tab-hover-foreground: #e98a15;}</style><style>.xe__progress-bar__container {
-  top:0;
-  opacity: 1;
-  position:absolute;
-  right:0;
-  left: 0;
-}
-.xe__progress-bar {
-  height: 0.25em;
-  background-color: #2c365e;
-  width: calc(var(--slide-current) / var(--slide-total) * 100%);
-}
-.remark-visible .xe__progress-bar {
-  animation: xe__progress-bar__wipe 200ms forwards;
-  animation-timing-function: cubic-bezier(.86,0,.07,1);
-}
-@keyframes xe__progress-bar__wipe {
-  0% { width: calc(var(--slide-previous) / var(--slide-total) * 100%); }
-  100% { width: calc(var(--slide-current) / var(--slide-total) * 100%); }
-}</style>
+<style>.panelset{--panel-tab-active-foreground: #2c365e;--panel-tab-hover-foreground: #e98a15;}</style>
 
 
 .center[
@@ -141,7 +120,7 @@ layout: false
 
 ## Example of unknown sampling distribution
 
-I estimate a classification tree on some data.
+I estimate a LDA on some data.
 
 I get a new `\(x_0\)` and produce `\(\widehat{Pr}(y_0 =1 \given x_0)\)`.
 
@@ -157,7 +136,7 @@ Can I get a 95% confidence interval for `\(Pr(y_0=1 \given x_0)\)`?
 __Procedure__
 
 1. Resample your training data w/ replacement.
-2. Calculate a new tree on this sample.
+2. Calculate a LDA on this sample.
 3. Produce a new prediction, call it `\(\widehat{Pr}_b(y_0 =1 \given x_0)\)`.
 4. Repeat 1-3 `\(b = 1,\ldots,B\)` times.
 5. CI: `\(\left[2\widehat{Pr}(y_0 =1 \given x_0) - \widehat{F}_{boot}(1-\alpha/2),\ 2\widehat{Pr}(y_0 =1 \given x_0) - \widehat{F}_{boot}(\alpha/2)\right]\)`
@@ -189,12 +168,12 @@ __Procedure__
 
 
 ```r
-ggplot(data.frame(x=c(0,12)), aes(x)) + 
-  stat_function(fun=function(x) dexp(x, 1/5), color=orange) +
-  geom_vline(xintercept = 5, color=blue) + # mean
-  geom_vline(xintercept = qexp(.5,1/5), color=red)+ # median
+ggplot(data.frame(x = c(0, 12)), aes(x)) + 
+  stat_function(fun = function(x) dexp(x, 1 / 5), color = orange) +
+  geom_vline(xintercept = 5, color = blue) + # mean
+  geom_vline(xintercept = qexp(.5,1/5), color = red)+ # median
   annotate("label", x = c(2.5, 5.5, 10), y = c(.15, .15, .05), 
-           label = c("median","bar(x)", "pdf"), parse = TRUE,
+           label = c("median", "bar(x)", "pdf"), parse = TRUE,
            color = c(red, blue, orange), size = 6)
 ```
 
@@ -216,13 +195,13 @@ ggplot(data.frame(x=c(0,12)), aes(x)) +
 
 
 ```r
-set.seed(2020-10-05)
-x &lt;- rexp(n, 1/5)
+set.seed(2022-11-01)
+x &lt;- rexp(n, 1 / 5)
 (med &lt;- median(x)) # sample median
 ```
 
 ```
-## [1] 3.652976
+## [1] 3.669627
 ```
 
 ```r
@@ -263,7 +242,7 @@ CI &lt;- 2 * med - quantile(Fhat, probs = c(1 - alpha / 2, alpha / 2))
 
 ```r
 ggplot(fatcats, aes(Bwt, Hwt)) + 
-  geom_point(color=blue) + 
+  geom_point(color = blue) + 
   xlab("Cat body weight (Kg)") + 
   ylab("Cat heart weight (g)")
 ```
@@ -285,17 +264,17 @@ summary(cats.lm)
 ## 
 ## Residuals:
 ##     Min      1Q  Median      3Q     Max 
-## -10.845  -1.321  -0.699   0.429  46.061 
+## -6.9293 -1.0460 -0.1407  0.8298 16.2536 
 ## 
 ## Coefficients:
 ##     Estimate Std. Error t value Pr(&gt;|t|)    
-## Bwt   4.1061     0.1669   24.61   &lt;2e-16 ***
+## Bwt  3.81895    0.07678   49.74   &lt;2e-16 ***
 ## ---
 ## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 ## 
-## Residual standard error: 5.539 on 143 degrees of freedom
-## Multiple R-squared:  0.809,	Adjusted R-squared:  0.8076 
-## F-statistic: 605.5 on 1 and 143 DF,  p-value: &lt; 2.2e-16
+## Residual standard error: 2.549 on 143 degrees of freedom
+## Multiple R-squared:  0.9454,	Adjusted R-squared:  0.945 
+## F-statistic:  2474 on 1 and 143 DF,  p-value: &lt; 2.2e-16
 ```
 
 ```r
@@ -303,8 +282,8 @@ confint(cats.lm)
 ```
 
 ```
-##        2.5 %   97.5 %
-## Bwt 3.776241 4.435908
+##        2.5 %  97.5 %
+## Bwt 3.667178 3.97073
 ```
 ]
 
@@ -344,12 +323,12 @@ for (b in 1:B) {
 }
 
 2 * coef(cats.lm) - # Bootstrap CI
-  quantile(bhats, probs = c(1-alpha/2, alpha/2))
+  quantile(bhats, probs = c(1 - alpha / 2, alpha / 2))
 ```
 
 ```
 ##    97.5%     2.5% 
-## 3.752268 4.379602
+## 3.654977 3.955927
 ```
 
 ```r
@@ -357,8 +336,8 @@ confint(cats.lm) # Original CI
 ```
 
 ```
-##        2.5 %   97.5 %
-## Bwt 3.776241 4.435908
+##        2.5 %  97.5 %
+## Bwt 3.667178 3.97073
 ```
 ]
 
@@ -368,7 +347,7 @@ confint(cats.lm) # Original CI
 
 * So far, I didn't use any information about the data-generating process. 
 
-* We've done the "non-parametric bootstrap"
+* We've done the **non-parametric bootstrap**
 
 * This is easiest, and most common for the methods in this module
 
@@ -407,7 +386,7 @@ for (b in 1:B) {
 
 ```
 ##    97.5%     2.5% 
-## 3.732221 4.396787
+## 3.673559 3.970251
 ```
 
 ```r
@@ -415,8 +394,8 @@ confint(cats.lm) # Original CI
 ```
 
 ```
-##        2.5 %   97.5 %
-## Bwt 3.776241 4.435908
+##        2.5 %  97.5 %
+## Bwt 3.667178 3.97073
 ```
 ]
 
@@ -424,8 +403,8 @@ confint(cats.lm) # Original CI
 **Parametric bootstrap**
 
 1. Assume that the linear model is TRUE.
-2. Then, `\(\texttt{Hwt}_i = \beta\times \texttt{Bwt}_i + \epsilon\)`
-3. The `\(\epsilon_i\)` is random, just resample those.
+2. Then, `\(\texttt{Hwt}_i = \widehat{\beta}\times \texttt{Bwt}_i + \widehat{e}_i\)`, `\(\widehat{e}_i \approx \epsilon_i\)`
+3. The `\(\epsilon_i\)` is random `\(\longrightarrow\)` just resample `\(\widehat{e}_i\)`.
 
 
 ```r
@@ -446,7 +425,7 @@ for (b in 1:B) {
 
 ```
 ##    97.5%     2.5% 
-## 3.685557 4.381270
+## 3.665531 3.961896
 ```
 
 
