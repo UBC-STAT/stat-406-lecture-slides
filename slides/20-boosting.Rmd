@@ -291,6 +291,9 @@ plot_grid(g1,g2, rel_widths = c(.4,.6))
 
 * Think about the Bias-Variance implications
 
+* You can use these for regression or classification
+
+* You can do this with other weak learners besides trees.
 
 
 

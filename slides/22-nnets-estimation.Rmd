@@ -75,6 +75,7 @@ __Classification:__ $\hat{R}_i = I(y_i = m)\log( 1 + \exp(-z_{im}))$
 
 ## Training neural networks
 
+(intuition)
 
 We need to estimate $B$, $\mathbf{W}_t$ $t=1,\ldots,T$
 
@@ -93,12 +94,16 @@ All the $g(u)$'s that get used have $g'(u)$ "nice".
 
 If $g$ is ReLu: $g(u) = xI(x>0)$, $g'(u) = I(x>0)$
 
-Get derivatives from backprop, then
+Once we have derivatives from backprop, then
 
 $$\begin{align}
 \widetilde{B} &\leftarrow B - \gamma \frac{\partial \widehat{R}}{\partial B}\\
 \widetilde{\mathbf{W}_t} &\leftarrow \mathbf{W}_t - \gamma \frac{\partial \widehat{R}}{\partial \mathbf{W}_t}
 \end{align}$$
+
+--
+
+How do we get the derivatives?
 
 ---
 
@@ -143,21 +148,21 @@ $$\begin{cases}
 ]
 
 .pull-right[
+
 __Back propogate__ `r fa("arrow-up", fill=orange)`
 
+$$r = \begin{cases}
+-\left(\mathbf{y} - \widehat{\mathbf{y}}\right) \\
+-\left(1 - \widehat{\Pi}\right)[y]\end{cases}$$
 
 
-$$\mathbf{r} = 
-\begin{cases}
--\left(\mathbf{y} - \widehat{\mathbf{y}}\right)\\
-- \left(1 - \widehat{\Pi}\right)[y]
-\end{cases}$$
-
-$$\begin{aligned}
+$$
+\begin{aligned}
 \frac{\partial}{\partial \mathbf{B}} \widehat{R} &= \left(\mathbf{A}^{(T)}\right)^\top \mathbf{r}\\
 \boldsymbol{\Gamma} &\leftarrow \mathbf{r}\\
 \mathbf{W}_{T+1} &\leftarrow \mathbf{B}
-\end{aligned}$$
+\end{aligned}
+$$
 
 
 Repeat, $t = T,...,1$,
@@ -184,7 +189,7 @@ Some comments on adding layers:
 -   By including multiple layers, we can have fewer hidden units per
     layer. 
     
-- Also, we can encode (in)dependencies that can speed computations
+- Also, we can encode (in)dependencies that can speed computations 
 
 - We don't have to connect everything the way we have been
 

@@ -18,8 +18,6 @@
     <script>window.xaringanExtraClipboard(null, {"button":"<i class=\"fa fa-clipboard\"><\/i>","success":"<i class=\"fa fa-check\" style=\"color: #90BE6D\"><\/i>","error":"Press Ctrl+C to Copy"})</script>
     <link href="materials/libs/font-awesome/css/all.css" rel="stylesheet" />
     <link href="materials/libs/font-awesome/css/v4-shims.css" rel="stylesheet" />
-    <link href="materials/libs/xaringanExtra-extra-styles/xaringanExtra-extra-styles.css" rel="stylesheet" />
-    <script src="materials/libs/xaringanExtra-progressBar/progress-bar.js"></script>
     <script src="https://kit.fontawesome.com/ae71192e04.js" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="materials/xaringan-themer.css" type="text/css" />
     <link rel="stylesheet" href="materials/slides-style.css" type="text/css" />
@@ -38,7 +36,7 @@ class: center, middle, inverse, title-slide
 ### Daniel J. McDonald
 ]
 .date[
-### Last modified - 2022-08-29
+### Last modified - 2022-11-02
 ]
 
 ---
@@ -46,26 +44,7 @@ class: center, middle, inverse, title-slide
 
 
 
-<style>.panelset{--panel-tab-active-foreground: #2c365e;--panel-tab-hover-foreground: #e98a15;}</style><style>.xe__progress-bar__container {
-  top:0;
-  opacity: 1;
-  position:absolute;
-  right:0;
-  left: 0;
-}
-.xe__progress-bar {
-  height: 0.25em;
-  background-color: #2c365e;
-  width: calc(var(--slide-current) / var(--slide-total) * 100%);
-}
-.remark-visible .xe__progress-bar {
-  animation: xe__progress-bar__wipe 200ms forwards;
-  animation-timing-function: cubic-bezier(.86,0,.07,1);
-}
-@keyframes xe__progress-bar__wipe {
-  0% { width: calc(var(--slide-previous) / var(--slide-total) * 100%); }
-  100% { width: calc(var(--slide-current) / var(--slide-total) * 100%); }
-}</style>
+<style>.panelset{--panel-tab-active-foreground: #2c365e;--panel-tab-hover-foreground: #e98a15;}</style>
 
 
 ## Overview
@@ -82,7 +61,7 @@ At the top layer, the resulting latent
 factors are fed into an algorithm for
 predictions
 
-(Most commonly via least squares or logistic regression)
+(Most commonly via least squares or logistic loss)
 
  
 
@@ -178,7 +157,7 @@ Suppose `\(Y \in \mathbb{R}\)` and we are trying estimate
 the regression function `$$\Expect{Y\given X} = f_*(X)$$`
 
  
-Earlier, we discussed basis expansion, 
+In Module 2, we discussed basis expansion, 
 
 
 
@@ -244,16 +223,16 @@ The main components are
 
 -   The derived features `\({A_k = g(w_{k0} + w_k^{\top}x)}\)` and are called the __hidden units__ or __activations__
 
--   The function `\(g\)` is called the __activation function__  
+-   The function `\(g\)` is called the __activation function__  (more on this later)
 
       
 -   The parameters
-`\({\beta_0},{\beta_k},{w_{k0}},{w_k},k = 1,\ldots,K\)` are estimated from the data.
+`\({\beta_0},{\beta_k},{w_{k0}},{w_k}\)` are estimated from the data for all `\(k = 1,\ldots, K\)`.
 
 -   The number of hidden units `\({K}\)` is a tuning
     parameter
     
-- `\(\beta_0\)` and `\(w_{k0}\)` are usually called __biases__ (I'm not going to include them in future formulas, just for space)    
+- `\(\beta_0\)` and `\(w_{k0}\)` are usually called __biases__ (I'm going to set them to 0 and ignore them in future formulas. Just for space. It's just an intercept)    
 
 --
 
@@ -286,7 +265,7 @@ Notes:
 `\(\mathbf{W}_2 \in \R^{K_2\times K_1}\)`  
 `\(\mathbf{W}_1 \in \R^{K_1\times p}\)`
 
-Final predicted class uses __Softmax__
+Final predicted class calles __Softmax__ in this area (just predict class with largest probability, same as last module)
 
 ]
 
@@ -312,7 +291,7 @@ We start with `\(p\)` covariates and we generate `\(K\)` features (1-layer)
 
 .pull-left[
 
-__Logistic/Least-squares with a polynomial transformation__
+__Logistic / Least-squares with a polynomial transformation__
 
 $$
 `\begin{aligned}
@@ -343,7 +322,7 @@ __Neural network__
 
 This gives
 
-`\(\Phi(x) = (z_1, \ldots,z_K)^{\top} \in \mathbb{R}^{K}\)`
+`\(\Phi(x) = (A_1,\ldots, A_K)^\top \in \mathbb{R}^{K}\)`
 
 and
 
@@ -354,7 +333,7 @@ and
 
 ---
 
-* If `\(g(u) = u\)`, then neural networks reduce to classic least squares (try to show this)
+2. If `\(g(u) = u\)`, (or `\(=3u\)`) then neural networks reduce to (massively underdetermined) ordinary least squares (try to show this)
 
 * ReLU is the current fashion
 
