@@ -36,7 +36,7 @@ class: center, middle, inverse, title-slide
 ### Daniel J. McDonald
 ]
 .date[
-### Last modified - 2022-11-01
+### Last modified - 2022-11-02
 ]
 
 ---
@@ -58,14 +58,14 @@ Today, we examine it's opposite: __Boosting__.
 
 __Boosting__ also combines estimators, but it combines __high-bias__ / low-variance estimators.
 
-Boosting has a number of flavors. And if you Google descriptions, most are wrong.
+Boosting has a number of flavours. And if you Google descriptions, most are wrong.
 
 For a deep (and accurate) treatment, see [ESL] Chapter 10
 
 
 --
 
-We'll discuss 2 flavors: AdaBoost and Gradient Boosting
+We'll discuss 2 flavours: AdaBoost and Gradient Boosting
 
 Neither requires a tree, but that's the typical usage.
 
@@ -208,7 +208,7 @@ __Algorithm:__
 
 Here, `\(L\)` is a loss function that measures prediction accuracy
 
-If `\(L(y,\ f(x))= \exp(-y f(x))\)`, `\(G\)` is a classifier, and `\(y \in \{-1, 1\}\)` then this is equivalent to AdaBoost. Proven 5 years later (Friedman, Hastie, and Tibshirani 2000). Called 
+If `\(L(y,\ f(x))= \exp(-y f(x))\)`, `\(G\)` is a classifier, and `\(y \in \{-1, 1\}\)` then this is equivalent to AdaBoost. Proven 5 years later (Friedman, Hastie, and Tibshirani 2000).
 
 ---
 
@@ -294,6 +294,27 @@ grad_boost &lt;- gbm(mobile ~ ., data = train_boost, n.trees = 500, distribution
 * There are many other extensions, notably XGBoost.
 
 &lt;img src="rmd_gfx/20-boosting/unnamed-chunk-3-1.svg" style="display: block; margin: auto;" /&gt;
+
+---
+
+## Major takeaways
+
+* Two flavours of Boosting (1) AdaBoost (the original) and (2) gradient boosting (easier and more computationally friendly)
+
+* The connection is "Forward stagewise additive modelling" (AdaBoost is a special case)
+
+* But that special case "isn't robust because it uses exponential loss" (squared error is even worse)
+
+* Gradient boosting is a computationally easier version of FSAM
+
+* All use **weak learners** (compare to Bagging)
+
+* Think about the Bias-Variance implications
+
+
+
+
+
 
 ---
 class: middle, inverse, center
