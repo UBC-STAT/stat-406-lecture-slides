@@ -36,7 +36,7 @@ class: center, middle, inverse, title-slide
 ### Daniel J. McDonald
 ]
 .date[
-### Last modified - 2022-10-17
+### Last modified - 2022-11-03
 ]
 
 ---
@@ -134,7 +134,7 @@ binary_calibration_plot &lt;- function(y, phat, nbreaks = 10) {
   midpts &lt;- midpts[-length(midpts)] + diff(midpts) / 2
   sum_dat &lt;- dat %&gt;% 
     group_by(bins) %&gt;%
-    summarise(p = mean(phat, na.rm = TRUE), 
+    summarise(p = mean(y, na.rm = TRUE), 
               se = sqrt(p * (1 - p) / n())) %&gt;%
     arrange(p)
   sum_dat$x &lt;- midpts
@@ -158,13 +158,13 @@ binary_calibration_plot &lt;- function(y, phat, nbreaks = 10) {
 binary_calibration_plot(y, dat$phat, 20L)
 ```
 
-&lt;img src="rmd_gfx/00-classfication-losses/unnamed-chunk-4-1.svg" style="display: block; margin: auto;" /&gt;
+&lt;img src="rmd_gfx/00-classification-losses/unnamed-chunk-4-1.svg" style="display: block; margin: auto;" /&gt;
 
 ---
 
 ## Less well-calibrated
 
-&lt;img src="rmd_gfx/00-classfication-losses/unnamed-chunk-5-1.svg" style="display: block; margin: auto;" /&gt;
+&lt;img src="rmd_gfx/00-classification-losses/unnamed-chunk-5-1.svg" style="display: block; margin: auto;" /&gt;
 
 
 ---
@@ -231,7 +231,7 @@ roc_plt &lt;- ggplot(roc(dat$phat, dat$y),
 
 .pull-right[
 
-![](rmd_gfx/00-classfication-losses/unnamed-chunk-7-1.svg)&lt;!-- --&gt;
+![](rmd_gfx/00-classification-losses/unnamed-chunk-7-1.svg)&lt;!-- --&gt;
 
 ]
 

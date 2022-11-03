@@ -91,7 +91,7 @@ binary_calibration_plot <- function(y, phat, nbreaks = 10) {
   midpts <- midpts[-length(midpts)] + diff(midpts) / 2
   sum_dat <- dat %>% 
     group_by(bins) %>%
-    summarise(p = mean(phat, na.rm = TRUE), 
+    summarise(p = mean(y, na.rm = TRUE), 
               se = sqrt(p * (1 - p) / n())) %>%
     arrange(p)
   sum_dat$x <- midpts
