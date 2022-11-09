@@ -23,12 +23,28 @@ Readings from [\[ISLR\]](https://www.statlearning.com) are always required while
 <br>
 
 <div class="alert alert-primary" role="alert">
-All lecture slides as <code>.Rmd</code> files are available <a href="https://github.com/UBC-STAT/stat-406/tree/main/_lecture-slides">here</a>.
+All lecture slides as <code>.Rmd</code> files are available <a href="https://github.com/UBC-STAT/stat-406-lectures">here</a>.
 </div>
 
 <div class="alert alert-primary" role="alert">
-Handouts for some lectures (coding files, pdfs) are available <a href="https://github.com/UBC-STAT/stat-406/tree/main/_lecture-slides/handouts">here</a>.
+Handouts for some lectures (coding files, pdfs) are available <a href="https://github.com/UBC-STAT/stat-406-lectures/handouts">here</a>.
 </div>
+
+If you want `.pdf`s of the lecture slides (requires Google Chrome to be installed)
+
+1. Clone the repo from <https://github.com/UBC-STAT/stat-406-lectures>.
+1. Open the project in RStudio.
+1. Run `install.packages("renderthis")`
+1. To convert a set to pdf, run, say,  `renderthis::to_pdf("slides/04-bias-variance.html")`.
+1. Repeat for any slides you want.
+1. If you want to do it for all slides at once (not advised since I update them a few times before class) you can do 
+    
+    ```r 
+    purrr::walk(
+      list.files("slides", ".html", full.names = TRUE), 
+      ~ renderthis::to_pdf(.x)
+    )
+    ```
 
 ## 0 Introduction and Review
 
@@ -153,9 +169,6 @@ Topics
 Required reading  
 : \[ISLR\] 12
 
-Video lectures  
-: Lectures 24-28
-
 Optional reading
 : \[ESL\] 8.5, 13.2, 14.3, 14.5.1, 14.8, 14.9
 
@@ -173,7 +186,8 @@ Optional reading
 
 ## F Final exam
 
-Sunday, December 18 from 1900&ndash;2100 (in-person)
+Sunday, December 18 from 19:00&ndash;21:15 [LIFE 2201](https://learningspaces.ubc.ca/classrooms/life-2201)  
+(formally known as the Student Union Building)
 
 <div class="alert alert-danger" role="alert">Do not leave Vancouver before the final exam date.</div>
 
