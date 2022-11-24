@@ -44,7 +44,7 @@ df_arrows = data.frame(x1 = m[1], y1 = m[2],
 pgood <- ggplot(df) + geom_point(aes(x,y,color=z)) + 
   scale_color_viridis_c()+ coord_fixed() +
   theme(legend.position = 'none') +
-  geom_segment(aes(x=x1,y=y1,xend=x2,yend=y2), data=df_arrows, arrow=arrow(), size=2, color=orange)
+  geom_segment(aes(x=x1,y=y1,xend=x2,yend=y2), data=df_arrows, arrow=arrow(), linewidth=2, color=orange)
 pgood
 ```
 

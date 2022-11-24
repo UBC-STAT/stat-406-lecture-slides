@@ -98,13 +98,13 @@ This is the equation for an eigenproblem. The solution is $\alpha=\V_1$ and the 
 ## Example (not real unless there's code)
 
 ```{r}
-mob <- readRDS("data/mobility.RDS")
-X <- mob %>% select(Black:Married) %>% as.matrix()
+data("mobility", package = "Stat406")
+X <- mobility %>% select(Black:Married) %>% as.matrix()
 not_missing <- X %>% complete.cases()
-X <- scale(X[not_missing,], center = TRUE, scale = TRUE)
+X <- scale(X[not_missing, ], center = TRUE, scale = TRUE)
 colors <- mob$Mobility[not_missing] 
 M <- 2 # embedding dimension
-P <- diag(nrow(X)) - 1/nrow(X)
+P <- diag(nrow(X)) - 1 / nrow(X)
 ```
 
 --
