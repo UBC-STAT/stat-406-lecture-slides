@@ -195,14 +195,19 @@ Sunday, December 18 from 19:00&ndash;21:15 [LIFE 2201](https://learningspaces.ub
 
 * In person attendance is required (per Faculty of Science guidelines)
 * You must bring your computer as the exam will be given through Canvas
-* Please [arrange to borrow](https://services.library.ubc.ca/computers-technology/technology-borrowing/) one from the library if you do not have your own
-* There are plenty of outlets in the room
-* You may bring 2 sheets of front/back 8.5x11 paper with any notes you want to use
+* Please [arrange to borrow](https://services.library.ubc.ca/computers-technology/technology-borrowing/) one from the library if you do not have your own. Let me know ASAP if this may pose a problem.
+* You may bring 2 sheets of front/back 8.5x11 paper with any notes you want to use. No other materials will be allowed.
 * There will be no required coding, but I may show code or output and ask questions about it.
-* It will be entirely multiple choice / True-False / matching, etc.
-* Questions will be similar to Clickers / Homework
-* Practice Exam and Solution will be on Canvas.
+* It will be entirely multiple choice / True-False / matching, etc. Delivered on Canvas.
 
+### Schedule of Office Hours before the Final
+
+* December 6 in ESB 4182 (or 4192 if necessary, this is my usual one)
+* December 8, 2-3:30 in ESB 3174 (TA)
+* December 12, 4-5:30 on Zoom (use the link on Canvas, TA)
+* December 13, 2-3 in ESB 4192 (Daniel)
+* December 15, 11-12 in ESB 4192 (Daniel)
+* December 16, 11-12:30 on Zoom (use the link on Canvas, TA)
 
 <!--
 
