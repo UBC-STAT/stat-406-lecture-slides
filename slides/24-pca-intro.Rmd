@@ -160,26 +160,26 @@ class: inverse
 
 ## Why?
 
-1. Given $\X$, find a projection $\mathbf{P}$ onto $\R^d$ with $d \leq p$ 
+1. Given $\X$, find a projection $\mathbf{P}$ onto $\R^M$ with $M \leq p$ 
 that minimizes the reconstruction error
 $$
 \begin{aligned}
 \min_{\mathbf{P}} &\,\, \lVert \mathbf{X} - \mathbf{X}\mathbf{P} \rVert^2_F \,\,\, \textrm{(sum all the elements)}\\
-\textrm{subject to} &\,\, \textrm{rank}(\mathbf{P}) = d,\, \mathbf{P} = \mathbf{P}^T,\, \mathbf{P} = \mathbf{P}^2
+\textrm{subject to} &\,\, \textrm{rank}(\mathbf{P}) = M,\, \mathbf{P} = \mathbf{P}^T,\, \mathbf{P} = \mathbf{P}^2
 \end{aligned}
 $$
-The conditions ensure that $\mathbf{P}$ is a projection matrix onto $d$ dimensions.
+The conditions ensure that $\mathbf{P}$ is a projection matrix onto $M$ dimensions.
 
-2. Maximize the variance explained by an orthogonal transformation $\mathbf{A} \in \R^{p\times d}$
+2. Maximize the variance explained by an orthogonal transformation $\mathbf{A} \in \R^{p\times M}$
 $$
 \begin{aligned}
 \max_{\mathbf{A}} &\,\, \textrm{trace}\left(\frac{1}{n}\mathbf{A}^\top \X^\top \X \mathbf{A}\right)\\
-\textrm{subject to} &\,\, \mathbf{A}^\top\mathbf{A} = \mathbf{I}_d
+\textrm{subject to} &\,\, \mathbf{A}^\top\mathbf{A} = \mathbf{I}_M
 \end{aligned}
 $$
 
-* In case one, the minimizer is $\mathbf{P} = \mathbf{V}_d\mathbf{V}_d^\top$
-* In case two, the maximizer is $\mathbf{A} = \mathbf{V}_d$.
+* In case one, the minimizer is $\mathbf{P} = \mathbf{V}_M\mathbf{V}_M^\top$
+* In case two, the maximizer is $\mathbf{A} = \mathbf{V}_M$.
 
 
 ---
