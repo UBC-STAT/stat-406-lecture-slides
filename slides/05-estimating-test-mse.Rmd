@@ -213,7 +213,7 @@ To alleviate some of these problems, people usually use $K$-fold cross validatio
 
 `r con` LOO-CV is (nearly) unbiased for $R_n$
 
-`r con` K-fold CV is unbiased for $R_{n-K/n}$
+`r con` K-fold CV is unbiased for $R_{n(1-1/K)}$
 
 The risk depends on how much data you use to estimate the model. $R_n$ depends on $n$.
 
