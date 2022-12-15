@@ -207,7 +207,7 @@ Sunday, December 18 from 19:00&ndash;21:15 [LIFE 2201](https://learningspaces.ub
 * December 12, 4-5:30 on Zoom (use the link on Canvas, TA)
 * December 13, 2-3 in ESB 4192 (Daniel)
 * December 15, 11-12 in ESB 4192 (Daniel)
-* December 16, 11-12:30 on Zoom (use the link on Canvas, TA)
+* December 16, 10:30-12 on Zoom (use the link on Canvas, TA)
 
 <!--
 
